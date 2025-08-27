@@ -66,7 +66,7 @@ A continuación se listan los principales endpoints de la API. Se requiere un to
 | POST   | /api/transactions/transfer   | Transfiere monedas entre dos cuentas.            |
 
 ## 🧑‍💻 Autores
-Tu Nombre - [Enlace a tu GitHub o LinkedIn]
+Tu Nombre - [link a tu GitHub o LinkedIn]
 
 ## 📄 Licencia
 Este proyecto está bajo la Licencia MIT.
