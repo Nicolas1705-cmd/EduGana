@@ -1,13 +1,21 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import mysql.connector
 import bcrypt
 import datetime
 from functools import wraps
 import jwt
+from flask_cors import CORS
+import os
 
 # --- Configuración de la aplicación y la base de datos ---
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'una_clave_secreta_fuerte'  # ¡Cámbiala en producción!
+# Configura Flask para que busque los archivos HTML y estáticos en la carpeta 'frontend'
+app = Flask(__name__,
+            template_folder='../frontend',
+            static_folder='../frontend')
+app.config['SECRET_KEY'] = 'una_clave_secreta_fuerte'
+
+# CORS
+CORS(app)
 
 def get_db_connection():
     try:
@@ -22,6 +30,10 @@ def get_db_connection():
         print(f"Error de conexión a la base de datos: {err}")
         return None
 
+# --- Lista global para tokens revocados ---
+# NOTA: Para producción, se recomienda usar una base de datos o un servicio de caché como Redis
+revoked_tokens = set()
+
 # --- Decorador para autenticación y roles ---
 def token_required(f):
     @wraps(f)
@@ -32,9 +44,13 @@ def token_required(f):
                 token = request.headers['Authorization'].split(" ")[1]
             except IndexError:
                 return jsonify({'message': 'Formato de token no válido'}), 401
-
+        
         if not token:
             return jsonify({'message': 'Token de autenticación faltante'}), 401
+        
+        # --- NUEVA VERIFICACIÓN: Revisar si el token está en la lista de revocados ---
+        if token in revoked_tokens:
+            return jsonify({'message': 'El token ha sido revocado. Por favor, inicie sesión de nuevo.'}), 401
         
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
@@ -46,7 +62,7 @@ def token_required(f):
             return jsonify({'message': 'Token no es válido'}), 401
         except Exception as e:
             return jsonify({'message': f'Error de autenticación: {e}'}), 401
-
+        
         return f(current_user_id, current_role_id, *args, **kwargs)
     return decorated
 
@@ -60,6 +76,11 @@ def roles_required(allowed_roles):
             return f(current_user_id, current_role_id, *args, **kwargs)
         return decorated_function
     return decorator
+
+# --- NUEVA RUTA: Sirve el archivo login.html al acceder a la URL base ---
+@app.route('/')
+def home():
+    return render_template('login.html')
 
 # --- Endpoints de la API ---
 
@@ -98,7 +119,7 @@ def register():
             return jsonify({'message': 'Usuario, perfil y cuenta registrados con éxito!'}), 201
         except mysql.connector.Error as err:
             conn.rollback()
-            if err.errno == 1062: # Error de duplicado
+            if err.errno == 1062:  # Error de duplicado
                 return jsonify({'message': 'El usuario, email o número de teléfono ya existen.'}), 409
             return jsonify({'message': f'Error al registrar usuario: {err.msg}'}), 500
         finally:
@@ -119,11 +140,15 @@ def login():
     if conn:
         cursor = conn.cursor(dictionary=True)
         try:
-            query = "SELECT user_id, password_hash, role_id FROM users WHERE email = %s"
+            query = "SELECT user_id, password_hash, role_id, status FROM users WHERE email = %s"
             cursor.execute(query, (email,))
             user = cursor.fetchone()
+            
+            # Verificar si el usuario existe y si su cuenta está activa
+            if not user or user['status'] == 'disabled':
+                return jsonify({'message': 'Usuario o cuenta deshabilitada. Por favor contacte con el soporte.'}), 401
 
-            if user and bcrypt.checkpw(password.encode('utf-8'), user['password_hash'].encode('utf-8')):
+            if bcrypt.checkpw(password.encode('utf-8'), user['password_hash'].encode('utf-8')):
                 token = jwt.encode({
                     'user_id': user['user_id'],
                     'role_id': user['role_id'],
@@ -139,8 +164,18 @@ def login():
             conn.close()
     return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
 
-# --- Nuevas APIs consolidadas para el perfil de usuario ---
+# --- NUEVO ENDPOINT PARA CERRAR SESIÓN ---
+@app.route('/api/auth/logout', methods=['POST'])
+@token_required
+def logout(current_user_id, current_role_id):
+    token = request.headers['Authorization'].split(" ")[1]
+    revoked_tokens.add(token)
+    return jsonify({'message': 'Sesión cerrada con éxito.'}), 200
 
+# Asegúrate de que tu `login` endpoint también valide el `status` del usuario para prevenir que usuarios deshabilitados inicien sesión. He añadido esa validación en el código de arriba.
+
+
+# --- Nuevas APIs consolidadas para el perfil de usuario ---
 # GET /api/users/<user_id> - Obtiene la información completa del usuario (perfil y cuenta)
 @app.route('/api/users/<int:user_id>', methods=['GET'])
 @token_required
@@ -435,7 +470,7 @@ def get_transaction_history(current_user_id, current_role_id, account_id):
         cursor.close()
         conn.close()
 
-# --- * POST /api/loans: Permite a los usuarios solicitar un préstamo o a los administradores otorgarlo. ---
+# --- * POST /api/loans/request: Permite a los usuarios solicitar un préstamo o a los administradores otorgarlo. ---
 @app.route('/api/loans/request', methods=['POST'])
 @roles_required([3])  # Solo rol de estudiante (3)
 def request_loan(current_user_id, current_role_id):
@@ -792,6 +827,438 @@ def inject_or_retire_coins(current_user_id, current_role_id):
     except mysql.connector.Error as err:
         conn.rollback()
         return jsonify({'message': f'Error en la operación de monedas: {err.msg}'}), 500
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'message': f'Un error inesperado ocurrió: {str(e)}'}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+# --- POST /api/admin/disable_account: permite al superusuario deshabilitar ---
+@app.route('/api/admin/disable_account', methods=['POST'])
+@roles_required([1])  # Solo para superadministrador (1)
+def disable_user_account(current_user_id, current_role_id):
+    data = request.json
+    user_id_to_disable = data.get('user_id')
+
+    if not user_id_to_disable:
+        return jsonify({'message': 'Se requiere el ID del usuario a deshabilitar.'}), 400
+
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor()
+    try:
+        conn.start_transaction()
+
+        # 1. Verificar si el usuario a deshabilitar es el superadministrador actual
+        if user_id_to_disable == current_user_id:
+            return jsonify({'message': 'No puedes deshabilitar tu propia cuenta.'}), 403
+
+        # 2. Verificar que el usuario a deshabilitar exista
+        cursor.execute("SELECT user_id, status FROM users WHERE user_id = %s", (user_id_to_disable,))
+        user_info = cursor.fetchone()
+
+        if not user_info:
+            return jsonify({'message': 'El usuario no existe.'}), 404
+        
+        user_status = user_info[1]
+        if user_status == 'disabled':
+            return jsonify({'message': 'La cuenta ya está deshabilitada.'}), 400
+
+        # 3. Deshabilitar la cuenta de usuario
+        cursor.execute("UPDATE users SET status = 'disabled' WHERE user_id = %s", (user_id_to_disable,))
+        
+        # 4. Deshabilitar la cuenta de la billetera asociada (si existe)
+        cursor.execute("UPDATE accounts SET status = 'disabled' WHERE user_id = %s", (user_id_to_disable,))
+        
+        conn.commit()
+        return jsonify({'message': f'La cuenta del usuario {user_id_to_disable} ha sido deshabilitada con éxito.'}), 200
+
+    except mysql.connector.Error as err:
+        conn.rollback()
+        return jsonify({'message': f'Error al deshabilitar la cuenta: {err.msg}'}), 500
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'message': f'Un error inesperado ocurrió: {str(e)}'}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+# La nueva API para habilitar una cuenta
+@app.route('/api/admin/enable_account', methods=['POST'])
+@roles_required([1])  # Solo para superadministrador (1)
+def enable_user_account(current_user_id, current_role_id):
+    """
+    Habilita una cuenta de usuario y su billetera asociada.
+    """
+    data = request.json
+    user_id_to_enable = data.get('user_id')
+
+    if not user_id_to_enable:
+        return jsonify({'message': 'Se requiere el ID del usuario a habilitar.'}), 400
+
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor()
+    try:
+        conn.start_transaction()
+
+        # 1. Verificar si el usuario a habilitar existe y no es el superadministrador actual
+        if user_id_to_enable == current_user_id:
+            return jsonify({'message': 'No puedes habilitar tu propia cuenta.'}), 403
+
+        # 2. Verificar que el usuario a habilitar exista
+        cursor.execute("SELECT user_id, status FROM users WHERE user_id = %s", (user_id_to_enable,))
+        user_info = cursor.fetchone()
+
+        if not user_info:
+            return jsonify({'message': 'El usuario no existe.'}), 404
+        
+        user_status = user_info[1]
+        if user_status == 'active':
+            return jsonify({'message': 'La cuenta ya está habilitada.'}), 400
+
+        # 3. Habilitar la cuenta de usuario
+        cursor.execute("UPDATE users SET status = 1 WHERE user_id = %s", (user_id_to_enable,))
+        
+        # 4. Habilitar la cuenta de la billetera asociada (si existe)
+        cursor.execute("UPDATE accounts SET status = 1 WHERE user_id = %s", (user_id_to_enable,))
+        
+        conn.commit()
+        return jsonify({'message': f'La cuenta del usuario {user_id_to_enable} ha sido habilitada con éxito.'}), 200
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'message': f'Un error inesperado ocurrió: {str(e)}'}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+# POST /api/tasks: Un administrador crea una nueva tarea con una recompensa asignada.
+@app.route('/api/tasks', methods=['POST'])
+@roles_required([1, 2])  # Rol 1 para superadministrador, Rol 2 para administrador
+def create_task(current_user_id, current_role_id):
+    """
+    Crea una nueva tarea asignada por un administrador.
+    """
+    data = request.json
+    title = data.get('title')
+    description = data.get('description')
+    reward_amount = data.get('reward_amount')
+
+    # 1. Validación de datos de entrada
+    if not all([title, description, reward_amount]):
+        return jsonify({'message': 'Título, descripción y recompensa son obligatorios.'}), 400
+
+    # 2. Validación de la recompensa
+    try:
+        reward_amount = float(reward_amount)
+        if reward_amount <= 0:
+            return jsonify({'message': 'La recompensa debe ser un valor positivo.'}), 400
+    except (ValueError, TypeError):
+        return jsonify({'message': 'El monto de la recompensa debe ser un número válido.'}), 400
+
+    # 3. Conexión a la base de datos
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor()
+    try:
+        # 4. Insertar la nueva tarea en la tabla 'tasks'
+        query = """
+            INSERT INTO tasks (created_by_admin_id, title, description, reward_amount, status)
+            VALUES (%s, %s, %s, %s, 'pending')
+        """
+        cursor.execute(query, (current_user_id, title, description, reward_amount))
+        conn.commit()
+
+        return jsonify({'message': 'Tarea creada con éxito.', 'task_id': cursor.lastrowid}), 201
+
+    except mysql.connector.Error as err:
+        conn.rollback()
+        return jsonify({'message': f'Error al crear la tarea: {err.msg}'}), 500
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'message': f'Un error inesperado ocurrió: {str(e)}'}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+# GET /api/get_tasks: Lista las tareas con una recompensa asignada.
+@app.route('/api/get_tasks', methods=['GET'])
+def get_available_tasks():
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor(dictionary=True)
+    try:
+        # La consulta busca tareas con estado 'pending'
+        cursor.execute("SELECT task_id, title, description, reward_amount FROM tasks WHERE status = 'pending'")
+        tasks = cursor.fetchall()
+
+        if not tasks:
+            return jsonify({'message': 'No hay tareas disponibles en este momento.'}), 404
+
+        return jsonify(tasks), 200
+    finally:
+        cursor.close()
+        conn.close()
+
+#POST /api/tasks/<int:task_id>/complete Enviar Solicitud de Tarea Completada
+@app.route('/api/tasks/<int:task_id>/complete', methods=['POST'])
+@token_required # Asegúrate de que el token corresponde al estudiante
+def complete_task(current_user_id, current_role_id, task_id):
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor()
+    try:
+        conn.start_transaction()
+
+        # 1. Verificar si la tarea existe y está pendiente
+        cursor.execute("SELECT status FROM tasks WHERE task_id = %s", (task_id,))
+        task_info = cursor.fetchone()
+        if not task_info or task_info[0] != 'pending':
+            return jsonify({'message': 'La tarea no existe o no está disponible.'}), 404
+
+        # 2. Insertar o actualizar la solicitud del estudiante
+        cursor.execute("""
+            INSERT INTO student_tasks (user_id, task_id, completion_date, is_paid)
+            VALUES (%s, %s, NOW(), 0)
+            ON DUPLICATE KEY UPDATE completion_date = NOW(), is_paid = 0
+        """, (current_user_id, task_id))
+
+        # 3. Actualizar el estado de la tarea a 'in_review'
+        cursor.execute("UPDATE tasks SET status = 'in_review' WHERE task_id = %s", (task_id,))
+        
+        conn.commit()
+        return jsonify({'message': 'Solicitud de tarea enviada con éxito. Esperando aprobación.'}), 200
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'message': f'Error al enviar la solicitud: {str(e)}'}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+# GET /api/admin/tasks/in_review Listar Tareas para Revisión
+@app.route('/api/admin/tasks/in_review', methods=['GET'])
+@roles_required([1, 2]) # Solo administradores y superusuarios
+def get_tasks_in_review(current_user_id, current_role_id):
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor(dictionary=True)
+    try:
+        query = """
+            SELECT 
+                st.student_task_id, 
+                st.user_id, 
+                u.username,
+                t.task_id,
+                t.title,
+                t.reward_amount,
+                st.completion_date
+            FROM student_tasks st
+            JOIN users u ON st.user_id = u.user_id
+            JOIN tasks t ON st.task_id = t.task_id
+            WHERE t.status = 'in_review' AND st.is_paid = 0
+            ORDER BY st.completion_date ASC
+        """
+        cursor.execute(query)
+        tasks_in_review = cursor.fetchall()
+        
+        if not tasks_in_review:
+            return jsonify({'message': 'No hay tareas pendientes de revisión.'}), 404
+
+        return jsonify(tasks_in_review), 200
+
+    finally:
+        cursor.close()
+        conn.close()
+
+# POST /api/admin/tasks/<int:task_id>/approve Aprobar la Tarea y Transferir la Recompensa
+@app.route('/api/admin/tasks/<int:task_id>/approve', methods=['POST'])
+@roles_required([1, 2])
+def approve_task(current_user_id, current_role_id, task_id):
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor()
+    try:
+        conn.start_transaction()
+
+        # 1. Obtener la información de la tarea y del estudiante
+        query_task = """
+            SELECT st.user_id, t.reward_amount
+            FROM student_tasks st
+            JOIN tasks t ON st.task_id = t.task_id
+            WHERE t.task_id = %s AND t.status = 'in_review' AND st.is_paid = 0
+        """
+        cursor.execute(query_task, (task_id,))
+        task_info = cursor.fetchone()
+
+        if not task_info:
+            return jsonify({'message': 'La tarea no existe, no está en revisión o ya fue pagada.'}), 404
+
+        student_user_id, reward_amount = task_info
+
+        # 2. Transferir el monto de la recompensa
+        # Debes tener una cuenta central (ej. del banco o del administrador) para la transferencia
+        # Asume que el ID de la cuenta del administrador es 'admin_account_id'
+        # Asume que el ID de la cuenta del estudiante se puede obtener desde su user_id
+        
+        # Obtener el account_id del estudiante
+        cursor.execute("SELECT account_id FROM accounts WHERE user_id = %s", (student_user_id,))
+        student_account_id = cursor.fetchone()[0]
+
+        # 3. Realizar la transferencia (similar a tu API de transacciones)
+        # Esto requiere que tengas un ID de cuenta de administrador que tiene saldo para pagar
+        # Por simplicidad, asumiremos que se "inyecta" dinero al sistema
+        
+        # 3.1 Actualizar el saldo de la cuenta del estudiante
+        cursor.execute("""
+            UPDATE accounts
+            SET balance = balance + %s
+            WHERE account_id = %s
+        """, (reward_amount, student_account_id))
+
+        # 3.2 Marcar la tarea como pagada y actualizar su estado
+        cursor.execute("""
+            UPDATE student_tasks
+            SET is_paid = 1
+            WHERE task_id = %s AND user_id = %s
+        """, (task_id, student_user_id))
+
+        cursor.execute("UPDATE tasks SET status = 'completed' WHERE task_id = %s", (task_id,))
+
+        # 3.3 Registrar la transacción en la tabla 'transactions'
+        # Debes usar 'event_type' y 'event_id' para vincular la transacción a la tarea
+        cursor.execute("""
+            INSERT INTO transactions (from_account_id, to_account_id, amount, transaction_type, status, notes, event_id, event_type)
+            VALUES (NULL, %s, %s, 'task_reward', 'approved', 'Recompensa por tarea completada', %s, 'task')
+        """, (student_account_id, reward_amount, task_id))
+
+        conn.commit()
+        return jsonify({'message': f'Tarea {task_id} aprobada. {reward_amount} monedas transferidas a la cuenta del estudiante.'}), 200
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'message': f'Un error inesperado ocurrió: {str(e)}'}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+# GET /api/users/students lista a todos los estudiantes
+@app.route('/api/users/students', methods=['GET'])
+@roles_required([1, 2]) # Solo administradores y superusuarios pueden obtener esta lista
+def get_students(current_user_id, current_role_id):
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor(dictionary=True)
+    try:
+        # Asume que el role_id para estudiantes es 3
+        cursor.execute("SELECT user_id, username, email FROM users WHERE role_id = 3")
+        students = cursor.fetchall()
+        
+        if not students:
+            return jsonify({'message': 'No se encontraron estudiantes.'}), 404
+
+        return jsonify(students), 200
+    finally:
+        cursor.close()
+        conn.close()
+
+# POST /api/attendance: Registrar la asistencia
+@app.route('/api/attendance', methods=['POST'])
+@roles_required([1, 2])  # Solo administradores y superusuarios pueden registrar asistencia
+def register_attendance(current_user_id, current_role_id):
+    """
+    Registra la asistencia de un estudiante y transfiere monedas.
+    """
+    data = request.json
+    student_user_id = data.get('student_user_id')
+    attendance_status = data.get('status')  # 'asistencia', 'tardanza', 'falta'
+
+    # 1. Validación de datos de entrada
+    if not all([student_user_id, attendance_status]):
+        return jsonify({'message': 'ID del estudiante y estado de la asistencia son obligatorios.'}), 400
+
+    # 2. Definir el monto de la recompensa
+    reward_amount = 0
+    if attendance_status == 'asistencia':
+        reward_amount = 10
+    elif attendance_status == 'tardanza':
+        reward_amount = 5
+    elif attendance_status == 'falta':
+        reward_amount = 0
+    else:
+        return jsonify({'message': 'Estado de asistencia inválido. Use "asistencia", "tardanza" o "falta".'}), 400
+
+    # 3. Conexión a la base de datos
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'message': 'Fallo en la conexión a la base de datos'}), 500
+
+    cursor = conn.cursor(buffered=True)  # Cursor buffered para evitar error "Unread result found"
+    try:
+        conn.start_transaction()
+
+        # 4. Verificar si ya se registró la asistencia para este usuario hoy
+        cursor.execute(
+            "SELECT COUNT(*) FROM attendance WHERE user_id = %s AND date = CURDATE()",
+            (student_user_id,)
+        )
+        if cursor.fetchone()[0] > 0:
+            conn.rollback()  # Asegurar que no se haga commit si ya existe
+            return jsonify({'message': 'La asistencia para este estudiante ya fue registrada hoy.'}), 409
+
+        # 5. Insertar el registro en la tabla 'attendance'
+        cursor.execute("""
+            INSERT INTO attendance (user_id, status, coins_awarded, date, created_by_admin_id)
+            VALUES (%s, %s, %s, CURDATE(), %s)
+        """, (student_user_id, attendance_status, reward_amount, current_user_id))
+
+        # 6. Si hay recompensa, realizamos la transferencia en el mismo cursor
+        if reward_amount > 0:
+            # Obtener la cuenta del estudiante
+            cursor.execute(
+                "SELECT account_id FROM accounts WHERE user_id = %s",
+                (student_user_id,)
+            )
+            result = cursor.fetchone()
+            if not result:
+                conn.rollback()
+                return jsonify({'message': 'La cuenta del estudiante no fue encontrada.'}), 404
+
+            student_account_id = result[0]
+
+            # Actualizar el balance de la cuenta
+            cursor.execute(
+                "UPDATE accounts SET balance = balance + %s WHERE account_id = %s",
+                (reward_amount, student_account_id)
+            )
+
+            # Registrar la transacción, usando las columnas correctas de tu esquema
+            cursor.execute("""
+                INSERT INTO transactions (from_account_id, to_account_id, amount, transaction_type, status, notes)
+                VALUES (NULL, %s, %s, 'attendance_reward', 'approved', %s)
+            """, (student_account_id, reward_amount, f'Recompensa por {attendance_status}'))
+
+        conn.commit()
+        return jsonify({'message': f'Asistencia registrada. Se otorgaron {reward_amount} monedas.'}), 201
+
     except Exception as e:
         conn.rollback()
         return jsonify({'message': f'Un error inesperado ocurrió: {str(e)}'}), 500

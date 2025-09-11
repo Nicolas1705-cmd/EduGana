@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monedero Virtual - Growup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --dark-bg: #111a2c;
+            --card-bg: #1c273e;
+            --text-color: #e0e0e0;
+            --accent-green: #00d1ff;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .bg-gradient-custom {
+            background: linear-gradient(135deg, #7cfc9b 0%, #35c0a2 100%);
+        }
+
+        .card-bg-gradient {
+            background: linear-gradient(135deg, #1d263b 0%, #293850 100%);
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .visa-gradient {
+            background: linear-gradient(180deg, #ffc83d 0%, #ff713d 100%);
+        }
+
+        .logo-growup {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo-growup::before {
+            content: 'G';
+            color: #00d1ff;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-content, .hero-card {
+                width: 100%;
+            }
+            .hero-card {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#111a2c] text-[#e0e0e0] min-h-screen flex flex-col items-center p-4">
+    <div class="absolute inset-0 bg-gradient-custom opacity-15"></div>
+    
+    <header class="w-full max-w-7xl relative z-10 flex justify-between items-center py-4 px-8 rounded-full bg-transparent">
+        <div class="flex items-center space-x-4">
+            <span class="logo-growup">Growup</span>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium text-white/70">
+                <a href="#" class="hover:text-white transition-colors duration-200">Visión General</a>
+                <a href="#" class="hover:text-white transition-colors duration-200">Solución</a>
+                <a href="#" class="hover:text-white transition-colors duration-200">Servicio</a>
+                <a href="#" class="hover:text-white transition-colors duration-200">Precios</a>
+                <a href="#" class="hover:text-white transition-colors duration-200">Blog</a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="#" class="hidden md:block text-sm font-medium text-white/70 hover:text-white transition-colors duration-200">Ayuda</a>
+            <a href="login.html" class="px-4 py-2 rounded-full border border-white/20 text-white/70 hover:bg-white/10 transition-colors duration-200 text-sm">Iniciar Sesión</a>
+        </div>
+    </header>
+
+    <main class="w-full max-w-7xl flex-grow flex items-center justify-center p-8 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Hero Content -->
+            <div class="text-center lg:text-left">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                    <span class="text-white/90">Simplifica todas tus</span><br>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">transacciones con nosotros.</span>
+                </h1>
+                <p class="mt-6 text-base sm:text-lg text-white/70 max-w-xl mx-auto lg:mx-0">
+                    Desde una sencilla gestión de dinero, hasta beneficios de viaje e inversiones. Abre tu cuenta en un instante.
+                </p>
+                <div class="mt-8 flex justify-center lg:justify-start items-center space-x-4">
+                    <a href="registro.html" class="px-6 py-3 rounded-full bg-white text-gray-900 font-semibold transition-transform duration-300 hover:scale-105 shadow-lg">
+                        Crear una cuenta
+                    </a>
+                    <a href="#" class="px-6 py-3 rounded-full bg-transparent border border-white/30 text-white font-semibold transition-colors duration-300 hover:bg-white/10 hover:border-white/50">
+                        Ver una demo
+                    </a>
+                </div>
+                <div class="mt-8 text-white/60 text-sm flex flex-col md:flex-row items-center justify-center lg:justify-start space-y-2 md:space-y-0 md:space-x-8">
+                    <div class="flex items-center">
+                        <span class="text-yellow-400">★★★★★</span>
+                        <span class="ml-2">Excelente 4.9 de 5</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="h-5 w-5 mr-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4M17 17h4M17 3h4M3 17h4M5 5l4 4M15 15l4 4M5 19l4-4M15 9l4-4" />
+                        </svg>
+                        <span>El mejor banco digital del mundo - 2024</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Mockup -->
+            <div class="flex justify-center lg:justify-end relative">
+                <div class="card-bg-gradient p-6 w-96 max-w-full">
+                    <div class="flex justify-between items-center mb-6">
+                        <svg class="h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <button class="bg-white/10 text-white/80 rounded-full px-4 py-2 text-sm font-semibold hover:bg-white/20 transition-colors duration-200">
+                            + Asignar fondos
+                        </button>
+                    </div>
+                    <div class="text-sm text-white/70">
+                        Saldo
+                    </div>
+                    <div class="flex items-center justify-between mt-1 mb-6">
+                        <div class="text-3xl font-bold">$32,000.00</div>
+                        <div class="h-6 w-6 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="flex justify-between text-sm text-white/60 mb-1">
+                        <span>●●●● 1406 1805</span>
+                        <span class="visa-gradient px-2 rounded-full font-bold text-xs text-white">VISA</span>
+                    </div>
+                    <div class="flex justify-between items-end mt-4">
+                        <div class="text-sm">
+                            <div class="font-semibold">WILLIAM BLACK</div>
+                            <div class="text-white/60 text-xs">10/25</div>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full max-w-7xl py-12 text-center relative z-10">
+        <p class="text-sm text-white/50">
+            Descarga nuestra aplicación desde
+        </p>
+        <div class="mt-4 flex justify-center space-x-6">
+            <a href="#" class="flex items-center px-6 py-3 rounded-full bg-white/10 text-white/80 font-semibold transition-colors duration-200 hover:bg-white/20">
+                <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13zM12 21a9 9 0 100-18 9 9 0 000 18z" />
+                </svg>
+                App Store
+            </a>
+            <a href="#" class="flex items-center px-6 py-3 rounded-full bg-white/10 text-white/80 font-semibold transition-colors duration-200 hover:bg-white/20">
+                <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13zM12 21a9 9 0 100-18 9 9 0 000 18z" />
+                </svg>
+                Google Play
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

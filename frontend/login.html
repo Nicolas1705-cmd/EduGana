@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-blue: #141c2c;
+            --light-blue: #1c273e;
+            --accent-blue: #00d1ff;
+            --text-color: #e0e0e0;
+            --gradient-start: #0a73aa;
+            --gradient-end: #00d1ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: var(--dark-blue);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1100px;
+            background-color: var(--light-blue);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .welcome-section {
+            width: 50%;
+            padding: 50px;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+        }
+
+        .welcome-content {
+            z-index: 2;
+        }
+
+        .welcome-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .welcome-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .form-section {
+            width: 50%;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .input-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--text-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .input-group label {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            pointer-events: none;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            transform: translateY(-25px);
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+        }
+
+        .input-group .icon {
+            position: absolute;
+            right: 0;
+            bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .input-group input:focus + label + .icon,
+        .input-group input:not(:placeholder-shown) + label + .icon {
+             color: var(--accent-blue);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 209, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 209, 255, 0.6);
+        }
+
+        .link-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .link-text a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .link-text a:hover {
+            color: white;
+        }
+
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-blue);
+            color: var(--dark-blue);
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.5s forwards;
+        }
+
+        @keyframes slideIn {
+            from { top: -50px; opacity: 0; }
+            to { top: 20px; opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 95%;
+            }
+
+            .welcome-section {
+                width: 100%;
+                padding: 30px;
+                clip-path: polygon(0 0, 100% 0, 100% 75%, 0% 100%);
+            }
+            
+            .form-section {
+                width: 100%;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <h1 id="welcome-title">BIENVENIDO A TU APPCOIN!</h1>
+                <p id="welcome-text">La billetera virtual de los estudiantes.</p>
+            </div>
+        </div>
+        <div class="form-section">
+            <div class="form-container">
+                <h2 id="form-title">Login</h2>
+                <form id="auth-form">
+                    <div class="input-group" id="username-group" style="display:none;">
+                        <input type="text" id="username" name="username" placeholder=" " required>
+                        <label for="username">Username</label>
+                        <span class="icon">&#x1F464;</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" name="email" placeholder=" " required>
+                        <label for="email">Email</label>
+                        <span class="icon">&#x1F4E7;</span>
+                    </div>
+                    <div class="input-group" id="phone-group" style="display:none;">
+                        <input type="tel" id="phone_number" name="phone_number" placeholder=" ">
+                        <label for="phone_number">Número de Teléfono</label>
+                        <span class="icon">&#x260E;</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" placeholder=" " required>
+                        <label for="password">Password</label>
+                        <span class="icon">&#x1F512;</span>
+                    </div>
+                    <button type="submit" class="btn-submit">Login</button>
+                </form>
+                <div class="link-text">
+                    <span id="toggle-link-text">¿No tienes una cuenta? <a href="#" id="toggle-link">Regístrate</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="message-box" class="message-box"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('auth-form');
+            const toggleLink = document.getElementById('toggle-link');
+            const formTitle = document.getElementById('form-title');
+            const submitBtn = form.querySelector('.btn-submit');
+            const usernameGroup = document.getElementById('username-group');
+            const phoneGroup = document.getElementById('phone-group');
+            const welcomeTitle = document.getElementById('welcome-title');
+            const welcomeText = document.getElementById('welcome-text');
+            const toggleLinkText = document.getElementById('toggle-link-text');
+            const messageBox = document.getElementById('message-box');
+            
+            let isLogin = true;
+
+            const showMessage = (message, isSuccess = true) => {
+                messageBox.textContent = message;
+                messageBox.style.display = 'block';
+                messageBox.style.backgroundColor = isSuccess ? '#00d1ff' : '#ff4d4d';
+                messageBox.style.color = isSuccess ? '#141c2c' : '#ffffff';
+                setTimeout(() => {
+                    messageBox.style.display = 'none';
+                }, 3000);
+            };
+
+            const toggleForm = () => {
+                isLogin = !isLogin;
+                if (isLogin) {
+                    formTitle.textContent = 'Login';
+                    submitBtn.textContent = 'Login';
+                    usernameGroup.style.display = 'none';
+                    phoneGroup.style.display = 'none';
+                    welcomeTitle.textContent = 'WELCOME BACK!';
+                    welcomeText.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing.';
+                    toggleLinkText.innerHTML = '¿No tienes una cuenta? <a href="#" id="toggle-link">Regístrate</a>';
+                } else {
+                    formTitle.textContent = 'Sign Up';
+                    submitBtn.textContent = 'Sign Up';
+                    usernameGroup.style.display = 'block';
+                    phoneGroup.style.display = 'block';
+                    welcomeTitle.textContent = 'HELLO, FRIEND!';
+                    welcomeText.textContent = 'Regístrate y comienza tu aventura con nosotros.';
+                    toggleLinkText.innerHTML = '¿Ya tienes una cuenta? <a href="#" id="toggle-link">Inicia Sesión</a>';
+                }
+                document.getElementById('toggle-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    toggleForm();
+                });
+            };
+
+            toggleLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleForm();
+            });
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                const data = { email, password };
+                let url = '';
+
+                if (isLogin) {
+                    url = '/api/auth/login';
+                } else {
+                    url = '/api/auth/register';
+                    const username = document.getElementById('username').value;
+                    const phoneNumber = document.getElementById('phone_number').value;
+                    data.username = username;
+                    data.phone_number = phoneNumber;
+                }
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        showMessage(result.message || (isLogin ? 'Inicio de sesión exitoso.' : 'Registro exitoso. ¡Inicia sesión ahora!'), true);
+                        if (isLogin) {
+                            // Lógica de redirección basada en el rol
+                            const roleId = result.role_id;
+                            if (roleId === 1) {
+                                window.location.href = 'admin.html'; // Redirigir a la página de administrador
+                            } else if (roleId === 2) {
+                                window.location.href = 'teacher.html'; // Redirigir a la página de profesor
+                            } else if (roleId === 3) {
+                                window.location.href = 'index.html'; // Redirigir a la página de estudiante
+                            } else {
+                                window.location.href = 'index.html'; // Redirección por defecto
+                            }
+                        } else {
+                            toggleForm();
+                        }
+                    } else {
+                        showMessage(result.message || 'Ocurrió un error. Inténtalo de nuevo.', false);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showMessage('Error de conexión. Inténtalo de nuevo.', false);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

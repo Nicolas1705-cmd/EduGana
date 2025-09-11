@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoWallet - Registro Futurista</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/registro.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap');
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --neon-blue: #00f3ff;
+    --neon-purple: #b967ff;
+    --dark-bg: #0f172a;
+    --success-green: #10b981;
+    --error-red: #ef4444;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--dark-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 20px;
+}
+
+.crypto-card {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 
+        0 0 20px rgba(103, 119, 234, 0.3),
+        0 0 40px rgba(103, 119, 234, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+    width: 100%;
+    max-width: 32rem;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+}
+
+.input-field {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+}
+
+.input-field::placeholder {
+    color: rgba(156, 163, 175, 1);
+}
+
+.input-field:focus {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    outline: none;
+}
+
+.input-field.error {
+    border-color: var(--error-red);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.input-field.success {
+    border-color: var(--success-green);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.login-btn {
+    background: var(--primary-gradient);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 600;
+    font-size: 1.125rem;
+    border: none;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(103, 119, 234, 0.4);
+}
+
+.login-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.login-btn:hover::before {
+    left: 100%;
+}
+
+.crypto-icon {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px); 
+    }
+    50% { 
+        transform: translateY(-10px); 
+    }
+}
+
+.neon-glow {
+    text-shadow: 
+        0 0 5px var(--neon-blue),
+        0 0 10px var(--neon-blue),
+        0 0 20px var(--neon-blue);
+}
+
+.text-neon-blue {
+    color: var(--neon-blue);
+}
+
+.text-neon-purple {
+    color: var(--neon-purple);
+}
+
+.text-success {
+    color: var(--success-green);
+}
+
+.text-error {
+    color: var(--error-red);
+}
+
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    background: var(--neon-purple);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: floatParticle 6s infinite;
+}
+
+@keyframes floatParticle {
+    0%, 100% { 
+        transform: translateY(0) translateX(0); 
+        opacity: 0; 
+    }
+    10% { 
+        opacity: 0.6; 
+    }
+    50% { 
+        transform: translateY(-100px) translateX(50px); 
+    }
+    90% { 
+        opacity: 0.6; 
+    }
+}
+
+.font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.social-btn {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    background-color: rgba(31, 41, 55, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.social-btn:hover {
+    background-color: rgba(55, 65, 81, 1);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mt-8 {
+    margin-top: 2rem;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.block {
+    display: block;
+}
+
+.w-20 {
+    width: 5rem;
+}
+
+.h-20 {
+    height: 5rem;
+}
+
+.rounded-xl {
+    border-radius: 0.75rem;
+}
+
+.border-2 {
+    border-width: 2px;
+}
+
+.border-\[\#667eea\] {
+    border-color: #667eea;
+}
+
+.p-2 {
+    padding: 0.5rem;
+}
+
+.text-3xl {
+    font-size: 1.875rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-white {
+    color: white;
+}
+
+.text-gray-400 {
+    color: rgba(156, 163, 175, 1);
+}
+
+.space-y-6 > * + * {
+    margin-top: 1.5rem;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.w-4 {
+    width: 1rem;
+}
+
+.h-4 {
+    height: 1rem;
+}
+
+.bg-gray-700 {
+    background-color: rgba(55, 65, 81, 1);
+}
+
+.border-gray-600 {
+    border-color: rgba(75, 85, 99, 1);
+}
+
+.rounded {
+    border-radius: 0.25rem;
+}
+
+.focus\:ring-\[\#667eea\]:focus {
+    --tw-ring-color: #667eea;
+}
+
+.ml-2 {
+    margin-left: 0.5rem;
+}
+
+.transition-colors {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.space-x-4 > * + * {
+    margin-left: 1rem;
+}
+
+.w-6 {
+    width: 1.5rem;
+}
+
+.h-6 {
+    height: 1.5rem;
+}
+
+.mx-4 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.relative {
+    position: relative;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.max-w-md {
+    max-width: 28rem;
+}
+
+.password-strength {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.password-strength-bar {
+    height: 100%;
+    transition: all 0.3s ease;
+    width: 0%;
+}
+
+.strength-0 { background: var(--error-red); width: 20%; }
+.strength-1 { background: #f59e0b; width: 40%; }
+.strength-2 { background: #f59e0b; width: 60%; }
+.strength-3 { background: #10b981; width: 80%; }
+.strength-4 { background: #10b981; width: 100%; }
+
+.validation-message {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.validation-message.show {
+    display: block;
+}
+
+.hover\:underline:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+    .crypto-card {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .text-3xl {
+        font-size: 1.5rem;
+    }
+    
+    .w-20 {
+        width: 4rem;
+    }
+    
+    .h-20 {
+        height: 4rem;
+    }
+}
+</style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="crypto-card">
+        <div class="text-center mb-8">
+            <div class="crypto-icon inline-block mb-4">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/77daa76b-ae96-4046-bc77-07b3d0af3976.png" alt="Logo de billetera cripto futurista con diseño hexagonal azul y púrpura con icono de blockchain" class="w-20 h-20 rounded-xl border-2 border-[#667eea] p-2" />
+            </div>
+            <h1 class="text-3xl font-bold text-white font-orbitron neon-glow">CRYPTO<span class="text-neon-blue">WALLET</span></h1>
+            <p class="text-gray-400 mt-2">Crea tu billetera del futuro</p>
+        </div>
+
+        <form class="space-y-6" id="registerForm">
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Nombre de usuario</label>
+                <input type="text" class="input-field" placeholder="Elige un nombre de usuario" id="username" required>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                <input type="email" class="input-field" placeholder="tu@email.com" id="email" required>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
+                <input type="password" class="input-field" placeholder="••••••••" id="password" required>
+                <p class="text-xs text-gray-400 mt-1">Mínimo 8 caracteres, incluir números y símbolos</p>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Número de Teléfono</label>
+                <input type="tel" class="input-field" placeholder="Ej. +51987654321" id="phoneNumber" required>
+            </div>
+            
+            <button type="submit" class="login-btn" id="registerButton">
+                CREAR BILLETERA
+            </button>
+        </form>
+
+        <div class="mt-8 text-center">
+            <p class="text-gray-400 mb-4">o regístrate con</p>
+            <div class="flex justify-center space-x-4">
+                <button class="social-btn" id="googleRegister">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8972d266-bc81-4f1a-9475-3886d7935cc7.png" alt="Icono de Google para registro social con diseño moderno" class="w-6 h-6" />
+                </button>
+                <button class="social-btn" id="metamaskRegister">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c0698c12-ff9d-4119-961b-05088b5354f4.png" alt="Icono de MetaMask para creación de wallet cripto" class="w-6 h-6" />
+                </button>
+                <button class="social-btn" id="walletConnectRegister">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d93bd4df-e88d-4889-a8c1-15c39fddc85b.png" alt="Icono de WalletConnect para registro blockchain" class="w-6 h-6" />
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <p class="text-gray-400">¿Ya tienes una cuenta? <a href="login.html" class="text-neon-purple hover:text-neon-blue transition-colors">Iniciar sesión</a></p>
+        </div>
+    </div>
+
+    <script>
+        // URL base de tu API de Flask
+const API_BASE_URL = 'http://localhost:5000/api/auth';
+
+// Crear partículas flotantes
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    if (!particlesContainer) return;
+    const particleCount = 20;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Tamaño aleatorio
+        const size = Math.random() * 4 + 1;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Posición aleatoria
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        
+        // Retardo de animación aleatorio
+        particle.style.animationDelay = `${Math.random() * 6}s`;
+        
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// Validar fortaleza de contraseña
+function checkPasswordStrength(password) {
+    let strength = 0;
+    
+    if (password.length >= 8) strength++;
+    if (password.match(/[a-z]+/)) strength++;
+    if (password.match(/[A-Z]+/)) strength++;
+    if (password.match(/[0-9]+/)) strength++;
+    if (password.match(/[!@#$%^&*(),.?":{}|<>]+/)) strength++;
+    
+    return strength;
+}
+
+// Actualizar barra de fortaleza de contraseña
+function updatePasswordStrength(password) {
+    const strength = checkPasswordStrength(password);
+    const strengthBar = document.getElementById('passwordStrengthBar');
+    const strengthText = document.getElementById('passwordStrengthText');
+    
+    if (strengthBar && strengthText) {
+        strengthBar.className = `password-strength-bar strength-${strength}`;
+        
+        const messages = [
+            'Muy débil',
+            'Débil',
+            'Regular',
+            'Fuerte',
+            'Muy fuerte'
+        ];
+        
+        const colors = [
+            'text-error',
+            'text-error',
+            'text-orange-400',
+            'text-success',
+            'text-success'
+        ];
+        
+        strengthText.textContent = messages[strength];
+        strengthText.className = `validation-message show ${colors[strength]}`;
+    }
+}
+
+// Efecto de escritura en el placeholder
+function typeWriterEffect() {
+    const input = document.getElementById('email');
+    if (!input) return;
+    const phrases = ["tu@email.com", "nombre@ejemplo.com", "wallet@cripto.com"];
+    let currentPhrase = 0;
+    let currentChar = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+    
+    function type() {
+        const current = phrases[currentPhrase];
+        
+        if (isDeleting) {
+            input.placeholder = current.substring(0, currentChar - 1);
+            currentChar--;
+            typingSpeed = 50;
+        } else {
+            input.placeholder = current.substring(0, currentChar + 1);
+            currentChar++;
+            typingSpeed = 100;
+        }
+        
+        if (!isDeleting && currentChar === current.length) {
+            isDeleting = true;
+            typingSpeed = 1000;
+        } else if (isDeleting && currentChar === 0) {
+            isDeleting = false;
+            currentPhrase = (currentPhrase + 1) % phrases.length;
+            typingSpeed = 500;
+        }
+        
+        setTimeout(type, typingSpeed);
+    }
+    
+    type();
+}
+
+// Efecto de hover en el botón
+function addButtonEffects() {
+    const button = document.getElementById('registerButton');
+    if (!button) return;
+    
+    button.addEventListener('mouseenter', () => {
+        button.style.boxShadow = '0 0 30px rgba(0, 243, 255, 0.6)';
+    });
+    
+    button.addEventListener('mouseleave', () => {
+        button.style.boxShadow = '0 10px 25px rgba(103, 119, 234, 0.4)';
+    });
+}
+
+// Manejar los mensajes del formulario
+function showMessage(message, type) {
+    const messageContainer = document.getElementById('message-container');
+    if (messageContainer) {
+        messageContainer.textContent = message;
+        messageContainer.className = `message-container ${type}`;
+    }
+}
+
+// Enviar datos del formulario a la API
+async function handleRegister(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const username = form.querySelector('#username').value;
+    const email = form.querySelector('#email').value;
+    const password = form.querySelector('#password').value;
+    const phoneNumber = form.querySelector('#phone-number').value;
+
+    // Validación básica del lado del cliente
+    if (!username || !email || !password) {
+        showMessage('Nombre de usuario, email y contraseña son obligatorios.', 'error');
+        return;
+    }
+
+    const strength = checkPasswordStrength(password);
+    if (strength < 3) {
+        showMessage('Por favor, usa una contraseña más fuerte.', 'error');
+        return;
+    }
+
+    const registerButton = form.querySelector('button[type="submit"]');
+    const originalText = registerButton.innerHTML;
+    registerButton.innerHTML = 'CREANDO BILLETERA...';
+    registerButton.disabled = true;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password,
+                phone_number: phoneNumber
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            showMessage(result.message, 'success');
+            form.reset();
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        } else {
+            showMessage(`Error: ${result.message}`, 'error');
+        }
+
+    } catch (error) {
+        showMessage(`Error de conexión: ${error.message}. Asegúrate de que el servidor está funcionando.`, 'error');
+    } finally {
+        registerButton.innerHTML = originalText;
+        registerButton.disabled = false;
+    }
+}
+
+// Inicializar efectos y eventos
+document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    typeWriterEffect();
+    addButtonEffects();
+
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', handleRegister);
+    }
+    
+    const passwordInput = document.getElementById('password');
+    if (passwordInput) {
+        passwordInput.addEventListener('input', function() {
+            updatePasswordStrength(this.value);
+        });
+    }
+
+    // El resto de tus funciones y event listeners
+    // ...
+});
+
+    </script>
+</body>
+</html>
