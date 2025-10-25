@@ -1,20 +1,15 @@
-from flask import Flask, request, jsonify
-from flask_bcrypt import Bcrypt 
 import psycopg2
 
-app = Flask(__name__)  
-
-# Configuración de la conexión a la base de datos
+# Datos de conexión (ajústalos según tu base)
 DB_NAME = "edugana_db"
 DB_USER = "postgres"
 DB_PASS = "System.2025*"
-DB_HOST = "35.237.18.79" # o la IP del servidor
+DB_HOST = "35.237.18.79"
 DB_PORT = "5432"
- 
 
 def get_db_connection():
     """
-    Función para establecer la conexión a la base de datos PostgreSQL.
+    Crea una conexión a PostgreSQL y la devuelve.
     """
     try:
         conn = psycopg2.connect(
@@ -26,5 +21,5 @@ def get_db_connection():
         )
         return conn
     except psycopg2.Error as e:
-        print(f"Error al conectar a la base de datos: {e}")
+        print(f"❌ Error al conectar a la base de datos: {e}")
         return None
