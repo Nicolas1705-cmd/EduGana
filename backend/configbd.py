@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonifyBcrypt  
+from flask import Flask, request, jsonify
+from flask_bcrypt import Bcrypt 
 import psycopg2
 
 app = Flask(__name__)  
