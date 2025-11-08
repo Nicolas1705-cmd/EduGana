@@ -100,39 +100,58 @@
         }
         
         /* 5. MEDIA QUERIES (Responsividad) */
-        @media screen and (max-width: 768px) {
-            .page-header .level {
-                display: block !important;
-                text-align: center;
-            }
-            .page-header .level-left,
-            .page-header .level-right {
-                margin-bottom: 1rem;
-                text-align: center;
-            }
-            .page-header .level-item {
-                display: block;
-                margin-bottom: 0.5rem;
-            }
-            .page-header .title.is-2 {
-                font-size: 1.3rem;
-            }
-            .page-header {
-                padding: 1.25rem 1rem;
-            }
-            .user-info { 
-                font-size: 1rem;
-                padding: 0.6rem 1.2rem;
-                margin: 0 auto;
-                display: flex;
-                justify-content: center;
-            }
-        }
-        @media screen and (max-width: 480px) {
-            .page-header .title.is-2 {
-                font-size: 1.1rem;
-            }
-        }
+        /* 5. MEDIA QUERIES (Responsividad) */
+@media screen and (max-width: 768px) {
+    /* ⚡ AJUSTES PARA QUE EL ENCABEZADO OCUPE TODO EL ANCHO ARRIBA ⚡ */
+    .page-header {
+        /* Elimina el redondeado superior para que se pegue a las esquinas de la ventana */
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        /* Mantiene el borde inferior grueso y el redondeado inferior (12px por defecto) */
+        
+        /* Resto de tus estilos */
+        padding: 1.25rem 1rem;
+        margin-bottom: 2rem; /* Mantener la separación con el contenido de abajo */
+    }
+
+    /* Contenedor padre de .page-header (section/div.container)
+       *Nota: Si necesitas que el color de fondo vaya hasta los bordes,
+       *debes asegurarte de que el contenedor de .page-header no tenga padding lateral.
+       *En tu estructura anterior, .page-header está dentro de .container,
+       *por lo que si quieres que se vea de borde a borde, tendrías que moverlo
+       *fuera del .container o modificar el padding del section/container.
+    */
+    
+    .page-header .level {
+        display: block !important;
+        text-align: center;
+    }
+    .page-header .level-left,
+    .page-header .level-right {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    .page-header .level-item {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    .page-header .title.is-2 {
+        font-size: 1.3rem;
+    }
+
+    .user-info { 
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+    }
+}
+@media screen and (max-width: 480px) {
+    .page-header .title.is-2 {
+        font-size: 1.1rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -175,20 +194,7 @@
     <section class="section pt-0">
         <div class="container">
             
-            <div class="nfc-scan-area">
-                <p class="title is-4 has-text-grey-dark">
-                    <span class="icon">
-                        <i class="fas fa-hand-pointer"></i>
-                    </span>
-                    **Toque la tarjeta o dispositivo NFC aquí para registrar la asistencia**
-                </p>
-                <p class="subtitle is-6 has-text-grey">
-                    Modo de registro: **Entrada**
-                </p>
-                <p id="scan-message" class="has-text-success has-text-weight-bold is-size-5 mt-4 is-hidden">
-                    ✅ Registro exitoso para [Nombre del Alumno] a las [Hora]
-                </p>
-            </div>
+            
             
             <hr>
             
