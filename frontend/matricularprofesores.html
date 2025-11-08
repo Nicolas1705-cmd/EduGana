@@ -7,15 +7,51 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <style>
-        /* Estilos para centrar y limitar el ancho del formulario */
-        .container {
-            margin-top: 30px;
-            margin-bottom: 50px;
-            max-width: 700px;
+
+        .page-header {
+            margin-bottom: 2rem;
+            /* Gradiente Morado a Azul */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0px 0px 12px 12px;
+            padding: 2rem;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        /* Estilo para la cabecera (Navbar) con el color exacto */
+
+        .page-header .title,
+        .page-header .subtitle {
+            color: white !important;
+        }
+
+        .page-header .icon {
+            color: white;
+        }
+
+        .page-header .icon-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Puntos del usuario (Botón de puntos) */
+        .user-points {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .user-points .icon {
+            font-size: 1.5rem;
+        }
+
+        /* --- 3. ESTILOS DE LA BARRA DE NAVEGACIÓN (Navbar) --- */
         .navbar.is-edu-blue {
-            /* Usando un color similar al azul vibrante de la imagen */
+            /* Usando un color similar al azul vibrante */
             background-color: #004dff; 
             color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -29,28 +65,104 @@
             background-color: transparent;
             color: #d1e4ff;
         }
-        /* Estilo para espaciar los botones en modo vertical forzado */
-        .vertical-buttons .control {
-            margin-bottom: 10px; 
+
+        /* --- 4. MEDIA QUERIES PARA RESPONSIVE DE CABECERA --- */
+        @media screen and (max-width: 768px) {
+            .page-header .level {
+                display: block !important;
+                text-align: center;
+            }
+            .page-header .level-left,
+            .page-header .level-right {
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+            .page-header .level-item {
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+            .page-header .title.is-2 {
+                font-size: 1.3rem;
+            }
+            .page-header .subtitle.is-5 {
+                font-size: 0.95rem;
+            }
+            .page-header {
+                padding: 1.25rem 1rem;
+            }
+            .page-header .icon-text {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .user-points {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+                margin: 0 auto;
+                display: flex;
+                justify-content: center;
+            }
+            .user-points .icon {
+                font-size: 1.2rem;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .page-header .title.is-2 {
+                font-size: 1.1rem;
+            }
+            .page-header .subtitle.is-5 {
+                font-size: 0.85rem;
+            }
+            .user-points {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+        @media screen and (min-width: 769px) and (max-width: 1023px) {
+            .page-header {
+                padding: 1.75rem 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-
-<nav class="navbar is-edu-blue" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="#">
-            <span class="icon is-medium mr-2">
-                <i class="fas fa-graduation-cap"></i>
-            </span>
-            EDUGANA
-        </a>
+    
+<div class="page-header">
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <div>
+                    <h1 class="title is-2">
+                        <span class="icon-text">
+                            <span class="icon has-text-white mr-3">
+                                <i class="fas fa-chalkboard-teacher fa-lg"></i>
+                            </span>
+                            <span>Registro de Profesor</span>
+                        </span>
+                    </h1>
+                    <p class="subtitle is-5 mt-2">EduGana</p>
+                </div>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <div class="user-points">
+                    <span class="icon">
+                        <i class="fas fa-coins"></i>
+                    </span>
+                    <span id="userPoints"></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
     </div>
-</nav>
+</div>
+
+
 
 <div class="container">
     <div class="box">
-        <h1 class="title is-3 has-text-centered has-text-info">🧑‍🏫 Matrícula de Profesor</h1>
+        <h1 class="title is-3 has-text-centered has-text-info"></h1>
         <hr>
 
         <form action="#" method="POST">
@@ -171,7 +283,8 @@
 
             <h2 class="title is-5 is-size-6-mobile mb-4">4. Colegios y Asignación</h2>
             <div class="columns is-multiline">
-                <div class="column is-full"> <div class="field">
+                <div class="column is-full"> 
+                    <div class="field">
                         <label class="label" for="colegio">Colegio Asignado <span class="has-text-danger">*</span></label>
                         <div class="control has-icons-left">
                             <input class="input" type="text" placeholder="Colegio Ejemplo S.A." id="colegio" name="colegio" required>
@@ -179,7 +292,7 @@
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
 
             <hr class="mt-4">
 

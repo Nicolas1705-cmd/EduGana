@@ -16,13 +16,14 @@
         /* Estilos generales */
         body {
             padding-top: 0; 
+            margin: 0;
         }
         .page-container {
             margin-top: 0;
             margin-bottom: 3rem;
         }
         .section {
-            padding: 1.5rem 1.5rem;
+            padding: 0;
         }
         .table-container {
             overflow-x: auto;
@@ -42,10 +43,10 @@
 
         /* ESTILOS DEL HEADER */
         .page-header {
-            margin-bottom: 2rem;
+            margin-bottom: 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 0px 0px 12px 12px 12px;
-            padding: 2rem;
+            border-radius: 0px 0px 12px 12px;
+            padding: 1.5rem 2rem;
             color: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
@@ -53,6 +54,11 @@
         .page-header .title,
         .page-header .subtitle {
             color: white !important;
+            margin-bottom: 0.25rem !important;
+        }
+
+        .page-header .title.is-2 {
+            font-size: 1.75rem;
         }
 
         .page-header .icon {
@@ -62,7 +68,7 @@
         .page-header .icon-text {
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .page-header .icon-text .icon {
@@ -75,24 +81,29 @@
         .coin-icon {
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
 
         /* EduGana badge */
         .edugana-badge {
             display: inline-block;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             color: rgba(255, 255, 255, 0.9);
             background: rgba(255, 255, 255, 0.15);
-            padding: 0.25rem 0.75rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 20px;
-            margin-top: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Contenedor del contenido */
+        .content-wrapper {
+            padding: 2rem 1.5rem;
         }
 
         /* Media Queries específicas para el encabezado */
@@ -104,17 +115,17 @@
 
             .page-header .level-left,
             .page-header .level-right {
-                margin-bottom: 1rem;
+                margin-bottom: 0.75rem;
                 text-align: center;
             }
 
             .page-header .level-item {
                 display: block;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.25rem;
             }
 
             .page-header .title.is-2 {
-                font-size: 1.3rem;
+                font-size: 1.25rem;
             }
 
             .page-header .subtitle.is-5 {
@@ -122,7 +133,7 @@
             }
 
             .page-header {
-                padding: 1.25rem 1rem;
+                padding: 1rem;
             }
 
             .page-header .icon-text {
@@ -132,10 +143,14 @@
             }
 
             .coin-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
                 margin: 0 auto;
+            }
+
+            .content-wrapper {
+                padding: 1.5rem 1rem;
             }
         }
 
@@ -150,16 +165,20 @@
             }
 
             .coin-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .page-header {
+                padding: 0.875rem;
             }
         }
 
         /* Tablet */
         @media screen and (min-width: 769px) and (max-width: 1023px) {
             .page-header {
-                padding: 1.75rem 1.5rem;
+                padding: 1.25rem 1.5rem;
             }
         }
     </style>
@@ -167,282 +186,283 @@
 <body>
 
     <section class="section">
-        <div class="container page-container">
-            <div class="box">
-                <!-- HEADER -->
-                <div class="page-header">
-                    <div class="level">
-                        <div class="level-left">
-                            <div class="level-item">
-                                <div>
-                                    <h1 class="title is-2">
-                                        <span class="icon-text">
-                                            <span class="icon has-text-white mr-3">
-                                                <i class="fas fa-calendar-check fa-lg"></i>
-                                            </span>
-                                            <span>Historial de Asistencias</span>
+        <!-- HEADER -->
+        <div class="page-header">
+            <div class="container">
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <div>
+                                <h1 class="title is-2">
+                                    <span class="icon-text">
+                                        <span class="icon has-text-white mr-2">
+                                            <i class="fas fa-calendar-check"></i>
                                         </span>
-                                    </h1>
-                                    <span class="edugana-badge">EduGana</span>
-                                </div>
+                                        <span>Historial de Asistencias</span>
+                                    </span>
+                                </h1>
+                                <span class="edugana-badge">EduGana</span>
                             </div>
                         </div>
-                        <div class="level-right">
-                            <div class="level-item">
-                                <div class="coin-icon">
-                                    <i class="fas fa-coins"></i>
-                                </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <div class="coin-icon">
+                                <i class="fas fa-coins"></i>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <hr>
+        <div class="container page-container">
+            <div class="box">
+                <div class="content-wrapper">
+                    <!-- FILTROS DESKTOP -->
+                    <div class="is-hidden-touch mb-5">
+                        <form>
+                            <div class="columns is-vcentered">
+                                <div class="column is-3">
+                                    <label class="label is-size-7">Inicio (Fecha)</label>
+                                    <div class="control">
+                                        <input class="input is-small" type="date" placeholder="dd/mm/aaaa">
+                                    </div>
+                                </div>
+                                <div class="column is-3">
+                                    <label class="label is-size-7">Fin (Fecha)</label>
+                                    <div class="control">
+                                        <input class="input is-small" type="date" placeholder="dd/mm/aaaa">
+                                    </div>
+                                </div>
+                                <div class="column is-3">
+                                    <label class="label is-size-7">Colegio (Filtro)</label>
+                                    <div class="control">
+                                        <input class="input is-small" type="text" placeholder="Buscar Colegio...">
+                                    </div>
+                                </div>
+                                <div class="column is-3">
+                                    <label class="label is-size-7 has-text-white-ter">Buscar</label>
+                                    <div class="control">
+                                        <button class="button is-primary is-small is-fullwidth">
+                                            <i class="fas fa-search mr-1"></i> Buscar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
-                <!-- FILTROS DESKTOP -->
-                <div class="is-hidden-touch mb-5">
-                    <form>
-                        <div class="columns is-vcentered">
-                            <div class="column is-3">
+                    <!-- FILTROS MÓVIL -->
+                    <div class="is-hidden-desktop mb-5">
+                        <form>
+                            <div class="field">
                                 <label class="label is-size-7">Inicio (Fecha)</label>
                                 <div class="control">
-                                    <input class="input is-small" type="date" placeholder="dd/mm/aaaa">
+                                    <input class="input is-small" type="date">
                                 </div>
                             </div>
-                            <div class="column is-3">
+                            <div class="field">
                                 <label class="label is-size-7">Fin (Fecha)</label>
                                 <div class="control">
-                                    <input class="input is-small" type="date" placeholder="dd/mm/aaaa">
+                                    <input class="input is-small" type="date">
                                 </div>
                             </div>
-                            <div class="column is-3">
+                            <div class="field">
                                 <label class="label is-size-7">Colegio (Filtro)</label>
                                 <div class="control">
                                     <input class="input is-small" type="text" placeholder="Buscar Colegio...">
                                 </div>
                             </div>
-                            <div class="column is-3">
-                                <label class="label is-size-7 has-text-white-ter">Buscar</label>
+                            <div class="field">
                                 <div class="control">
                                     <button class="button is-primary is-small is-fullwidth">
                                         <i class="fas fa-search mr-1"></i> Buscar
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- FILTROS MÓVIL -->
-                <div class="is-hidden-desktop mb-5">
-                    <form>
-                        <div class="field">
-                            <label class="label is-size-7">Inicio (Fecha)</label>
-                            <div class="control">
-                                <input class="input is-small" type="date">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label is-size-7">Fin (Fecha)</label>
-                            <div class="control">
-                                <input class="input is-small" type="date">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label is-size-7">Colegio (Filtro)</label>
-                            <div class="control">
-                                <input class="input is-small" type="text" placeholder="Buscar Colegio...">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <button class="button is-primary is-small is-fullwidth">
-                                    <i class="fas fa-search mr-1"></i> Buscar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- TABLA DESKTOP -->
-                <div class="is-hidden-touch">
-                    <div class="table-container">
-                        <table class="table is-striped is-hoverable is-fullwidth">
-                            <thead>
-                                <tr>
-                                    <th><abbr title="Identificador de Registro">ID.Reg.</abbr></th>
-                                    <th>Nombres</th>
-                                    <th>Fecha</th>
-                                    <th>Hora de Registro</th>
-                                    <th>Tipo de Movimiento</th>
-                                    <th>Colegio</th> 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>15432</td>
-                                    <td>Juan Pérez</td>
-                                    <td>2025-11-06</td>
-                                    <td>08:00:15</td>
-                                    <td><span class="tag is-success is-light">Entrada</span></td>
-                                    <td><strong>San José Obrero</strong></td> 
-                                </tr>
-                                <tr>
-                                    <td>15433</td>
-                                    <td>Juan Pérez</td>
-                                    <td>2025-11-06</td>
-                                    <td>17:01:30</td>
-                                    <td><span class="tag is-info is-light">Salida</span></td>
-                                    <td><strong>San José Obrero</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>15434</td>
-                                    <td>Ana Gómez</td>
-                                    <td>2025-11-07</td>
-                                    <td>08:35:45</td>
-                                    <td><span class="tag is-success is-light">Entrada</span></td>
-                                    <td><strong>Santa Úrsula</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>---</td>
-                                    <td>Ana Gómez</td>
-                                    <td>2025-11-08</td>
-                                    <td>- - -</td>
-                                    <td><span class="tag is-danger is-light">Ausente</span></td>
-                                    <td><strong>Santa Úrsula</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>15435</td>
-                                    <td>Luis Torres</td>
-                                    <td>2025-11-09</td>
-                                    <td>15:45:00</td>
-                                    <td><span class="tag is-info is-light">Salida</span></td>
-                                    <td><strong>Teresa de la Cuna</strong></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="6"> 
-                                        <p class="has-text-right is-size-7">Datos actualizados al 07 de Noviembre de 2025.</p>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-
-                    <!-- PAGINACIÓN -->
-                    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                        <a class="pagination-previous" disabled>Anterior</a>
-                        <a class="pagination-next">Siguiente</a>
-                        <ul class="pagination-list">
-                            <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
-                            <li><span class="pagination-ellipsis">&hellip;</span></li>
-                            <li><a class="pagination-link is-current is-primary" aria-label="Page 46" aria-current="page">46</a></li>
-                            <li><span class="pagination-ellipsis">&hellip;</span></li>
-                            <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <hr>
-
-                <!-- TARJETAS MÓVIL -->
-                <div class="is-hidden-desktop">
-                    <h2 class="title is-5">Resumen de Registros</h2>
-                    
-                    <!-- Tarjeta 1: Entrada -->
-                    <div class="box card-row has-background-light">
-                        <p class="is-size-5 has-text-weight-bold has-text-primary"><i class="fas fa-calendar-alt"></i> 2025-11-06</p>
-                        <hr class="my-2">
-                        <p class="heading">Nombres:</p>
-                        <p class="subtitle is-6">Juan Pérez</p>
-                        <p class="heading">ID.Reg:</p>
-                        <p class="subtitle is-6">15432</p>
-                        <div class="columns is-mobile">
-                            <div class="column is-half">
-                                <p class="heading">Movimiento:</p>
-                                <p class="subtitle is-6"><span class="tag is-success is-large">Entrada</span></p>
-                            </div>
-                            <div class="column is-half">
-                                <p class="heading">Hora:</p>
-                                <p class="subtitle is-6 has-text-weight-bold">08:00:15</p>
-                            </div>
-                        </div>
-                        <p class="heading">Colegio:</p>
-                        <p class="is-size-6">San José Obrero</p>
-                    </div>
-
-                    <!-- Tarjeta 2: Salida -->
-                    <div class="box card-row has-background-info-light">
-                        <p class="is-size-5 has-text-weight-bold has-text-info-dark"><i class="fas fa-calendar-alt"></i> 2025-11-06</p>
-                        <hr class="my-2">
-                        <p class="heading">Nombres:</p>
-                        <p class="subtitle is-6">Juan Pérez</p>
-                        <p class="heading">ID.Reg:</p>
-                        <p class="subtitle is-6">15433</p>
-                        <div class="columns is-mobile">
-                            <div class="column is-half">
-                                <p class="heading">Movimiento:</p>
-                                <p class="subtitle is-6"><span class="tag is-info is-large">Salida</span></p>
-                            </div>
-                            <div class="column is-half">
-                                <p class="heading">Hora:</p>
-                                <p class="subtitle is-6 has-text-weight-bold">17:01:30</p>
-                            </div>
-                        </div>
-                        <p class="heading">Colegio:</p>
-                        <p class="is-size-6">San José Obrero</p>
-                    </div>
-
-                    <!-- Tarjeta 3: Entrada -->
-                    <div class="box card-row has-background-success-light">
-                        <p class="is-size-5 has-text-weight-bold has-text-success-dark"><i class="fas fa-calendar-alt"></i> 2025-11-07</p>
-                        <hr class="my-2">
-                        <p class="heading">Nombres:</p>
-                        <p class="subtitle is-6">Ana Gómez</p>
-                        <p class="heading">ID.Reg:</p>
-                        <p class="subtitle is-6">15434</p>
-                        <div class="columns is-mobile">
-                            <div class="column is-half">
-                                <p class="heading">Movimiento:</p>
-                                <p class="subtitle is-6"><span class="tag is-success is-large">Entrada</span></p>
-                            </div>
-                            <div class="column is-half">
-                                <p class="heading">Hora:</p>
-                                <p class="subtitle is-6 has-text-weight-bold">08:35:45</p>
-                            </div>
-                        </div>
-                        <p class="heading">Colegio:</p>
-                        <p class="is-size-6">Santa Úrsula</p>
-                    </div>
-
-                    <!-- Tarjeta 4: Ausente -->
-                    <div class="box card-row has-background-danger-light">
-                        <p class="is-size-5 has-text-weight-bold has-text-danger-dark"><i class="fas fa-calendar-alt"></i> 2025-11-08</p>
-                        <hr class="my-2">
-                        <p class="heading">Nombres:</p>
-                        <p class="subtitle is-6">Ana Gómez</p>
-                        <p class="heading">ID.Reg:</p>
-                        <p class="subtitle is-6">---</p>
-                        <div class="columns is-mobile">
-                            <div class="column is-half">
-                                <p class="heading">Movimiento:</p>
-                                <p class="subtitle is-6"><span class="tag is-danger is-large">Ausente</span></p>
-                            </div>
-                            <div class="column is-half">
-                                <p class="heading">Hora:</p>
-                                <p class="subtitle is-6 has-text-weight-bold">- - -</p>
-                            </div>
-                        </div>
-                        <p class="heading">Colegio:</p>
-                        <p class="is-size-6">Santa Úrsula</p>
+                        </form>
                     </div>
                     
-                    <div class="has-text-centered mt-4">
-                        <button class="button is-info is-outlined is-fullwidth is-small">Cargar Registros Anteriores</button>
+                    <!-- TABLA DESKTOP -->
+                    <div class="is-hidden-touch">
+                        <div class="table-container">
+                            <table class="table is-striped is-hoverable is-fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th><abbr title="Identificador de Registro">ID.Reg.</abbr></th>
+                                        <th>Nombres</th>
+                                        <th>Fecha</th>
+                                        <th>Hora de Registro</th>
+                                        <th>Tipo de Movimiento</th>
+                                        <th>Colegio</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>15432</td>
+                                        <td>Juan Pérez</td>
+                                        <td>2025-11-06</td>
+                                        <td>08:00:15</td>
+                                        <td><span class="tag is-success is-light">Entrada</span></td>
+                                        <td><strong>San José Obrero</strong></td> 
+                                    </tr>
+                                    <tr>
+                                        <td>15433</td>
+                                        <td>Juan Pérez</td>
+                                        <td>2025-11-06</td>
+                                        <td>17:01:30</td>
+                                        <td><span class="tag is-info is-light">Salida</span></td>
+                                        <td><strong>San José Obrero</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>15434</td>
+                                        <td>Ana Gómez</td>
+                                        <td>2025-11-07</td>
+                                        <td>08:35:45</td>
+                                        <td><span class="tag is-success is-light">Entrada</span></td>
+                                        <td><strong>Santa Úrsula</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>---</td>
+                                        <td>Ana Gómez</td>
+                                        <td>2025-11-08</td>
+                                        <td>- - -</td>
+                                        <td><span class="tag is-danger is-light">Ausente</span></td>
+                                        <td><strong>Santa Úrsula</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>15435</td>
+                                        <td>Luis Torres</td>
+                                        <td>2025-11-09</td>
+                                        <td>15:45:00</td>
+                                        <td><span class="tag is-info is-light">Salida</span></td>
+                                        <td><strong>Teresa de la Cuna</strong></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6"> 
+                                            <p class="has-text-right is-size-7">Datos actualizados al 07 de Noviembre de 2025.</p>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <!-- PAGINACIÓN -->
+                        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                            <a class="pagination-previous" disabled>Anterior</a>
+                            <a class="pagination-next">Siguiente</a>
+                            <ul class="pagination-list">
+                                <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+                                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                                <li><a class="pagination-link is-current is-primary" aria-label="Page 46" aria-current="page">46</a></li>
+                                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                                <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <hr>
+
+                    <!-- TARJETAS MÓVIL -->
+                    <div class="is-hidden-desktop">
+                        <h2 class="title is-5">Resumen de Registros</h2>
+                        
+                        <!-- Tarjeta 1: Entrada -->
+                        <div class="box card-row has-background-light">
+                            <p class="is-size-5 has-text-weight-bold has-text-primary"><i class="fas fa-calendar-alt"></i> 2025-11-06</p>
+                            <hr class="my-2">
+                            <p class="heading">Nombres:</p>
+                            <p class="subtitle is-6">Juan Pérez</p>
+                            <p class="heading">ID.Reg:</p>
+                            <p class="subtitle is-6">15432</p>
+                            <div class="columns is-mobile">
+                                <div class="column is-half">
+                                    <p class="heading">Movimiento:</p>
+                                    <p class="subtitle is-6"><span class="tag is-success is-large">Entrada</span></p>
+                                </div>
+                                <div class="column is-half">
+                                    <p class="heading">Hora:</p>
+                                    <p class="subtitle is-6 has-text-weight-bold">08:00:15</p>
+                                </div>
+                            </div>
+                            <p class="heading">Colegio:</p>
+                            <p class="is-size-6">San José Obrero</p>
+                        </div>
+
+                        <!-- Tarjeta 2: Salida -->
+                        <div class="box card-row has-background-info-light">
+                            <p class="is-size-5 has-text-weight-bold has-text-info-dark"><i class="fas fa-calendar-alt"></i> 2025-11-06</p>
+                            <hr class="my-2">
+                            <p class="heading">Nombres:</p>
+                            <p class="subtitle is-6">Juan Pérez</p>
+                            <p class="heading">ID.Reg:</p>
+                            <p class="subtitle is-6">15433</p>
+                            <div class="columns is-mobile">
+                                <div class="column is-half">
+                                    <p class="heading">Movimiento:</p>
+                                    <p class="subtitle is-6"><span class="tag is-info is-large">Salida</span></p>
+                                </div>
+                                <div class="column is-half">
+                                    <p class="heading">Hora:</p>
+                                    <p class="subtitle is-6 has-text-weight-bold">17:01:30</p>
+                                </div>
+                            </div>
+                            <p class="heading">Colegio:</p>
+                            <p class="is-size-6">San José Obrero</p>
+                        </div>
+
+                        <!-- Tarjeta 3: Entrada -->
+                        <div class="box card-row has-background-success-light">
+                            <p class="is-size-5 has-text-weight-bold has-text-success-dark"><i class="fas fa-calendar-alt"></i> 2025-11-07</p>
+                            <hr class="my-2">
+                            <p class="heading">Nombres:</p>
+                            <p class="subtitle is-6">Ana Gómez</p>
+                            <p class="heading">ID.Reg:</p>
+                            <p class="subtitle is-6">15434</p>
+                            <div class="columns is-mobile">
+                                <div class="column is-half">
+                                    <p class="heading">Movimiento:</p>
+                                    <p class="subtitle is-6"><span class="tag is-success is-large">Entrada</span></p>
+                                </div>
+                                <div class="column is-half">
+                                    <p class="heading">Hora:</p>
+                                    <p class="subtitle is-6 has-text-weight-bold">08:35:45</p>
+                                </div>
+                            </div>
+                            <p class="heading">Colegio:</p>
+                            <p class="is-size-6">Santa Úrsula</p>
+                        </div>
+
+                        <!-- Tarjeta 4: Ausente -->
+                        <div class="box card-row has-background-danger-light">
+                            <p class="is-size-5 has-text-weight-bold has-text-danger-dark"><i class="fas fa-calendar-alt"></i> 2025-11-08</p>
+                            <hr class="my-2">
+                            <p class="heading">Nombres:</p>
+                            <p class="subtitle is-6">Ana Gómez</p>
+                            <p class="heading">ID.Reg:</p>
+                            <p class="subtitle is-6">---</p>
+                            <div class="columns is-mobile">
+                                <div class="column is-half">
+                                    <p class="heading">Movimiento:</p>
+                                    <p class="subtitle is-6"><span class="tag is-danger is-large">Ausente</span></p>
+                                </div>
+                                <div class="column is-half">
+                                    <p class="heading">Hora:</p>
+                                    <p class="subtitle is-6 has-text-weight-bold">- - -</p>
+                                </div>
+                            </div>
+                            <p class="heading">Colegio:</p>
+                            <p class="is-size-6">Santa Úrsula</p>
+                        </div>
+                        
+                        <div class="has-text-centered mt-4">
+                            <button class="button is-info is-outlined is-fullwidth is-small">Cargar Registros Anteriores</button>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>

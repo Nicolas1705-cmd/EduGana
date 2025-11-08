@@ -6,31 +6,22 @@
     <title>Registro de Asistencia NFC - Colegio</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
-        /* Estilos opcionales para centrar y dar espacio */
-        .nfc-scan-area {
-            text-align: center;
-            padding: 30px;
-            border: 2px dashed #dbdbdb;
-            border-radius: 6px;
-            margin-bottom: 20px;
-        }
-        .nfc-scan-area .icon {
-            margin-right: 5px;
-        }
-        /* Ajuste para que el contenido no quede debajo de la navbar fija */
+        /* 1. AJUSTES GENERALES */
+        /* Eliminé el error de sintaxis en el body */
         body {
-            padding-top: 52px; 
+            /* Puedes agregar padding-top si usaras una navbar fija */
         }
-
-        /* --- Estilos CSS PROPORCIONADOS (para .page-header) --- */
+        
+        /* 2. ESTILOS DEL ENCABEZADO (.page-header) */
         .page-header {
             margin-bottom: 2rem;
-            /* Degradado de colores que reemplaza el color fijo "is-info" */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
             border-radius: 12px;
             padding: 2rem;
             color: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            /* Propiedad para borde solo abajo del encabezado: */
+            border-bottom: 5px solid rgba(255, 255, 255, 0.4); 
         }
 
         .page-header .title,
@@ -41,20 +32,15 @@
         .page-header .icon {
             color: white;
         }
-
+        
+        /* Asegura que los íconos del encabezado se vean correctamente */
         .page-header .icon-text {
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
         }
 
-        .page-header .icon-text .icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Información del usuario (Adaptado de .user-points a .user-info en el HTML anterior) */
+        /* Información del usuario/Colegio */
         .user-info {
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50px;
@@ -70,98 +56,108 @@
             font-size: 1.5rem;
         }
 
-        /* Media Queries específicas para el encabezado */
-        @media screen and (max-width: 768px) {
-            .page-header .level {
-                display: block !important;
-                text-align: center;
-            }
-
-            .page-header .level-left,
-            .page-header .level-right {
-                margin-bottom: 1rem;
-                text-align: center;
-            }
-
-            .page-header .level-item {
-                display: block;
-                margin-bottom: 0.5rem;
-            }
-
-            .page-header .title.is-2 {
-                font-size: 1.3rem;
-            }
-
-            .page-header .subtitle.is-5 {
-                font-size: 0.95rem;
-            }
-
-            .page-header {
-                padding: 1.25rem 1rem;
-            }
-
-            .page-header .icon-text {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            .user-info { /* Corregido de .user-points a .user-info */
-                font-size: 1rem;
-                padding: 0.6rem 1.2rem;
-                margin: 0 auto;
-                display: flex;
-                justify-content: center;
-            }
-
-            .user-info .icon { /* Corregido de .user-points a .user-info */
-                font-size: 1.2rem;
-            }
-        }
-
-        /* Pantallas muy pequeñas */
-        @media screen and (max-width: 480px) {
-            .page-header .title.is-2 {
-                font-size: 1.1rem;
-            }
-
-            .page-header .subtitle.is-5 {
-                font-size: 0.85rem;
-            }
-
-            .user-info { /* Corregido de .user-points a .user-info */
-                font-size: 0.9rem;
-                padding: 0.5rem 1rem;
-            }
-
-            .user-info .icon { /* Corregido de .user-points a .user-info */
-                font-size: 1.2rem;
-            }
-        }
-
-        /* Tablet */
-        @media screen and (min-width: 769px) and (max-width: 1023px) {
-            .page-header {
-                padding: 1.75rem 1.5rem;
-            }
-        }
-        /* --- FIN Estilos CSS PROPORCIONADOS --- */
-
-        /* Estilos de la caja de escaneo (Mantenidos) */
+        /* 3. ESTILOS DE LA CAJA DE ESCANEO NFC (Registro) */
         .nfc-scan-area {
             text-align: center;
             padding: 30px;
             border: 2px dashed #dbdbdb;
             border-radius: 6px;
             margin-bottom: 20px;
+            background-color: #f9f9f9; /* Fondo ligero para destacarla */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         .nfc-scan-area .icon {
             margin-right: 5px;
+            font-size: 2.5rem; /* Icono más grande */
+            color: #48c78e; /* Color verde de éxito o primario de Bulma */
         }
+        
+        /* 4. ESTILOS DE LA TABLA (BORDE SOLO ABAJO) */
+        .table-container {
+            /* Da un borde completo al contenedor para simular la tabla completa */
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        
+        .table.is-bordered th, 
+        .table.is-bordered td {
+            /* Establece el borde solo en la parte inferior */
+            border-width: 0 0 1px 0; 
+            border-color: #dbdbdb; 
+        }
+
+        .table.is-bordered thead th {
+            /* Un borde inferior más grueso para el thead */
+            border-width: 0 0 2px 0; 
+            border-bottom: 2px solid #b5b5b5; 
+        }
+        
+        .table {
+            border-collapse: separate;
+            /* Elimina el margen por defecto de Bulma para que el contenedor lo gestione */
+            margin-bottom: 0 !important;
+        }
+        
+        /* 5. MEDIA QUERIES (Responsividad) */
+        /* 5. MEDIA QUERIES (Responsividad) */
+@media screen and (max-width: 768px) {
+    /* ⚡ AJUSTES PARA QUE EL ENCABEZADO OCUPE TODO EL ANCHO ARRIBA ⚡ */
+    .page-header {
+        /* Elimina el redondeado superior para que se pegue a las esquinas de la ventana */
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        /* Mantiene el borde inferior grueso y el redondeado inferior (12px por defecto) */
+        
+        /* Resto de tus estilos */
+        padding: 1.25rem 1rem;
+        margin-bottom: 2rem; /* Mantener la separación con el contenido de abajo */
+    }
+
+    /* Contenedor padre de .page-header (section/div.container)
+       *Nota: Si necesitas que el color de fondo vaya hasta los bordes,
+       *debes asegurarte de que el contenedor de .page-header no tenga padding lateral.
+       *En tu estructura anterior, .page-header está dentro de .container,
+       *por lo que si quieres que se vea de borde a borde, tendrías que moverlo
+       *fuera del .container o modificar el padding del section/container.
+    */
+    
+    .page-header .level {
+        display: block !important;
+        text-align: center;
+    }
+    .page-header .level-left,
+    .page-header .level-right {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    .page-header .level-item {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    .page-header .title.is-2 {
+        font-size: 1.3rem;
+    }
+
+    .user-info { 
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+    }
+}
+@media screen and (max-width: 480px) {
+    .page-header .title.is-2 {
+        font-size: 1.1rem;
+    }
+}
     </style>
 </head>
 <body>
 
+    <section class="section is-paddingless">
+        <div class="container">
             <div class="page-header">
                 <div class="level">
                     <div class="level-left">
@@ -169,36 +165,45 @@
                             <div>
                                 <h1 class="title is-2">
                                     <span class="icon-text">
-                                        <span class="icon has-text-white mr-3">
-                                            <i class="fas fa-gift fa-lg"></i>
+                                        <span class="icon mr-3">
+                                            <i class="fas fa-calendar-check fa-lg"></i> 
                                         </span>
                                         <span>Registro de Asistencia NFC</span>
                                     </span>
                                 </h1>
-                                <p class="subtitle is-5 mt-2">EduGana</p>
+                                <p class="subtitle is-5 mt-2">Sistema de Control de Entrada y Salida</p>
                             </div>
                         </div>
                     </div>
                     <div class="level-right">
                         <div class="level-item">
-                            <div class="user-points">
+                            <div class="user-info">
                                 <span class="icon">
-                                    <i class="fas fa-coins"></i>
+                                    <i class="fas fa-school"></i>
                                 </span>
-                                <span id="userPoints"></span>
-                                <span></span>
+                                <span id="currentCollege" class="has-text-weight-bold">Colegio Nacional</span>
+                                <span>(Activo)</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
- 
-           
-
-           
+        </div>
+    </section>
+    
+    <section class="section pt-0">
+        <div class="container">
+            
+            
+            
+            <hr>
+            
+            <h2 class="title is-4 mt-5">
+                Historial de las Últimas 20 Asistencias Registradas 🕒
+            </h2>
+            
             <div class="box p-4 mb-4 has-background-light">
-                <div class="field is-grouped">
+                <div class="field is-grouped is-grouped-multiline">
                     <p class="control is-expanded has-icons-left">
                         <input class="input" type="text" placeholder="Buscar por Alumno o Colegio...">
                         <span class="icon is-left">
@@ -234,127 +239,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>**Juan Pérez**</td>
-                            <td>**Colegio Nacional**</td>
-                            <td>08/11/2025 15:45:12</td>
-                            <td><span class="tag is-info is-light">FIN</span></td>
-                        </tr>
-                        <tr>
-                            <td>**María López**</td>
-                            <td>**Instituto Central**</td>
-                            <td>08/11/2025 08:30:40</td>
-                            <td><span class="tag is-success is-light">INICIO</span></td>
-                        </tr>
-                         <tr>
-                            <td>**Carlos García**</td>
-                            <td>**Colegio Nacional**</td>
-                            <td>08/11/2025 08:05:00</td>
-                            <td><span class="tag is-success is-light">INICIO</span></td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                            <td>...</td>
-                        </tr>
-                        
+                        <tr><td>**Juan Pérez**</td><td>**Colegio Nacional**</td><td>08/11/2025 15:45:12</td><td><span class="tag is-info is-light">FIN</span></td></tr>
+                        <tr><td>**María López**</td><td>**Instituto Central**</td><td>08/11/2025 08:30:40</td><td><span class="tag is-success is-light">INICIO</span></td></tr>
+                        <tr><td>**Carlos García**</td><td>**Colegio Nacional**</td><td>08/11/2025 08:05:00</td><td><span class="tag is-success is-light">INICIO</span></td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                        <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -363,5 +267,5 @@
     </section>
 
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
-</body>
+    </body>
 </html>
