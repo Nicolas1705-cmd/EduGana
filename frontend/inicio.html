@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal (Bulma)</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ===================================== */
+        /* ESTILOS DE LA VISTA (Para centrar)  */
+        /* ===================================== */
+        body {
+            background-color: #f4f7f9;
+        }
+
+        .main-container {
+            padding: 30px 15px;
+            max-width: 960px; /* Ancho máximo para el contenido en desktop */
+            margin: auto;
+        }
+
+        /* Título */
+        .title-app {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        /* ===================================== */
+        /* ESTILOS DEL BOTÓN CÍRCULO    */
+        /* ===================================== */
+        .menu-item-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s;
+            padding: 10px 5px;
+        }
+
+        .menu-item-link:hover {
+            transform: translateY(-4px); /* Efecto de elevación */
+        }
+        
+        /* Contenedor del Círculo (El botón visual) */
+        .round-button {
+            /* Definición de tamaño y forma circular */
+            width: 100px; 
+            height: 100px;
+            border-radius: 50%; /* ¡Círculo perfecto! */
+            background-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 4px solid #4a90e2; /* Borde de color principal por defecto */
+            transition: all 0.2s;
+        }
+
+        .menu-item-link:hover .round-button {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Icono */
+        .round-button i {
+            font-size: 3em;
+            color: #4a90e2; /* Color principal del icono por defecto */
+        }
+        
+        /* Etiqueta de texto */
+        .label-text {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #555;
+            line-height: 1.2;
+            padding: 0 5px;
+        }
+
+        /* ===================================== */
+        /* COLORES PERSONALIZADOS (Por Botón)  */
+        /* ===================================== */
+        /* Aquí puedes definir los colores de Bulma o colores personalizados */
+        .btn-alumno .round-button { border-color: #2ecc71; }
+        .btn-alumno .round-button i { color: #2ecc71; }
+
+        .btn-curso .round-button { border-color: #f39c12; }
+        .btn-curso .round-button i { color: #f39c12; }
+        
+        /* ... y así sucesivamente para los demás botones si deseas más variedad ... */
+        .page-header {
+
+  margin-bottom: 2rem;
+
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  border-radius: 0px 0px 12px 12px;
+
+  padding: 2rem;
+
+  color: white;
+
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+}
+
+
+
+.page-header .title,
+
+.page-header .subtitle {
+
+  color: white !important;
+
+}
+
+
+
+.page-header .icon {
+
+  color: white;
+
+}
+
+
+
+.page-header .icon-text {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+}
+
+
+
+.page-header .icon-text .icon {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+/* Puntos del usuario */
+
+.user-points {
+
+  background: rgba(255, 255, 255, 0.2);
+
+  border-radius: 50px;
+
+  padding: 0.75rem 1.5rem;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.5rem;
+
+  font-size: 1.2rem;
+
+  font-weight: bold;
+
+}
+
+
+
+.user-points .icon {
+
+  font-size: 1.5rem;
+
+}
+
+
+
+/* Media Queries específicas para el encabezado */
+
+@media screen and (max-width: 768px) {
+
+  .page-header .level {
+
+    display: block !important;
+
+    text-align: center;
+
+  }
+
+
+
+  .page-header .level-left,
+
+  .page-header .level-right {
+
+    margin-bottom: 1rem;
+
+    text-align: center;
+
+  }
+
+
+
+  .page-header .level-item {
+
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+  }
+
+
+
+  .page-header .title.is-2 {
+
+    font-size: 1.3rem;
+
+  }
+
+
+
+  .page-header .subtitle.is-5 {
+
+    font-size: 0.95rem;
+
+  }
+
+
+
+  .page-header {
+
+    padding: 1.25rem 1rem;
+
+  }
+
+
+
+  .page-header .icon-text {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+  }
+
+
+
+  .user-points {
+
+    font-size: 1rem;
+
+    padding: 0.6rem 1.2rem;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    justify-content: center;
+
+  }
+
+
+
+  .user-points .icon {
+
+    font-size: 1.2rem;
+
+  }
+
+}
+
+
+
+/* Pantallas muy pequeñas */
+
+@media screen and (max-width: 480px) {
+
+  .page-header .title.is-2 {
+
+    font-size: 1.1rem;
+
+  }
+
+
+
+  .page-header .subtitle.is-5 {
+
+    font-size: 0.85rem;
+
+  }
+
+
+
+  .user-points {
+
+    font-size: 0.9rem;
+
+    padding: 0.5rem 1rem;
+
+  }
+
+
+
+  .user-points .icon {
+
+    font-size: 1.2rem;
+
+  }
+
+}
+
+
+
+/* Tablet */
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+
+  .page-header {
+
+    padding: 1.75rem 1.5rem;
+
+  }
+
+}
+    </style>
+</head>
+<body>
+<div class="page-header">
+
+  <div class="level">
+
+    <div class="level-left">
+
+      <div class="level-item">
+
+        <div>
+
+          <h1 class="title is-2">
+
+            <span class="icon-text">
+
+              <span class="icon has-text-white mr-3">
+
+                <i class="fas fa-gift fa-lg"></i>
+
+              </span>
+
+              <span>Catálogo de Recompensas</span>
+
+            </span>
+
+          </h1>
+
+          <p class="subtitle is-5 mt-2">Canjea tus puntos por increíbles premios</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="level-right">
+
+      <div class="level-item">
+
+        <div class="user-points">
+
+          <span class="icon">
+
+            <i class="fas fa-coins"></i>
+
+          </span>
+
+          <span id="userPoints"> </span>
+
+          <span> </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<div class="main-container">
+    <h1 class="title is-2 has-text-centered title-app">Menú de Gestión</h1>
+
+    <div class="columns is-multiline is-mobile is-centered">
+        
+        <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop has-text-centered">
+            <a href="matricula.html" class="menu-item-link btn-alumno">
+                <div class="round-button">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <span class="label-text">Alumno</span>
+            </a>
+        </div>
+        
+        <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop has-text-centered">
+            <a href="registrar_curso.html" class="menu-item-link btn-curso">
+                <div class="round-button">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <span class="label-text">Curso</span>
+            </a>
+        </div>
+        
+        <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop has-text-centered">
+            <a href="asistencia.html" class="menu-item-link">
+                <div class="round-button" style="border-color: #3498db;">
+                    <i class="fas fa-calendar-check" style="color: #3498db;"></i>
+                </div>
+                <span class="label-text">Asistencia</span>
+            </a>
+        </div>
+        
+        <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop has-text-centered">
+            <a href="matricularprofesores.html" class="menu-item-link">
+                <div class="round-button" style="border-color: #9b59b6;">
+                    <i class="fas fa-chalkboard-user" style="color: #9b59b6;"></i>
+                </div>
+                <span class="label-text">Profesor</span>
+            </a>
+        </div>
+        
+        <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop has-text-centered">
+            <a href="registrarcolegio.html" class="menu-item-link">
+                <div class="round-button" style="border-color: #f1c40f;">
+                    <i class="fas fa-school" style="color: #f1c40f;"></i>
+                </div>
+                <span class="label-text">Colegio</span>
+            </a>
+        </div>
+        
+        <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop has-text-centered">
+            <a href="tienda.html" class="menu-item-link">
+                <div class="round-button" style="border-color: #e74c3c;">
+                    <i class="fas fa-store" style="color: #e74c3c;"></i>
+                </div>
+                <span class="label-text">Tiendas</span>
+            </a>
+        </div>
+        
+        <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop has-text-centered">
+            <a href="lectura_de_asistencias.html" class="menu-item-link">
+                <div class="round-button" style="border-color: #1abc9c;">
+                    <i class="fas fa-clipboard-check" style="color: #1abc9c;"></i>
+                </div>
+                <span class="label-text">Registro de Asistencia</span>
+            </a>
+        </div>
+        
+        <div class="column is-half-mobile is-one-quarter-tablet is-one-fifth-desktop has-text-centered">
+            <a href="listar_cupones.html" class="menu-item-link">
+                <div class="round-button" style="border-color: #7f8c8d;">
+                    <i class="fas fa-ticket-alt" style="color: #7f8c8d;"></i>
+                </div>
+                <span class="label-text">Cupones</span>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
