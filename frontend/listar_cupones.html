@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduGana - Listar Cupones</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+  <style>
+    body {
+      background-color: #f8fafc;
+    }
+
+    .coupon-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      display: flex;
+      align-items: flex-start;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background-color: #fff;
+      transition: transform 0.2s;
+    }
+    .coupon-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .coupon-logo img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 1.5rem;
+    }
+
+    .coupon-content p {
+      margin: 0.3rem 0;
+    }
+
+    /* Cabecera principal */
+    .header-box {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .header-box img {
+      width: 90px;
+      margin-bottom: 10px;
+    }
+    .header-box .title {
+      font-size: 3rem;
+      color: #3273dc;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* Vista para listar cupones */
+    .list-view {
+      background-color: #e3f2fd;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    .list-view h2 {
+      color: #0d47a1;
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    .tag {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+
+      <!-- Encabezado -->
+      <div class="header-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/685/685655.png" alt="EduGana Logo">
+        <h1 class="title">EduGana</h1>
+      </div>
+
+      <!-- Vista de Listar Cupones -->
+      <div class="list-view has-text-centered">
+        <h2>📜 Listar Cupones</h2>
+      </div>
+
+      <!-- Cupón 1 -->
+      <div class="coupon-card">
+        <div class="coupon-logo">
+          <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400" alt="Descuento en libros">
+        </div>
+        <div class="coupon-content">
+          <p><strong>Descripción:</strong> 20% de descuento en libros educativos y novelas.</p>
+          <p><strong>Tienda:</strong> Librería Central</p>
+          <p><strong>Dirección:</strong> Av. Cultura 345</p>
+          <p><strong>Válido hasta:</strong> 30 de noviembre de 2025</p>
+          <span class="tag is-success">Descuento</span>
+        </div>
+      </div>
+
+      <!-- Cupón 2 -->
+      <div class="coupon-card">
+        <div class="coupon-logo">
+          <img src="img/tablet.jpg" alt="Descuento en tablets">
+        </div>
+        <div class="coupon-content">
+          <p><strong>Descripción:</strong> 15% de descuento en tablets y accesorios.</p>
+          <p><strong>Tienda:</strong> EduTech</p>
+          <p><strong>Dirección:</strong> Calle Libertad 99</p>
+          <p><strong>Válido hasta:</strong> 20 de diciembre de 2025</p>
+          <span class="tag is-success">Descuento</span>
+        </div>
+      </div>
+
+      <!-- Cupón 3 -->
+      <div class="coupon-card">
+        <div class="coupon-logo">
+          <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400" alt="Descuento en mochilas">
+        </div>
+        <div class="coupon-content">
+          <p><strong>Descripción:</strong> 25% de descuento en mochilas escolares.</p>
+          <p><strong>Tienda:</strong> BackPack Store</p>
+          <p><strong>Dirección:</strong> Jr. San Martín 221</p>
+          <p><strong>Válido hasta:</strong> 10 de diciembre de 2025</p>
+          <span class="tag is-success">Descuento</span>
+        </div>
+      </div>
+
+      <!-- Cupón 4 -->
+      <div class="coupon-card">
+        <div class="coupon-logo">
+          <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=400" alt="Descuento en tecnología">
+        </div>
+        <div class="coupon-content">
+          <p><strong>Descripción:</strong> 10% de descuento en laptops y accesorios tecnológicos.</p>
+          <p><strong>Tienda:</strong> TechZone</p>
+          <p><strong>Dirección:</strong> Av. Los Ingenieros 321</p>
+          <p><strong>Válido hasta:</strong> 5 de diciembre de 2025</p>
+          <span class="tag is-success">Descuento</span>
+        </div>
+      </div>
+
+      <!-- Pie -->
+      <div class="has-text-centered mt-5">
+        <button class="button is-primary is-light is-medium">Ver más cupones</button>
+      </div>
+
+    </div>
+  </section>
+</body>
+</html>
