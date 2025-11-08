@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Tienda | Formulario con Bulma</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+    <style>
+        /* Estilo para centrar y añadir margen vertical al formulario */
+        body {
+            background-color: #f5f5f5;
+        }
+        .form-container {
+            margin-top: 5rem;
+            margin-bottom: 5rem;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container form-container">
+        <div class="box">
+            <h1 class="title is-4 has-text-centered">🏪 Matricular Tienda / Contacto</h1>
+            <p class="subtitle is-6 has-text-centered mb-5">Los campos marcados con **(\*)** son obligatorios.</p>
+            
+            <form action="#" method="POST">
+
+                <div class="field">
+                    <label class="label">Nombre Completo <span class="has-text-danger">(*)</span></label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Escribe tu nombre completo o de la tienda" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="email" placeholder="email@ejemplo.com" required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Contraseña <span class="has-text-danger">(*)</span></label>
+                    <div class="control has-icons-right">
+                        <input class="input is-success" type="password" placeholder="Mínimo 8 caracteres para tu cuenta" required>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <p class="help is-success">Contraseña aceptada</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="field">
+                    <label class="label">Teléfono (Opcional)</label>
+                    <div class="control">
+                        <input class="input" type="tel" placeholder="Ej: +1 555 123 4567">
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label class="label">País (Opcional)</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select>
+                                <option value="">Selecciona tu país...</option>
+                                <option>España</option>
+                                <option>México</option>
+                                <option>Colombia</option>
+                                <option>Argentina</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="field">
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" required>
+                            <span class="has-text-danger">(*)</span> Acepto los <a href="#">Términos y Condiciones</a>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field is-grouped is-grouped-centered mt-5">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">
+                            <span class="icon"><i class="fas fa-user-plus"></i></span>
+                            <span>Enviar Registro</span>
+                        </button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-light" type="reset">
+                            Cancelar / Reiniciar
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
