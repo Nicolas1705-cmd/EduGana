@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
-        /* Estilo personalizado para asegurar el color azul profundo/brillante en la barra */
+        /* Estilo personalizado para asegurar el color azul profundo/brillante en la barra y botón */
         .navbar.is-primary, .button.is-primary {
             background-color: #3273dc !important; /* Azul primario fuerte de Bulma */
             color: #fff !important;
@@ -62,7 +62,7 @@
                     <h1 class="title is-3 has-text-success">
                         <i class="fas fa-calendar-check"></i> Historial de Asistencias
                     </h1>
-                    <p class="subtitle is-6">Registro detallado de entradas y salidas del estudiante: **Juan Pérez (ID: 45789)**</p>
+                    <p class="subtitle is-6">Registro detallado de entradas y salidas de múltiples estudiantes.</p>
                 </div>
 
                 ---
@@ -106,53 +106,53 @@
                             <thead>
                                 <tr>
                                     <th><abbr title="Identificador de Registro">ID.Reg.</abbr></th>
+                                    <th>Nombres</th>
                                     <th>Fecha</th>
                                     <th>Hora de Registro</th>
                                     <th>Tipo de Movimiento</th>
-                                    <th>Estado</th>
                                     <th>Colegio</th> 
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>**15432**</td>
+                                    <td>15432</td>
+                                    <td>Juan Pérez</td>
                                     <td>2025-11-06</td>
                                     <td>08:00:15</td>
                                     <td><span class="tag is-success is-light">Entrada</span></td>
-                                    <td><span class="tag is-success">Normal</span></td>
-                                    <td>San Pedro Chanell</td> 
+                                    <td>**San José Obrero**</td> 
                                 </tr>
                                 <tr>
-                                    <td>**15433**</td>
+                                    <td>15433</td>
+                                    <td>Juan Pérez</td>
                                     <td>2025-11-06</td>
                                     <td>17:01:30</td>
                                     <td><span class="tag is-info is-light">Salida</span></td>
-                                    <td><span class="tag is-success">Normal</span></td>
-                                    <td>San Pedro Chanell</td>
+                                    <td>**San José Obrero**</td>
                                 </tr>
                                 <tr>
-                                    <td>**15434**</td>
+                                    <td>15434</td>
+                                    <td>Ana Gómez</td>
                                     <td>2025-11-07</td>
                                     <td>08:35:45</td>
                                     <td><span class="tag is-success is-light">Entrada</span></td>
-                                    <td><span class="tag is-warning">Tarde</span></td>
-                                    <td>San Pedro Chanell</td>
+                                    <td>**Santa Úrsula**</td>
                                 </tr>
                                 <tr>
-                                    <td>**---**</td>
+                                    <td>---</td>
+                                    <td>Ana Gómez</td>
                                     <td>2025-11-08</td>
                                     <td>- - -</td>
                                     <td><span class="tag is-danger is-light">Ausente</span></td>
-                                    <td><span class="tag is-danger">Falta</span></td>
-                                    <td>San Pedro Chanell</td>
+                                    <td>**Santa Úrsula**</td>
                                 </tr>
                                 <tr>
-                                    <td>**15435**</td>
+                                    <td>15435</td>
+                                    <td>Luis Torres</td>
                                     <td>2025-11-09</td>
                                     <td>15:45:00</td>
                                     <td><span class="tag is-info is-light">Salida</span></td>
-                                    <td><span class="tag is-link">Temprana</span></td>
-                                    <td>San Pedro Chanell</td>
+                                    <td>**Teresa de la Cuna**</td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -186,8 +186,10 @@
                     <div class="box card-row has-background-light">
                         <p class="is-size-5 has-text-weight-bold has-text-primary"><i class="fas fa-calendar-alt"></i> 2025-11-06</p>
                         <hr class="my-2">
+                        <p class="heading">Nombres:</p>
+                        <p class="subtitle is-6">Juan Pérez</p>
                         <p class="heading">ID.Reg:</p>
-                        <p class="subtitle is-6">**15432**</p>
+                        <p class="subtitle is-6">15432</p>
                         <div class="columns is-mobile">
                             <div class="column is-half">
                                 <p class="heading">Movimiento:</p>
@@ -198,17 +200,17 @@
                                 <p class="subtitle is-6 has-text-weight-bold">08:00:15</p>
                             </div>
                         </div>
-                        <p class="heading">Estado:</p>
-                        <p class="is-size-6"><span class="tag is-success is-light">Normal</span></p>
                         <p class="heading">Colegio:</p>
-                        <p class="is-size-6">San Pedro Chanell</p>
+                        <p class="is-size-6">San José Obrero</p>
                     </div>
 
                     <div class="box card-row has-background-warning-light">
                         <p class="is-size-5 has-text-weight-bold has-text-warning-dark"><i class="fas fa-calendar-alt"></i> 2025-11-07</p>
                         <hr class="my-2">
+                        <p class="heading">Nombres:</p>
+                        <p class="subtitle is-6">Ana Gómez</p>
                         <p class="heading">ID.Reg:</p>
-                        <p class="subtitle is-6">**15434**</p>
+                        <p class="subtitle is-6">15434</p>
                         <div class="columns is-mobile">
                             <div class="column is-half">
                                 <p class="heading">Movimiento:</p>
@@ -219,10 +221,8 @@
                                 <p class="subtitle is-6 has-text-weight-bold">08:35:45</p>
                             </div>
                         </div>
-                        <p class="heading">Estado:</p>
-                        <p class="is-size-6"><span class="tag is-warning">¡Tarde! (35 min)</span></p>
                         <p class="heading">Colegio:</p>
-                        <p class="is-size-6">San Pedro Chanell</p>
+                        <p class="is-size-6">Santa Úrsula</p>
                     </div>
                     
                     <div class="has-text-centered mt-4">

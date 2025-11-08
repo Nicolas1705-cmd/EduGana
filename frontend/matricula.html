@@ -15,17 +15,314 @@
             margin-top: 3rem;
             margin-bottom: 3rem;
         }
+        .page-header {
+
+  margin-bottom: 2rem;
+
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  border-radius: 12px;
+
+  padding: 2rem;
+
+  color: white;
+
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+}
+
+
+
+.page-header .title,
+
+.page-header .subtitle {
+
+  color: white !important;
+
+}
+
+
+
+.page-header .icon {
+
+  color: white;
+
+}
+
+
+
+.page-header .icon-text {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+}
+
+
+
+.page-header .icon-text .icon {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+/* Puntos del usuario */
+
+.user-points {
+
+  background: rgba(255, 255, 255, 0.2);
+
+  border-radius: 50px;
+
+  padding: 0.75rem 1.5rem;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.5rem;
+
+  font-size: 1.2rem;
+
+  font-weight: bold;
+
+}
+
+
+
+.user-points .icon {
+
+  font-size: 1.5rem;
+
+}
+
+
+
+/* Media Queries específicas para el encabezado */
+
+@media screen and (max-width: 768px) {
+
+  .page-header .level {
+
+    display: block !important;
+
+    text-align: center;
+
+  }
+
+
+
+  .page-header .level-left,
+
+  .page-header .level-right {
+
+    margin-bottom: 1rem;
+
+    text-align: center;
+
+  }
+
+
+
+  .page-header .level-item {
+
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+  }
+
+
+
+  .page-header .title.is-2 {
+
+    font-size: 1.3rem;
+
+  }
+
+
+
+  .page-header .subtitle.is-5 {
+
+    font-size: 0.95rem;
+
+  }
+
+
+
+  .page-header {
+
+    padding: 1.25rem 1rem;
+
+  }
+
+
+
+  .page-header .icon-text {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+  }
+
+
+
+  .user-points {
+
+    font-size: 1rem;
+
+    padding: 0.6rem 1.2rem;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    justify-content: center;
+
+  }
+
+
+
+  .user-points .icon {
+
+    font-size: 1.2rem;
+
+  }
+
+}
+
+
+
+/* Pantallas muy pequeñas */
+
+@media screen and (max-width: 480px) {
+
+  .page-header .title.is-2 {
+
+    font-size: 1.1rem;
+
+  }
+
+
+
+  .page-header .subtitle.is-5 {
+
+    font-size: 0.85rem;
+
+  }
+
+
+
+  .user-points {
+
+    font-size: 0.9rem;
+
+    padding: 0.5rem 1rem;
+
+  }
+
+
+
+  .user-points .icon {
+
+    font-size: 1.2rem;
+
+  }
+
+}
+
+
+
+/* Tablet */
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+
+  .page-header {
+
+    padding: 1.75rem 1.5rem;
+
+  }
+
+}
     </style>
 </head>
 <body>
+    <div class="page-header">
 
-<section class="section">
+  <div class="level">
+
+    <div class="level-left">
+
+      <div class="level-item">
+
+        <div>
+
+          <h1 class="title is-2">
+
+            <span class="icon-text">
+
+              <span class="icon has-text-white mr-3">
+
+                <i class="fas fa-gift fa-lg"></i>
+
+              </span>
+
+              <span>Nuevo Alumno</span>
+
+            </span>
+
+          </h1>
+
+          <p class="subtitle is-5 mt-2">EduGana</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="level-right">
+
+      <div class="level-item">
+
+        <div class="user-points">
+
+          <span class="icon">
+
+            <i class="fas fa-coins"></i>
+
+          </span>
+
+          <span id="userPoints"></span>
+
+          <span></span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+    
     <div class="container matrícula-container">
         
         <div class="box">
-            <h1 class="title is-4 has-text-centered">
-                <i class="fas fa-user-plus"></i> Matrícula de Nuevo Alumno
-            </h1>
+           
             <p class="subtitle is-6 has-text-centered">
                 Complete la siguiente información para formalizar la inscripción.
             </p>
@@ -38,28 +335,28 @@
                 <div class="columns is-multiline">
                     <div class="column is-full">
                         <div class="field">
-                            <label class="label">Nombre Completo</label>
+                            <label class="label">Nombre Completo <span class="has-text-danger">(*)</span></label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Ej: Juan Pérez García" required>
+                                <input class="input" type="text" placeholder="Ej: Juan Pérez García" **required**>
                             </div>
                         </div>
                     </div>
 
                     <div class="column is-half">
                         <div class="field">
-                            <label class="label">Fecha de Nacimiento</label>
+                            <label class="label">Fecha de Nacimiento <span class="has-text-danger">(*)</span></label>
                             <div class="control">
-                                <input class="input" type="date" required>
+                                <input class="input" type="date" **required**>
                             </div>
                         </div>
                     </div>
 
                     <div class="column is-half">
                         <div class="field">
-                            <label class="label">Género</label>
+                            <label class="label">Género <span class="has-text-danger">(*)</span></label>
                             <div class="control">
                                 <div class="select is-fullwidth">
-                                    <select required>
+                                    <select **required**>
                                         <option value="">Seleccione uno</option>
                                         <option>Masculino</option>
                                         <option>Femenino</option>
@@ -71,33 +368,16 @@
                     </div>
                 </div>
 
+                ---
+
                 <h2 class="title is-5 is-size-6-mobile has-text-link mt-5">Detalles de la Matrícula</h2>
                 
                 <div class="columns is-multiline">
-                    <div class="column is-half">
+                    <div class="column is-full">
                         <div class="field">
-                            <label class="label">Grado/Nivel a Matricular</label>
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select required>
-                                        <option value="">Seleccione el nivel</option>
-                                        <option>Preescolar</option>
-                                        <option>1er Grado</option>
-                                        <option>2do Grado</option>
-                                        <option>3er Grado</option>
-                                        <option>...</option>
-                                        <option>Universidad (Primer Semestre)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="column is-half">
-                        <div class="field">
-                            <label class="label">Documento de Identidad</label>
+                            <label class="label">Documento de Identidad <span class="has-text-danger">(*)</span></label>
                             <div class="control has-icons-left">
-                                <input class="input" type="text" placeholder="DNI, Cédula, Pasaporte, etc." required>
+                                <input class="input" type="text" placeholder="DNI, Cédula, Pasaporte, etc." **required**>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-id-card"></i>
                                 </span>
@@ -105,24 +385,26 @@
                         </div>
                     </div>
                 </div>
+
+                ---
                 
                 <h2 class="title is-5 is-size-6-mobile has-text-link mt-5">Contacto del Tutor Legal</h2>
 
                 <div class="columns is-multiline">
                     <div class="column is-half">
                         <div class="field">
-                            <label class="label">Nombre del Padre/Tutor</label>
+                            <label class="label">Nombre del Padre/Tutor <span class="has-text-danger">(*)</span></label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="Ej: María López" required>
+                                <input class="input" type="text" placeholder="Ej: María López" **required**>
                             </div>
                         </div>
                     </div>
 
                     <div class="column is-half">
                         <div class="field">
-                            <label class="label">Teléfono de Contacto</label>
+                            <label class="label">Teléfono de Contacto <span class="has-text-danger">(*)</span></label>
                             <div class="control has-icons-left">
-                                <input class="input" type="tel" placeholder="Ej: +51 987 654 321" required>
+                                <input class="input" type="tel" placeholder="Ej: +51 987 654 321" **required**>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-phone"></i>
                                 </span>
@@ -130,46 +412,61 @@
                         </div>
                     </div>
 
-                    <div class="column is-full">
+                    <div class="column is-half">
                         <div class="field">
-                            <label class="label">Correo Electrónico</label>
+                            <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
                             <div class="control has-icons-left">
-                                <input class="input" type="email" placeholder="ejemplo@dominio.com" required>
+                                <input class="input" type="email" placeholder="ejemplo@dominio.com" **required**>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-envelope"></i>
                                 </span>
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="column is-half">
+                        <div class="field">
+                            <label class="label">Colegio <span class="has-text-danger">(*)</span></label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Nombre del Colegio" **required**>
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-school"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
+                ---
+
                 <div class="field mt-5">
                     <div class="control">
                         <label class="checkbox">
-                            <input type="checkbox" required>
-                            Acepto los <a href="#">términos y condiciones</a> de matrícula.
+                            <input type="checkbox" **required**>
+                            Acepto los <a href="#">términos y condiciones</a> de matrícula. <span class="has-text-danger">(*)</span>
                         </label>
                     </div>
                 </div>
 
-                <div class="field is-grouped is-grouped-centered mt-5">
-                    <div class="control">
-                        <button class="button is-link is-large">
-                            <span class="icon">
-                                <i class="fas fa-check"></i>
-                            </span>
-                            <span>Matricular Alumno</span>
-                        </button>
-                    </div>
-                    <div class="control">
-                        <button class="button is-light is-large is-danger" type="reset">
-                             <span class="icon">
-                                <i class="fas fa-undo"></i>
-                            </span>
-                            <span>Limpiar Formulario</span>
-                        </button>
-                    </div>
-                </div>
+                <div class="field is-grouped is-grouped-multiline is-grouped-centered mt-5">
+    
+    <div class="control is-full-mobile">
+        <button class="button is-link is-medium is-fullwidth"> <span class="icon">
+                <i class="fas fa-check"></i>
+            </span>
+            <span>Matricular Alumno</span>
+        </button>
+    </div>
+    
+    <div class="control is-full-mobile">
+        <button class="button is-light is-medium is-danger is-fullwidth" type="reset"> <span class="icon">
+                 <i class="fas fa-undo"></i>
+             </span>
+             <span>Limpiar Formulario</span>
+        </button>
+    </div>
+    
+</div>
 
             </form>
         </div>
