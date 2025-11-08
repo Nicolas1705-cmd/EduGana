@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Edugana | Registro de Tienda (Claro)</title>
+    <title>Edugana | Registro de Tienda</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
@@ -15,7 +15,7 @@
             background-color: #f0f2f5; 
             color: #363636; 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            padding-top: 52px; 
+            padding-top: 52px; /* Espacio para el Navbar fijo */
         }
         
         /* 1. BARRA DE NAVEGACIÓN (NAVBAR) */
@@ -28,16 +28,22 @@
             color: #363636 !important; 
             font-weight: 700;
             font-size: 1.25rem;
+            display: flex;
+            align-items: center;
         }
         .navbar-item.has-text-primary {
              color: #00d1b2 !important; 
+        }
+        .navbar-item .icon {
+            margin-right: 0.5rem;
+            color: #00d1b2;
         }
 
         /* Contenedor principal que centra y limita el ancho en móviles */
         .app-container {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: flex-start; /* Alinea el formulario en la parte superior del espacio disponible */
             padding: 1.5rem 0.75rem; 
         }
         
@@ -45,39 +51,41 @@
         .box {
             background-color: #ffffff; 
             border: none;
-            border-radius: 16px; 
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); 
-            padding: 2.5rem 1.5rem; 
+            border-radius: 18px; /* Ligeramente más redondeado */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Sombra más definida */
+            padding: 2.75rem 1.75rem; /* Aumento ligero del padding para más espacio */
             width: 100%;
             max-width: 450px; 
         }
 
-        /* LOGO Y ENCABEZADO - AJUSTE DEL ÍCONO */
+        /* LOGO Y ENCABEZADO - MEJORA DEL ÍCONO DE TIENDA */
         .header-content {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.25rem; /* Un poco más de espacio */
         }
         .logo-placeholder {
-            display: inline-block;
-            width: 60px;
-            height: 60px;
-            background-color: #00d1b2; /* Color de acento */
+            display: inline-flex; /* Usar flexbox para centrar bien el icono */
+            justify-content: center;
+            align-items: center;
+            width: 70px; /* Tamaño del círculo del logo */
+            height: 70px;
+            background-color: #00d1b2; 
             border-radius: 50%;
-            margin-bottom: 1rem;
-            line-height: 60px;
-            font-size: 1.8rem;
-            color: #ffffff; /* Ícono blanco sobre acento */
+            margin-bottom: 1.25rem; 
+            font-size: 2.2rem; /* Tamaño del icono dentro del círculo */
+            color: #ffffff; 
+            box-shadow: 0 4px 10px rgba(0, 209, 178, 0.4); /* Sombra para el logo */
         }
 
         /* Títulos */
         .title {
             color: #363636 !important; 
-            font-size: 1.6rem !important; 
+            font-size: 1.75rem !important; /* Ligeramente más grande */
             font-weight: 700;
-            margin-bottom: 0.25rem !important;
+            margin-bottom: 0.35rem !important;
         }
         .subtitle {
-            font-size: 0.85rem !important;
+            font-size: 0.9rem !important; /* Ligeramente más grande */
             color: #7a7a7a !important; 
             margin-bottom: 0 !important;
         }
@@ -86,10 +94,13 @@
         .label {
             color: #4a4a4a !important; 
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem; /* Más espacio debajo de las etiquetas */
         }
 
         /* Campos de Entrada (Input, Select) */
+        .field:not(:last-child) {
+            margin-bottom: 1.5rem; /* Espacio entre campos para mejor legibilidad móvil */
+        }
         .input, .select select, .textarea {
             background-color: #f7f7f7; 
             border: 1px solid #dbdbdb; 
@@ -97,7 +108,7 @@
             border-radius: 10px; 
             transition: all 0.3s ease;
             padding-left: 1.25em; 
-            height: 2.8em; 
+            height: 3em; /* Un poco más de altura para tocar */
         }
 
         .input::placeholder, .textarea::placeholder {
@@ -111,8 +122,12 @@
         }
 
         /* Íconos y Texto de Éxito */
-        .control.has-icons-left .icon, .control.has-icons-right .icon {
-            color: #b5b5b5; 
+        .control.has-icons-left .icon {
+            color: #b5b5b5; /* Íconos gris claro */
+            left: 0.75em; /* Ajuste para centrado visual */
+        }
+        .control.has-icons-right .icon {
+            right: 0.75em; /* Ajuste para centrado visual */
         }
         .input.is-success {
             border-color: #48c78e !important; 
@@ -120,6 +135,8 @@
         }
         .help.is-success {
             color: #48c78e !important;
+            font-size: 0.8em;
+            margin-top: 0.3em;
         }
         
         /* Enlaces */
@@ -133,15 +150,15 @@
         hr {
             background-color: #dbdbdb;
             height: 1px;
-            margin: 2rem 0;
+            margin: 2.5rem 0; /* Más espacio alrededor del separador */
         }
         
-        /* Botones (Centrado mejorado para móvil) */
+        /* Botones (Centrado y mejorado para móvil) */
         .footer-buttons {
             display: flex;
             justify-content: center; 
-            gap: 12px; 
-            margin-top: 2.5rem;
+            gap: 15px; /* Más espacio entre botones */
+            margin-top: 3rem; /* Más margen superior */
         }
         .footer-buttons .control {
             flex-grow: 1;
@@ -151,20 +168,38 @@
             border-radius: 10px;
             font-weight: 600;
             transition: all 0.3s ease;
-            height: 3em; 
+            height: 3.2em; /* Altura un poco mayor para mejor tacto */
             width: 100%; 
+            font-size: 1rem;
+            display: inline-flex; /* Asegura que el contenido del botón se centre */
+            align-items: center;
+            justify-content: center;
         }
         .button.is-primary {
             background-color: #00d1b2; 
             border-color: transparent;
-            box-shadow: 0 4px 10px rgba(0, 209, 178, 0.3); 
+            box-shadow: 0 5px 15px rgba(0, 209, 178, 0.4); /* Sombra más pronunciada */
             color: #ffffff; 
+        }
+        .button.is-primary:hover {
+            background-color: #00e0c0;
+            box-shadow: 0 7px 18px rgba(0, 209, 178, 0.5);
+            transform: translateY(-1px); /* Efecto sutil */
+        }
+        .button.is-primary .icon {
+            color: #ffffff; /* Asegurar icono blanco en botón primario */
+            margin-right: 0.5em;
         }
         .button.is-light {
             background-color: #f0f0f0; 
             color: #4a4a4a; 
             border: 1px solid #dbdbdb;
             box-shadow: none;
+        }
+        .button.is-light:hover {
+            background-color: #e8e8e8;
+            border-color: #c9c9c9;
+            transform: translateY(-1px);
         }
         
     </style>
@@ -174,7 +209,7 @@
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item is-size-5" href="#">
-          <span class="has-text-primary mr-2"><i class="fas fa-graduation-cap"></i></span>
+          <span class="icon"><i class="fas fa-graduation-cap"></i></span>
           Edugana
         </a>
       </div>
@@ -184,7 +219,7 @@
         <div class="box">
             
             <div class="header-content">
-                <div class="logo-placeholder"><i class="fas fa-shopping-bag"></i></div> 
+                <div class="logo-placeholder"><i class="fas fa-store-alt"></i></div> 
                 <h1 class="title is-4">Registro de Tiendas</h1>
                 <p class="subtitle is-6">Creación de cuenta para administrar tu negocio.</p>
             </div>
@@ -257,7 +292,7 @@
                 <div class="footer-buttons">
                     <div class="control">
                         <button class="button is-primary" type="submit">
-                            <span class="icon is-small"><i class="fas fa-store"></i></span>
+                            <span class="icon is-small"><i class="fas fa-store-alt"></i></span>
                             <span>Matricular Tienda</span>
                         </button>
                     </div>
