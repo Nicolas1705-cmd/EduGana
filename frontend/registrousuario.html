@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro de Usuario</title>
+  <title>Registro de Usuario - Edugana</title>
 
   <!-- Bulma CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   
-  <!-- Font Awesome (para íconos) -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
@@ -16,64 +16,87 @@
       background: #f4f6fb;
       font-family: "Poppins", sans-serif;
     }
+    .navbar {
+      background-color: #2563eb;
+    }
+    .navbar-brand .navbar-item {
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .navbar-brand .navbar-item:hover {
+      background: none;
+      color: #e0e0e0;
+    }
     .form-container {
       max-width: 500px;
       margin-top: 60px;
     }
-    .title {
-      font-weight: 700;
-      color: #363636;
+    .button.is-primary {
+      background-color: #2563eb;
     }
     .button.is-primary:hover {
-      background-color: #2563eb;
+      background-color: #1e40af;
     }
   </style>
 </head>
 
 <body>
+  <!-- Barra superior -->
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#">
+        <i class="fas fa-graduation-cap"></i>&nbsp; <strong>EDUGANA</strong>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Formulario -->
   <section class="section">
     <div class="container form-container">
       <div class="box">
         <h1 class="title has-text-centered">Registro de Usuario</h1>
-        <form>
-          
+        <form id="registroForm" novalidate>
+
           <!-- Nombre Completo -->
           <div class="field">
             <label class="label">Nombre Completo(*)</label>
             <div class="control has-icons-left">
-              <input class="input" type="text" placeholder="Ingresa tu nombre completo" required>
+              <input class="input" type="text" id="nombre" placeholder="Ingresa tu nombre completo" required>
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
             </div>
+            <p class="help is-danger" id="nombreError" style="display:none;">El nombre es obligatorio.</p>
           </div>
 
           <!-- Correo Electrónico -->
           <div class="field">
             <label class="label">Correo Electrónico(*)</label>
             <div class="control has-icons-left">
-              <input class="input" type="email" placeholder="ejemplo@correo.com" required>
+              <input class="input" type="email" id="correo" placeholder="ejemplo@correo.com" required>
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
             </div>
+            <p class="help is-danger" id="correoError" style="display:none;">Ingresa un correo válido.</p>
           </div>
 
           <!-- Contraseña -->
           <div class="field">
             <label class="label">Contraseña(*)</label>
             <div class="control has-icons-left">
-              <input class="input is-success" type="password" placeholder="Crea una contraseña segura" required>
+              <input class="input" type="password" placeholder="Crea una contraseña segura" required>
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
             </div>
-            <p class="help is-success">Tu contraseña es segura</p>
           </div>
 
-          <!-- Teléfono (opcional) -->
+          <!-- Teléfono -->
           <div class="field">
-            <label class="label">Teléfono (opcional)(*)</label>
+            <label class="label">Teléfono (opcional)</label>
             <div class="control has-icons-left">
               <input class="input" type="tel" placeholder="Ejemplo: +51 999 999 999">
               <span class="icon is-small is-left">
@@ -82,22 +105,7 @@
             </div>
           </div>
 
-          <!-- País -->
-          <div class="field">
-            <label class="label">País(*)</label>
-            <div class="control">
-              <div class="select is-fullwidth">
-                <select>
-                  <option value="">Selecciona tu país</option>
-                  <option>Perú</option>
-                  <option>México</option>
-                  <option>Colombia</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- Términos y Condiciones -->
+          <!-- Términos -->
           <div class="field">
             <div class="control">
               <label class="checkbox">
@@ -127,5 +135,43 @@
       </div>
     </div>
   </section>
+
+  <!-- Validación JS -->
+  <script>
+    const form = document.getElementById("registroForm");
+    const nombre = document.getElementById("nombre");
+    const correo = document.getElementById("correo");
+    const nombreError = document.getElementById("nombreError");
+    const correoError = document.getElementById("correoError");
+
+    form.addEventListener("submit", function(e) {
+      let valido = true;
+
+      // Validar nombre
+      if (nombre.value.trim() === "") {
+        nombre.classList.add("is-danger");
+        nombreError.style.display = "block";
+        valido = false;
+      } else {
+        nombre.classList.remove("is-danger");
+        nombreError.style.display = "none";
+      }
+
+      // Validar correo
+      const regexCorreo = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (!regexCorreo.test(correo.value)) {
+        correo.classList.add("is-danger");
+        correoError.style.display = "block";
+        valido = false;
+      } else {
+        correo.classList.remove("is-danger");
+        correoError.style.display = "none";
+      }
+
+      if (!valido) {
+        e.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
