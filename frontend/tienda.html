@@ -3,40 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Tienda | Formulario con Bulma</title>
+    <title>Matrícula de Tienda | App Cordova</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
     <style>
-        /* Estilo para centrar y añadir margen vertical al formulario */
+        /* Estilos CSS para un diseño Moderno (Dark Mode) y profesional */
+        
+        /* 1. Base y Tipografía */
         body {
-            background-color: #f5f5f5;
+            background-color: #121212; /* Fondo negro puro para simular la app */
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh; /* Asegura que el cuerpo ocupe toda la pantalla */
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Centrado vertical para un look más de app */
+            padding: 20px;
         }
+
+        /* 2. Contenedor del Formulario (Box) */
         .form-container {
-            margin-top: 5rem;
-            margin-bottom: 5rem;
-            max-width: 600px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .box {
+            background-color: #1e1e1e; /* Fondo del formulario oscuro y suave */
+            border: none;
+            border-radius: 10px; /* Bordes suaves */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra elegante */
+            padding: 30px;
+        }
+
+        /* 3. Encabezado */
+        .title {
+            color: #f0f0f0 !important;
+            font-weight: 700;
+            margin-bottom: 0.5rem !important;
+        }
+        .subtitle {
+            color: #b0b0b0 !important;
+            font-size: 0.9rem !important;
+            margin-bottom: 25px !important;
+        }
+
+        /* 4. Inputs y Selects */
+        .label {
+            color: #b0b0b0 !important; /* Color de etiqueta sutil */
+            font-weight: 500;
+        }
+
+        .input, .select select, .textarea {
+            background-color: #333333; /* Fondo del campo más claro que el box */
+            border: 1px solid #444444;
+            color: #f0f0f0;
+            border-radius: 6px; /* Bordes suaves */
+            transition: all 0.3s ease; /* Transiciones para el enfoque */
+        }
+
+        .input::placeholder, .textarea::placeholder {
+            color: #888888;
+        }
+
+        .input:focus, .select select:focus, .textarea:focus {
+            border-color: #3e8ed0 !important; /* Color de acento (info) en el enfoque */
+            box-shadow: 0 0 0 0.125em rgba(62, 142, 208, 0.2);
+        }
+
+        /* Íconos */
+        .control.has-icons-left .icon, .control.has-icons-right .icon {
+            color: #b0b0b0;
+        }
+
+        /* Contraseña is-success */
+        .input.is-success {
+            border-color: #48c78e !important; 
+            box-shadow: 0 0 0 0.125em rgba(72, 199, 142, 0.25) !important;
+        }
+        .help.is-success {
+            color: #48c78e !important;
+            font-size: 0.8rem;
+        }
+
+        /* Enlaces (Términos) */
+        a {
+            color: #3e8ed0; /* Color azul de acento (is-info) */
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #5aa6e8;
+        }
+        
+        /* 5. Botones (is-info como primario) */
+        .button {
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            height: 2.5em;
+        }
+
+        .button.is-info {
+            background-color: #3e8ed0; /* Color de acento para Envío */
+            border-color: transparent;
+        }
+
+        .button.is-info:hover {
+            background-color: #5aa6e8;
+            box-shadow: 0 4px 10px rgba(62, 142, 208, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .button.is-light {
+            background-color: #444444; /* Gris oscuro para el botón secundario */
+            color: #f0f0f0;
+            border-color: transparent;
+        }
+
+        .button.is-light:hover {
+            background-color: #555555;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        /* Separador */
+        hr {
+            background-color: #444444;
+            height: 1px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
         }
     </style>
 </head>
 <body>
+
     <div class="container form-container">
         <div class="box">
-            <h1 class="title is-4 has-text-centered">🏪 Matricular Tienda / Contacto</h1>
-            <p class="subtitle is-6 has-text-centered mb-5">Los campos marcados con **(\*)** son obligatorios.</p>
+            <h1 class="title is-4 has-text-centered">🏪 Matrícula de Tienda</h1>
+            <p class="subtitle is-6 has-text-centered">Regístrate para empezar a vender. Los campos marcados con <span class="has-text-danger">(*)</span> son obligatorios.</p>
             
             <form action="#" method="POST">
 
                 <div class="field">
-                    <label class="label">Nombre Completo <span class="has-text-danger">(*)</span></label>
+                    <label class="label">Nombre de la Tienda <span class="has-text-danger">(*)</span></label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Escribe tu nombre completo o de la tienda" required>
+                        <input class="input" type="text" placeholder="Ej: Tienda 'Mi Barrio'" required>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
                     <div class="control has-icons-left">
-                        <input class="input" type="email" placeholder="email@ejemplo.com" required>
+                        <input class="input" type="email" placeholder="contacto@mitienda.com" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -44,13 +162,13 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Contraseña <span class="has-text-danger">(*)</span></label>
+                    <label class="label">Contraseña de Acceso <span class="has-text-danger">(*)</span></label>
                     <div class="control has-icons-right">
-                        <input class="input is-success" type="password" placeholder="Mínimo 8 caracteres para tu cuenta" required>
+                        <input class="input is-success" type="password" placeholder="Define una contraseña segura (mín. 8 caracteres)" required>
                         <span class="icon is-small is-right">
                             <i class="fas fa-check"></i>
                         </span>
-                        <p class="help is-success">Contraseña aceptada</p>
+                        <p class="help is-success">Contraseña segura</p>
                     </div>
                 </div>
 
@@ -59,20 +177,20 @@
                 <div class="field">
                     <label class="label">Teléfono (Opcional)</label>
                     <div class="control">
-                        <input class="input" type="tel" placeholder="Ej: +1 555 123 4567">
+                        <input class="input" type="tel" placeholder="Ej: +51 987 654 321">
                     </div>
                 </div>
                 
                 <div class="field">
-                    <label class="label">País (Opcional)</label>
+                    <label class="label">País de Ubicación (Opcional)</label>
                     <div class="control">
                         <div class="select is-fullwidth">
                             <select>
                                 <option value="">Selecciona tu país...</option>
-                                <option>España</option>
-                                <option>México</option>
-                                <option>Colombia</option>
-                                <option>Argentina</option>
+                                <option>Perú</option>
+                                <option>Chile</option>
+                                <option>Ecuador</option>
+                                <option>Otro</option>
                             </select>
                         </div>
                     </div>
@@ -91,14 +209,14 @@
 
                 <div class="field is-grouped is-grouped-centered mt-5">
                     <div class="control">
-                        <button class="button is-primary" type="submit">
-                            <span class="icon"><i class="fas fa-user-plus"></i></span>
-                            <span>Enviar Registro</span>
+                        <button class="button is-info" type="submit">
+                            <span class="icon"><i class="fas fa-store"></i></span>
+                            <span>Matricular Tienda</span>
                         </button>
                     </div>
                     <div class="control">
                         <button class="button is-light" type="reset">
-                            Cancelar / Reiniciar
+                            Reiniciar
                         </button>
                     </div>
                 </div>
