@@ -3,31 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Tienda | Formulario con Bulma</title>
+    <title>Matrícula de Tienda | App Móvil</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
     <style>
-        /* Estilo para centrar y añadir margen vertical al formulario */
+        /* ======================================= */
+        /* DISEÑO MODERNO Y OSCURO (Optimizado para App/Móvil) */
+        /* ======================================= */
+        
+        /* Fondo de la Aplicación Móvil (Oscuro Moderno) */
         body {
-            background-color: #f5f5f5;
+            background-color: #1a1a2e; /* Fondo oscuro y profundo */
+            color: #e0e0e0;
+            padding: 0;
+            margin: 0;
         }
-        .form-container {
-            margin-top: 5rem;
-            margin-bottom: 5rem;
-            max-width: 600px;
+
+        /* Contenedor Principal (Simula la pantalla de la App) */
+        .container.is-fullhd {
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
+
+        /* Contenedor del Formulario (Caja Elevada) */
+        .box {
+            background-color: #24243e; /* Fondo del formulario ligeramente más claro */
+            border: none;
+            border-radius: 12px; /* Bordes suaves */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra más oscura para dar profundidad en la app */
+            padding: 2rem;
+            margin-top: 2rem; /* Separación de la parte superior */
+            margin-bottom: 2rem;
+        }
+        
+        /* Título Principal (Más prominente) */
+        .title.is-4 {
+            color: #f0f0f0 !important;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        /* Subtítulo */
+        .subtitle.is-6 {
+            color: #b0b0b0 !important; /* Gris suave */
+            margin-bottom: 2rem !important;
+        }
+
+        /* Etiquetas de Campo */
+        .label {
+            color: #c0c0c0 !important;
+            font-weight: 500;
+        }
+        
+        /* Estilo de los Inputs (Campos de Texto y Select) */
+        .input, .select select, .textarea {
+            background-color: #313155; /* Fondo de campo oscuro con tono azulado */
+            border: 1px solid #4a4a70;
+            color: #f0f0f0;
+            border-radius: 6px; /* Bordes redondeados */
+            transition: all 0.3s ease;
+            height: 2.5rem; /* Altura estándar para móvil */
+        }
+        
+        .input:focus, .select select:focus, .textarea:focus {
+            border-color: #7a7aff !important;
+            box-shadow: 0 0 0 0.125em rgba(122, 122, 255, 0.25);
+        }
+
+        /* Separador Elegante */
+        hr {
+            background-color: #4a4a70;
+            height: 1px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Estilo del Botón Primario (Acento Visual) */
+        .button.is-primary {
+            background-color: #00d1b2; /* Verde Azulado (Teal) */
+            border-color: transparent;
+            font-weight: 700;
+            height: 3rem; /* Botón más grande para móvil */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 209, 178, 0.3);
+            transition: all 0.2s ease-in-out;
+        }
+        .button.is-primary:hover {
+            background-color: #00e0c0;
+            transform: translateY(-1px);
+        }
+        
+        /* Estilo del Botón Secundario (Discreto) */
+        .button.is-light {
+            background-color: #444466;
+            color: #f0f0f0;
+            border-color: transparent;
+            font-weight: 600;
+            height: 3rem;
+            border-radius: 8px;
+        }
+
+        /* Enlaces (Términos) */
+        a {
+            color: #7a7aff; /* Azul claro para los enlaces */
+        }
+
     </style>
 </head>
 <body>
-    <div class="container form-container">
+
+    <div class="container is-fullhd">
         <div class="box">
-            <h1 class="title is-4 has-text-centered">🏪 Matricular Tienda / Contacto</h1>
-            <p class="subtitle is-6 has-text-centered mb-5">Los campos marcados con **(\*)** son obligatorios.</p>
+            
+            <h1 class="title is-4 has-text-centered">🏪 Matrícula de Nueva Tienda</h1>
+            <p class="subtitle is-6 has-text-centered">Completa la información para registrar tu negocio.</p>
             
             <form action="#" method="POST">
 
                 <div class="field">
-                    <label class="label">Nombre Completo <span class="has-text-danger">(*)</span></label>
+                    <label class="label">Nombre (Persona o Tienda) <span class="has-text-danger">(*)</span></label>
                     <div class="control">
                         <input class="input" type="text" placeholder="Escribe tu nombre completo o de la tienda" required>
                     </div>
@@ -36,20 +130,16 @@
                 <div class="field">
                     <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
                     <div class="control has-icons-left">
-                        <input class="input" type="email" placeholder="email@ejemplo.com" required>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-envelope"></i>
-                        </span>
+                        <input class="input" type="email" placeholder="email@tienda.com" required>
+                        <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Contraseña <span class="has-text-danger">(*)</span></label>
                     <div class="control has-icons-right">
-                        <input class="input is-success" type="password" placeholder="Mínimo 8 caracteres para tu cuenta" required>
-                        <span class="icon is-small is-right">
-                            <i class="fas fa-check"></i>
-                        </span>
+                        <input class="input is-success" type="password" placeholder="Define una contraseña segura" required>
+                        <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                         <p class="help is-success">Contraseña aceptada</p>
                     </div>
                 </div>
@@ -69,10 +159,9 @@
                         <div class="select is-fullwidth">
                             <select>
                                 <option value="">Selecciona tu país...</option>
-                                <option>España</option>
-                                <option>México</option>
-                                <option>Colombia</option>
-                                <option>Argentina</option>
+                                <option>Chile</option>
+                                <option>Perú</option>
+                                <option>Ecuador</option>
                             </select>
                         </div>
                     </div>
@@ -89,18 +178,18 @@
                     </div>
                 </div>
 
-                <div class="field is-grouped is-grouped-centered mt-5">
-                    <div class="control">
+                <div class="field is-grouped is-grouped-centered mt-6">
+                    <p class="control">
                         <button class="button is-primary" type="submit">
-                            <span class="icon"><i class="fas fa-user-plus"></i></span>
-                            <span>Enviar Registro</span>
+                            <span class="icon"><i class="fas fa-store"></i></span>
+                            <span>Matricular Tienda</span>
                         </button>
-                    </div>
-                    <div class="control">
+                    </p>
+                    <p class="control">
                         <button class="button is-light" type="reset">
-                            Cancelar / Reiniciar
+                            Cancelar
                         </button>
-                    </div>
+                    </p>
                 </div>
 
             </form>
