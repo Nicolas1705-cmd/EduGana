@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Control de Asistencias - Bulma.io</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v6.4.2/js/all.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .main-content {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container main-content">
+        <h1 class="title is-2 has-text-centered has-text-primary mb-6">Sistema de Control de Asistencias</h1>
+        
+        <div class="columns">
+
+            <div class="column is-one-third">
+                <div class="box has-background-white-ter">
+                    <h2 class="title is-5 has-text-centered">👤 Registrar Entrada</h2>
+                    <p class="subtitle is-7 has-text-centered mb-4">Ingresa el ID del empleado/estudiante para marcar asistencia.</p>
+
+                    <form action="#" method="POST">
+                        
+                        <div class="field">
+                            <label class="label" for="registro_id">ID / Código *</label>
+                            <div class="control has-icons-left">
+                                <input class="input is-large" type="text" id="registro_id" name="registro_id" placeholder="Ej. A00123" required autofocus>
+                                <span class="icon is-left">
+                                    <i class="fas fa-id-card"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field mt-5">
+                            <div class="control">
+                                <button class="button is-primary is-fullwidth" type="submit">
+                                    <span class="icon"><i class="fas fa-clock"></i></span>
+                                    <span>Marcar Asistencia</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-light is-fullwidth" type="reset">
+                                    <span>Limpiar Campo</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="column is-two-thirds">
+                <div class="box">
+                    <h2 class="title is-5 has-text-centered">✅ Asistencias del Día</h2>
+                    
+                    <div class="field has-addons mb-4">
+                        <div class="control has-icons-left is-expanded">
+                            <input class="input" type="text" placeholder="Buscar por Nombre o ID...">
+                            <span class="icon is-left"><i class="fas fa-search"></i></span>
+                        </div>
+                        <div class="control">
+                            <span class="select">
+                                <select>
+                                    <option>Mostrar todos</option>
+                                    <option>Presentes</option>
+                                    <option>Ausentes</option>
+                                    <option>Tardes</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre Completo</th>
+                                    <th>ID</th>
+                                    <th><abbr title="Estado de Asistencia">Estado</abbr></th>
+                                    <th>Hora</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Ana Lucía Flores</td>
+                                    <td>A00123</td>
+                                    <td><span class="tag is-success">Presente</span></td>
+                                    <td>07:58 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Carlos Miguel Pérez</td>
+                                    <td>C00456</td>
+                                    <td><span class="tag is-warning">Tarde</span></td>
+                                    <td>08:10 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Diana Sofía Herrera</td>
+                                    <td>D00789</td>
+                                    <td><span class="tag is-danger">Ausente</span></td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+</html>
