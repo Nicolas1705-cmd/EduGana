@@ -2,144 +2,192 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrícula de Tienda | App Móvil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Edugana | Registro de Tienda</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+
     <style>
-        /* ======================================= */
-        /* DISEÑO MODERNO Y OSCURO (Optimizado para App/Móvil) */
-        /* ======================================= */
-        
-        /* Fondo de la Aplicación Móvil (Oscuro Moderno) */
-        body {
+        /* Estilos base para Dark Mode y pantalla completa (móvil) */
+        html, body {
+            height: 100%;
             background-color: #1a1a2e; /* Fondo oscuro y profundo */
             color: #e0e0e0;
-            padding: 0;
-            margin: 0;
-        }
-
-        /* Contenedor Principal (Simula la pantalla de la App) */
-        .container.is-fullhd {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        /* Contenedor del Formulario (Caja Elevada) */
-        .box {
-            background-color: #24243e; /* Fondo del formulario ligeramente más claro */
-            border: none;
-            border-radius: 12px; /* Bordes suaves */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra más oscura para dar profundidad en la app */
-            padding: 2rem;
-            margin-top: 2rem; /* Separación de la parte superior */
-            margin-bottom: 2rem;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            /* Importante: Añadir padding al body para que el contenido no quede debajo del navbar fijo */
+            padding-top: 52px; 
         }
         
-        /* Título Principal (Más prominente) */
-        .title.is-4 {
+        /* 1. BARRA DE NAVEGACIÓN (NAVBAR) */
+        .navbar {
+            background-color: #1a1a2e; /* Mismo fondo que el body para integrar */
+            border-bottom: 1px solid #313155; /* Separador sutil */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Sombra para elevarlo */
+        }
+        .navbar-item {
             color: #f0f0f0 !important;
             font-weight: 700;
-            margin-bottom: 0.25rem;
+            font-size: 1.25rem; /* Tamaño de fuente para el título */
         }
-        
-        /* Subtítulo */
-        .subtitle.is-6 {
-            color: #b0b0b0 !important; /* Gris suave */
-            margin-bottom: 2rem !important;
+        .navbar-item.has-text-primary {
+             color: #00d1b2 !important; /* Color de acento para la marca */
         }
 
-        /* Etiquetas de Campo */
-        .label {
-            color: #c0c0c0 !important;
-            font-weight: 500;
+        /* Contenedor principal que centra y limita el ancho en móviles */
+        .app-container {
+            /* Eliminamos min-height: 100vh; si queremos que la página desplace el contenido */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinear arriba para que el formulario no esté centrado en el medio de la pantalla */
+            padding: 1.5rem 0.75rem; 
         }
         
-        /* Estilo de los Inputs (Campos de Texto y Select) */
+        /* Contenedor del formulario (.box) */
+        .box {
+            background-color: #24243e; 
+            border: none;
+            border-radius: 16px; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); 
+            padding: 2.5rem 1.5rem; 
+            width: 100%;
+            max-width: 450px; 
+        }
+
+        /* LOGO Y ENCABEZADO */
+        .header-content {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo-placeholder {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background-color: #00d1b2; 
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            line-height: 60px;
+            font-size: 1.8rem;
+            color: #24243e;
+        }
+
+        /* Títulos */
+        .title {
+            color: #f0f0f0 !important;
+            font-size: 1.6rem !important; 
+            font-weight: 700;
+            margin-bottom: 0.25rem !important;
+        }
+        .subtitle {
+            font-size: 0.85rem !important;
+            color: #a0a0c0 !important; 
+            margin-bottom: 0 !important;
+        }
+
+        /* Inputs y Selects */
         .input, .select select, .textarea {
-            background-color: #313155; /* Fondo de campo oscuro con tono azulado */
-            border: 1px solid #4a4a70;
+            background-color: #313155; 
+            border: 1px solid #4a4a70; 
             color: #f0f0f0;
-            border-radius: 6px; /* Bordes redondeados */
+            border-radius: 10px; 
             transition: all 0.3s ease;
-            height: 2.5rem; /* Altura estándar para móvil */
+            padding-left: 1.25em; 
+            height: 2.8em; 
         }
-        
         .input:focus, .select select:focus, .textarea:focus {
-            border-color: #7a7aff !important;
-            box-shadow: 0 0 0 0.125em rgba(122, 122, 255, 0.25);
+            border-color: #00d1b2 !important; 
+            box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.3); 
+        }
+        .label {
+            color: #c0c0c0 !important; 
+            font-weight: 500;
+            margin-bottom: 0.5rem;
         }
 
-        /* Separador Elegante */
+        /* Botones (Centrado mejorado para móvil) */
+        .footer-buttons {
+            display: flex;
+            justify-content: center; 
+            gap: 12px; 
+            margin-top: 2.5rem;
+        }
+        .footer-buttons .control {
+            flex-grow: 1;
+            max-width: 50%;
+        }
+        .button {
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            height: 3em; 
+            width: 100%; 
+        }
+        .button.is-primary {
+            background-color: #00d1b2; 
+            border-color: transparent;
+            box-shadow: 0 4px 10px rgba(0, 209, 178, 0.4); 
+        }
+        .button.is-light {
+            background-color: #444466; 
+            color: #f0f0f0;
+            border-color: transparent;
+        }
+
+        /* Separador */
         hr {
             background-color: #4a4a70;
             height: 1px;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
         }
         
-        /* Estilo del Botón Primario (Acento Visual) */
-        .button.is-primary {
-            background-color: #00d1b2; /* Verde Azulado (Teal) */
-            border-color: transparent;
-            font-weight: 700;
-            height: 3rem; /* Botón más grande para móvil */
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 209, 178, 0.3);
-            transition: all 0.2s ease-in-out;
-        }
-        .button.is-primary:hover {
-            background-color: #00e0c0;
-            transform: translateY(-1px);
-        }
-        
-        /* Estilo del Botón Secundario (Discreto) */
-        .button.is-light {
-            background-color: #444466;
-            color: #f0f0f0;
-            border-color: transparent;
-            font-weight: 600;
-            height: 3rem;
-            border-radius: 8px;
-        }
-
-        /* Enlaces (Términos) */
-        a {
-            color: #7a7aff; /* Azul claro para los enlaces */
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="container is-fullhd">
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item is-size-5" href="#">
+          <span class="has-text-primary mr-2"><i class="fas fa-graduation-cap"></i></span>
+          Edugana
+        </a>
+      </div>
+    </nav>
+    
+    <div class="app-container">
         <div class="box">
             
-            <h1 class="title is-4 has-text-centered">🏪 Matrícula de Nueva Tienda</h1>
-            <p class="subtitle is-6 has-text-centered">Completa la información para registrar tu negocio.</p>
+            <div class="header-content">
+                <div class="logo-placeholder"><i class="fas fa-store"></i></div> 
+                <h1 class="title is-4">Registro de Tiendas</h1>
+                <p class="subtitle is-6">Creación de cuenta para administrar tu negocio.</p>
+            </div>
             
             <form action="#" method="POST">
 
                 <div class="field">
-                    <label class="label">Nombre (Persona o Tienda) <span class="has-text-danger">(*)</span></label>
+                    <label class="label">Nombre de la Tienda <span class="has-text-danger">(*)</span></label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Escribe tu nombre completo o de la tienda" required>
+                        <input class="input" type="text" placeholder="Ej: Tienda de Libros 'El Lector'" required>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
                     <div class="control has-icons-left">
-                        <input class="input" type="email" placeholder="email@tienda.com" required>
-                        <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                        <input class="input" type="email" placeholder="contacto@tutienda.com" required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Contraseña <span class="has-text-danger">(*)</span></label>
                     <div class="control has-icons-right">
-                        <input class="input is-success" type="password" placeholder="Define una contraseña segura" required>
-                        <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
+                        <input class="input is-success" type="password" placeholder="Crea una contraseña segura" required>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
                         <p class="help is-success">Contraseña aceptada</p>
                     </div>
                 </div>
@@ -147,21 +195,22 @@
                 <hr>
 
                 <div class="field">
-                    <label class="label">Teléfono (Opcional)</label>
+                    <label class="label">Teléfono de Contacto (Opcional)</label>
                     <div class="control">
-                        <input class="input" type="tel" placeholder="Ej: +1 555 123 4567">
+                        <input class="input" type="tel" placeholder="Ej: +51 987 654 321">
                     </div>
                 </div>
                 
                 <div class="field">
-                    <label class="label">País (Opcional)</label>
+                    <label class="label">País de Ubicación (Opcional)</label>
                     <div class="control">
                         <div class="select is-fullwidth">
                             <select>
-                                <option value="">Selecciona tu país...</option>
-                                <option>Chile</option>
+                                <option value="">Selecciona el país...</option>
                                 <option>Perú</option>
+                                <option>Chile</option>
                                 <option>Ecuador</option>
+                                <option>Bolivia</option>
                             </select>
                         </div>
                     </div>
@@ -178,18 +227,18 @@
                     </div>
                 </div>
 
-                <div class="field is-grouped is-grouped-centered mt-6">
-                    <p class="control">
+                <div class="footer-buttons">
+                    <div class="control">
                         <button class="button is-primary" type="submit">
-                            <span class="icon"><i class="fas fa-store"></i></span>
+                            <span class="icon is-small"><i class="fas fa-store"></i></span>
                             <span>Matricular Tienda</span>
                         </button>
-                    </p>
-                    <p class="control">
+                    </div>
+                    <div class="control">
                         <button class="button is-light" type="reset">
                             Cancelar
                         </button>
-                    </p>
+                    </div>
                 </div>
 
             </form>
