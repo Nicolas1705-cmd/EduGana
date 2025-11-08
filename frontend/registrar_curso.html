@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Curso - Bulma</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .centered-form {
+            max-width: 500px;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="section">
+        <div class="container centered-form">
+            
+            <div class="box">
+                <h1 class="title is-4 has-text-centered">Inscripción al Curso</h1>
+                <h2 class="subtitle is-6 has-text-centered">Completa tus datos para registrarte</h2>
+
+                <form action="procesar_registro.php" method="POST">
+                    
+                    <div class="field">
+                        <label class="label">Nombre Completo <span class="has-text-danger">*</span></label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Ej: Juan Pérez García" name="nombre" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Correo Electrónico <span class="has-text-danger">*</span></label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="email" placeholder="ejemplo@dominio.com" name="email" required>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Contraseña <span class="has-text-danger">*</span></label>
+                        <div class="control">
+                            <input class="input is-success" type="password" placeholder="Mínimo 8 caracteres" name="password" required>
+                        </div>
+                        <p class="help is-success">Contraseña segura. Úsala para iniciar sesión.</p>
+                    </div>
+
+                    <hr> <div class="field">
+                        <label class="label">Teléfono (Opcional)</label>
+                        <div class="control">
+                            <input class="input" type="tel" placeholder="Ej: +51 987 654 321" name="telefono">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">País (Opcional)</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="pais">
+                                    <option value="">Selecciona un País</option>
+                                    <option value="peru">Perú</option>
+                                    <option value="mexico">México</option>
+                                    <option value="colombia">Colombia</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" name="terminos" required>
+                                Acepto los <a href="#" target="_blank">Términos y Condiciones</a> <span class="has-text-danger">*</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped is-grouped-centered mt-5">
+                        <div class="control">
+                            <button type="submit" class="button is-primary">
+                                <span class="icon is-small"><i class="fas fa-user-plus"></i></span>
+                                <span>Registrarme</span>
+                            </button>
+                        </div>
+
+                        <div class="control">
+                            <button type="reset" class="button is-light">
+                                <span class="icon is-small"><i class="fas fa-sync-alt"></i></span>
+                                <span>Reiniciar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>
