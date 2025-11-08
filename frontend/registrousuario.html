@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro de Usuario - Edugana</title>
+  <title>Registro de Curso - Edugana</title>
 
   <!-- Bulma CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -45,7 +45,7 @@
 
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 
-  border-radius: 12px;
+  border-radius: 0px 0px 12px 12px;
 
   padding: 2rem;
 
@@ -288,6 +288,16 @@
 </head>
 
 <body>
+<<<<<<< HEAD
+  <!-- Barra superior -->
+  <nav class="navbar" role="navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        <i class="fas fa-book"></i>&nbsp; <strong>EDUGANA</strong>
+      </a>
+    </div>
+  </nav>
+=======
   <div class="page-header">
 
   <div class="level">
@@ -347,75 +357,60 @@
   </div>
 
 </div>
+>>>>>>> 66614d2f10df4504732dbd909c9552fa5302a85f
 
   <section class="section">
     <div class="container form-container">
       <div class="box">
+<<<<<<< HEAD
+        <h1 class="title has-text-centered">Registro de Curso</h1>
+        <form id="cursoForm" novalidate>
+=======
         
         <form id="registroForm" novalidate>
+>>>>>>> 66614d2f10df4504732dbd909c9552fa5302a85f
 
-          <!-- Nombre Completo -->
+          <!-- Nombre del Curso -->
           <div class="field">
-            <label class="label">Nombre Completo(*)</label>
+            <label class="label">Nombre del Curso (*)</label>
             <div class="control has-icons-left">
-              <input class="input" type="text" id="nombre" placeholder="Ingresa tu nombre completo" required>
+              <input class="input" type="text" id="cursoNombre" placeholder="Ejemplo: Matemáticas Básicas" required>
               <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-book-open"></i>
               </span>
             </div>
-            <p class="help is-danger" id="nombreError" style="display:none;">El nombre es obligatorio.</p>
+            <p class="help is-danger" id="cursoNombreError" style="display:none;">El nombre es obligatorio.</p>
           </div>
 
-          <!-- Correo Electrónico -->
+          <!-- Descripción -->
           <div class="field">
-            <label class="label">Correo Electrónico(*)</label>
+            <label class="label">Descripción (opcional)</label>
             <div class="control has-icons-left">
-              <input class="input" type="email" id="correo" placeholder="ejemplo@correo.com" required>
+              <textarea class="textarea" id="descripcion" placeholder="Breve descripción del curso"></textarea>
               <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-              </span>
-            </div>
-            <p class="help is-danger" id="correoError" style="display:none;">Ingresa un correo válido.</p>
-          </div>
-
-          <!-- Contraseña -->
-          <div class="field">
-            <label class="label">Contraseña(*)</label>
-            <div class="control has-icons-left">
-              <input class="input" type="password" placeholder="Crea una contraseña segura" required>
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
+                <i class="fas fa-align-left"></i>
               </span>
             </div>
           </div>
 
-          <!-- Teléfono -->
+          <!-- Duración -->
           <div class="field">
-            <label class="label">Teléfono (opcional)</label>
+            <label class="label">Duración (horas) (*)</label>
             <div class="control has-icons-left">
-              <input class="input" type="tel" placeholder="Ejemplo: +51 999 999 999">
+              <input class="input" type="number" id="duracion" placeholder="Ejemplo: 40" required>
               <span class="icon is-small is-left">
-                <i class="fas fa-phone"></i>
+                <i class="fas fa-clock"></i>
               </span>
             </div>
-          </div>
-
-          <!-- Términos -->
-          <div class="field">
-            <div class="control">
-              <label class="checkbox">
-                <input type="checkbox" required>
-                Acepto los <a href="#">términos y condiciones</a>
-              </label>
-            </div>
+            <p class="help is-danger" id="duracionError" style="display:none;">Ingresa una duración válida.</p>
           </div>
 
           <!-- Botones -->
           <div class="field is-grouped is-grouped-centered mt-5">
             <div class="control">
               <button class="button is-primary" type="submit">
-                <span class="icon"><i class="fas fa-paper-plane"></i></span>
-                <span>Enviar</span>
+                <span class="icon"><i class="fas fa-check-circle"></i></span>
+                <span>Registrar</span>
               </button>
             </div>
             <div class="control">
@@ -433,16 +428,15 @@
 
   <!-- Validación JS -->
   <script>
-    const form = document.getElementById("registroForm");
-    const nombre = document.getElementById("nombre");
-    const correo = document.getElementById("correo");
-    const nombreError = document.getElementById("nombreError");
-    const correoError = document.getElementById("correoError");
+    const form = document.getElementById("cursoForm");
+    const nombre = document.getElementById("cursoNombre");
+    const duracion = document.getElementById("duracion");
+    const nombreError = document.getElementById("cursoNombreError");
+    const duracionError = document.getElementById("duracionError");
 
     form.addEventListener("submit", function(e) {
       let valido = true;
 
-      // Validar nombre
       if (nombre.value.trim() === "") {
         nombre.classList.add("is-danger");
         nombreError.style.display = "block";
@@ -452,15 +446,13 @@
         nombreError.style.display = "none";
       }
 
-      // Validar correo
-      const regexCorreo = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-      if (!regexCorreo.test(correo.value)) {
-        correo.classList.add("is-danger");
-        correoError.style.display = "block";
+      if (duracion.value <= 0 || duracion.value === "") {
+        duracion.classList.add("is-danger");
+        duracionError.style.display = "block";
         valido = false;
       } else {
-        correo.classList.remove("is-danger");
-        correoError.style.display = "none";
+        duracion.classList.remove("is-danger");
+        duracionError.style.display = "none";
       }
 
       if (!valido) {
