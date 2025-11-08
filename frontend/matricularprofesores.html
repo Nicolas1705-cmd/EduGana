@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Matrícula de Profesor - Bulma</title>
+    <title>Formulario de Matrícula de Profesor - EDUGANA</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <style>
@@ -11,12 +11,42 @@
         .container {
             margin-top: 30px;
             margin-bottom: 50px;
-            max-width: 700px; 
+            max-width: 700px;
+        }
+        /* Estilo para la cabecera (Navbar) con el color exacto */
+        .navbar.is-edu-blue {
+            /* Usando un color similar al azul vibrante de la imagen */
+            background-color: #004dff; 
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand .navbar-item {
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        .navbar-brand .navbar-item:hover {
+            background-color: transparent;
+            color: #d1e4ff;
+        }
+        /* Estilo para espaciar los botones en modo vertical forzado */
+        .vertical-buttons .control {
+            margin-bottom: 10px; 
         }
     </style>
 </head>
 <body>
 
+<nav class="navbar is-edu-blue" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+            <span class="icon is-medium mr-2">
+                <i class="fas fa-graduation-cap"></i>
+            </span>
+            EDUGANA
+        </a>
+    </div>
+</nav>
 <div class="container">
     <div class="box">
         <h1 class="title is-3 has-text-centered has-text-info">🧑‍🏫 Matrícula de Profesor</h1>
@@ -122,7 +152,7 @@
 
             <hr>
             
-            <h2 class="title is-5 is-size-6-mobile mb-4">3. Datos Laborales y Matrícula</h2>
+            <h2 class="title is-5 is-size-6-mobile mb-4">3. Datos Laborales</h2>
             <div class="columns is-multiline">
                 
                 <div class="column is-full">
@@ -134,54 +164,34 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <hr>
 
+            <h2 class="title is-5 is-size-6-mobile mb-4">4. Colegios y Asignación</h2>
+            <div class="columns is-multiline">
                 <div class="column is-half">
                     <div class="field">
-                        <label class="label" for="nivel_asignado">Nivel Asignado</label>
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select id="nivel_asignado" name="nivel_asignado" required>
-                                    <option value="" disabled selected>Seleccione un nivel</option>
-                                    <option value="inicial">Inicial</option>
-                                    <option value="primaria">Primaria</option>
-                                    <option value="secundaria">Secundaria</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="column is-half">
-                    <div class="field">
-                        <label class="label" for="fecha_contratacion">Fecha de Contratación</label>
-                        <div class="control">
-                            <input class="input" type="date" id="fecha_contratacion" name="fecha_contratacion" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="column is-half">
-                    <div class="field">
-                        <label class="label" for="activo">Estado</label>
-                        <div class="control">
-                            <label class="radio">
-                                <input type="radio" name="activo" value="true" checked>
-                                Contratado (Activo)
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="activo" value="false">
-                                Inactivo
-                            </label>
+                        <label class="label" for="colegio">Colegio Asignado</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Colegio Ejemplo S.A." id="colegio" name="colegio" required>
+                            <span class="icon is-small is-left"><i class="fas fa-building"></i></span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="column is-half">
                     <div class="field">
-                        <label class="label" for="fecha_registro">Fecha de Registro</label>
-                        <div class="control has-icons-left">
-                            <input class="input is-static" type="text" value="Sistema - HOY" id="fecha_registro" name="fecha_registro" readonly>
-                            <span class="icon is-small is-left"><i class="fas fa-calendar-alt"></i></span>
+                        <label class="label" for="turno">Turno Asignado</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="turno" name="turno" required>
+                                    <option value="" disabled selected>Seleccione el turno</option>
+                                    <option value="manana">Mañana</option>
+                                    <option value="tarde">Tarde</option>
+                                    <option value="completo">Completo</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,18 +199,22 @@
 
             <hr class="mt-4">
 
-            <div class="field is-grouped is-grouped-centered" style="margin-top: 40px;">
-                <div class="control">
-                    <button class="button is-info is-large" type="submit">
-                        <span class="icon is-medium"><i class="fas fa-user-plus"></i></span>
-                        <span>Matricular Profesor</span>
-                    </button>
+            <div class="columns is-mobile is-centered is-multiline vertical-buttons" style="margin-top: 40px;">
+                <div class="column is-full-mobile is-half-tablet is-one-third-desktop has-text-centered">
+                    <div class="control">
+                        <button class="button is-info is-large is-fullwidth" type="submit">
+                            <span class="icon is-medium"><i class="fas fa-user-plus"></i></span>
+                            <span>Matricular Profesor</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="control">
-                    <button class="button is-light is-large" type="reset">
-                        <span class="icon is-medium"><i class="fas fa-eraser"></i></span>
-                        <span>Limpiar Formulario</span>
-                    </button>
+                <div class="column is-full-mobile is-half-tablet is-one-third-desktop has-text-centered">
+                    <div class="control">
+                        <button class="button is-light is-large is-fullwidth" type="reset">
+                            <span class="icon is-medium"><i class="fas fa-eraser"></i></span>
+                            <span>Limpiar Formulario</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
