@@ -117,6 +117,14 @@
             text-align: center;
         }
 
+        .recompensa-card-main .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
         .recompensa-card-main .card-title {
             font-size: 1.5rem;
             font-weight: bold;
@@ -711,18 +719,18 @@
                 
                 // Datos de ejemplo para pruebas (quitar cuando tengas la API real)
                 recompensasData = [
-                    { id: 1, nombre: 'Audífonos Bluetooth', descripcion: 'Audífonos inalámbricos premium con cancelación de ruido', puntos: 800, disponible: true, icono: 'fa-headphones' },
-                    { id: 2, nombre: 'Tablet 10"', descripcion: 'Tablet Android 10 pulgadas, 64GB, ideal para estudiar', puntos: 3500, disponible: true, icono: 'fa-tablet-alt' },
-                    { id: 3, nombre: 'Smartphone', descripcion: 'Celular Android último modelo, 128GB, cámara HD', puntos: 5000, disponible: false, icono: 'fa-mobile-alt' },
-                    { id: 4, nombre: 'Laptop Gamer', descripcion: 'Laptop 15" Intel i7, 16GB RAM, ideal para programar', puntos: 8500, disponible: true, icono: 'fa-laptop' },
-                    { id: 5, nombre: 'Mouse Gamer RGB', descripcion: 'Mouse inalámbrico con iluminación RGB y 6 botones', puntos: 350, disponible: true, icono: 'fa-computer-mouse' },
-                    { id: 6, nombre: 'Teclado Mecánico', descripcion: 'Teclado mecánico retroiluminado para gaming y programación', puntos: 600, disponible: true, icono: 'fa-keyboard' },
-                    { id: 7, nombre: 'Smartwatch', descripcion: 'Reloj inteligente con monitor de actividad y notificaciones', puntos: 1200, disponible: true, icono: 'fa-clock' },
-                    { id: 8, nombre: 'Webcam Full HD', descripcion: 'Cámara web 1080p con micrófono incorporado', puntos: 450, disponible: true, icono: 'fa-video' },
-                    { id: 9, nombre: 'Mochila Antirrobo', descripcion: 'Mochila para laptop con puerto USB y seguridad antirrobo', puntos: 280, disponible: true, icono: 'fa-backpack' },
-                    { id: 10, nombre: 'Curso Premium', descripcion: 'Acceso a curso online de tu elección por 6 meses', puntos: 500, disponible: true, icono: 'fa-graduation-cap' },
-                    { id: 11, nombre: 'Gift Card $50', descripcion: 'Tarjeta de regalo de $50 para tiendas online', puntos: 2000, disponible: true, icono: 'fa-gift-card' },
-                    { id: 12, nombre: 'Consola Nintendo Switch', descripcion: 'Consola de videojuegos Nintendo Switch + juego incluido', puntos: 6000, disponible: false, icono: 'fa-gamepad' }
+                    { id: 1, nombre: 'Audífonos Bluetooth', descripcion: 'Audífonos inalámbricos premium con cancelación de ruido', puntos: 800, disponible: true, icono: 'fa-headphones', imagen: './img/audifonos.jpg' },
+                    { id: 2, nombre: 'Tablet 10"', descripcion: 'Tablet Android 10 pulgadas, 64GB, ideal para estudiar', puntos: 3500, disponible: true, icono: 'fa-tablet-alt', imagen: './img/tablet.jpg' },
+                    { id: 3, nombre: 'Smartphone', descripcion: 'Celular Android último modelo, 128GB, cámara HD', puntos: 5000, disponible: false, icono: 'fa-mobile-alt', imagen: './img/smartphone.jpg' },
+                    { id: 4, nombre: 'Laptop Gamer', descripcion: 'Laptop 15" Intel i7, 16GB RAM, ideal para programar', puntos: 8500, disponible: true, icono: 'fa-laptop', imagen: './img/laptop.jpg' },
+                    { id: 5, nombre: 'Mouse Gamer RGB', descripcion: 'Mouse inalámbrico con iluminación RGB y 6 botones', puntos: 350, disponible: true, icono: 'fa-computer-mouse', imagen: './img/mouse.jpg' },
+                    { id: 6, nombre: 'Teclado Mecánico', descripcion: 'Teclado mecánico retroiluminado para gaming y programación', puntos: 600, disponible: true, icono: 'fa-keyboard', imagen: './img/teclado.jpg' },
+                    { id: 7, nombre: 'Smartwatch', descripcion: 'Reloj inteligente con monitor de actividad y notificaciones', puntos: 1200, disponible: true, icono: 'fa-clock', imagen: './img/smartwatch.jpg' },
+                    { id: 8, nombre: 'Webcam Full HD', descripcion: 'Cámara web 1080p con micrófono incorporado', puntos: 450, disponible: true, icono: 'fa-video', imagen: './img/webcam.jpg' },
+                    { id: 9, nombre: 'Mochila Antirrobo', descripcion: 'Mochila para laptop con puerto USB y seguridad antirrobo', puntos: 280, disponible: true, icono: 'fa-backpack', imagen: './img/mochila.jpg' },
+                    { id: 10, nombre: 'Curso Premium', descripcion: 'Acceso a curso online de tu elección por 6 meses', puntos: 500, disponible: true, icono: 'fa-graduation-cap', imagen: './img/curso.jpg' },
+                    { id: 11, nombre: 'Gift Card $50', descripcion: 'Tarjeta de regalo de $50 para tiendas online', puntos: 2000, disponible: true, icono: 'fa-gift-card', imagen: './img/giftcard.jpg' },
+                    { id: 12, nombre: 'Consola Nintendo Switch', descripcion: 'Consola de videojuegos Nintendo Switch + juego incluido', puntos: 6000, disponible: false, icono: 'fa-gamepad', imagen: './img/consola.jpg' }
                 ];
                 recompensasFiltradas = [...recompensasData];
                 mostrarRecompensas();
@@ -769,6 +777,20 @@
                 card.className = cardClass;
                 
                 const icono = recompensa.icono || 'fa-gift';
+                const imagenUrl = recompensa.imagen || '';
+                
+                // Usar imagen si está disponible, sino usar ícono
+                let contenidoVisual = '';
+                if (imagenUrl) {
+                    contenidoVisual = `<img src="${imagenUrl}" alt="${recompensa.nombre}" class="card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="card-icon" style="display: none;">
+                        <i class="fas ${icono}"></i>
+                    </div>`;
+                } else {
+                    contenidoVisual = `<div class="card-icon">
+                        <i class="fas ${icono}"></i>
+                    </div>`;
+                }
                 
                 let botonHtml = '';
                 if (!recompensa.disponible) {
@@ -809,9 +831,7 @@
                 }
                 
                 card.innerHTML = `
-                    <div class="card-icon">
-                        <i class="fas ${icono}"></i>
-                    </div>
+                    ${contenidoVisual}
                     <div class="card-title">${recompensa.nombre}</div>
                     <div class="card-description">${recompensa.descripcion}</div>
                     <div class="card-points">
