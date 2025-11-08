@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Control de Asistencias - Colegio San Marcos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v6.4.2/js/all.js"></script>
+    <style>
+
+        /* Estilos de la barra de título moderna (Degradado MORADO/AZUL) */
+        .page-header {
+            margin-bottom: 2rem;
+            /* Degradado morado/azul */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            border-radius: 0px 0px 12px 12px; 
+            padding: 2rem;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .page-header .title,
+        .page-header .subtitle {
+            color: white !important;
+        }
+
+        .page-header .icon-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        /* 1. ESTILOS GLOBALES */
+        body {
+            background-color: #f5f5f5;
+            padding-top: 0; 
+        }
+        
+        .main-content {
+            padding-top: 0px;
+            padding-bottom: 30px;
+        }
+        
+        /* Ajuste de color del box de registro */
+        .box.has-background-white-ter {
+            background-color: white !important; 
+            box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+        }
+        
+        /* Color del botón principal (Mantenemos el verde menta) */
+        .button.is-primary {
+            background-color: #00d1b2; 
+            border-color: transparent;
+            color: #fff;
+        }
+        .button.is-primary:hover {
+            background-color: #00b89c; 
+        }
+
+        /* Estilos para el bloque de estadísticas (SOLO ÍCONO) */
+        .user-stats {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50px;
+            padding: 0.75rem; /* Ajuste para hacerlo más pequeño al no tener texto */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px; /* Tamaño fijo para que se vea como un botón de ícono */
+            height: 50px;
+        }
+        .user-stats .icon {
+            font-size: 1.6rem;
+        }
+        
+        /* Estilos de Media Queries para el header en móviles */
+        @media screen and (max-width: 768px) {
+            .page-header .level { display: block !important; text-align: center; }
+            .page-header .level-left, .page-header .level-right { margin-bottom: 1rem; text-align: center; }
+            .page-header .level-item { display: block; margin-bottom: 0.5rem; }
+            .page-header .title.is-2 { font-size: 1.3rem; }
+            .page-header .subtitle.is-5 { font-size: 0.95rem; }
+            .page-header { padding: 1.25rem 1rem; }
+            /* Centrar el ícono en vista móvil */
+            .level-right { 
+                justify-content: center;
+                display: flex; 
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="page-header">
+        <div class="container">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        <div>
+                            <h1 class="title is-2">
+                                <span class="icon-text">
+                                    <span class="icon has-text-white mr-3">
+                                        <i class="fas fa-calendar-check fa-lg"></i>
+                                    </span>
+                                    <span>Sistema de Control de Asistencias | Colegio San Marcos</span>
+                                </span>
+                            </h1>
+                            <p class="subtitle is-5 mt-2">EDUGANA</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="level-right">
+                    <div class="level-item">
+                        <div class="user-stats">
+                            <span class="icon">
+                                <i class="fas fa-coins"></i> </span>
+                            </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container main-content">
+        <div class="columns">
+
+            <div class="column is-one-third">
+                <div class="box has-background-white-ter">
+                    <h2 class="title is-5 has-text-centered">👤 Registrar Entrada</h2>
+                    <p class="subtitle is-7 has-text-centered mb-4">Ingresa el ID del **empleado/estudiante** para marcar asistencia.</p>
+
+                    <form action="#" method="POST">
+                        
+                        <div class="field">
+                            <label class="label" for="registro_id">ID *</label>
+                            <div class="control has-icons-left">
+                                <input class="input is-large" type="text" id="registro_id" name="registro_id" placeholder="Ej. A00123" required autofocus>
+                                <span class="icon is-left">
+                                    <i class="fas fa-id-card"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field mt-5">
+                            <div class="control">
+                                <button class="button is-primary is-fullwidth" type="submit">
+                                    <span class="icon"><i class="fas fa-clock"></i></span>
+                                    <span>Marcar Asistencia</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-light is-fullwidth" type="reset">
+                                    <span>Limpiar Campo</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="column is-two-thirds">
+                <div class="box">
+                    <h2 class="title is-5 has-text-centered has-text-success">✅ Asistencias del Día</h2>
+                    
+                    <div class="field has-addons mb-4">
+                        <div class="control has-icons-left is-expanded">
+                            <input class="input" type="text" placeholder="Buscar por Nombre o ID...">
+                            <span class="icon is-left"><i class="fas fa-search"></i></span>
+                        </div>
+                        <div class="control">
+                            <div class="select">
+                                <select>
+                                    <option>Mostrar todos</option>
+                                    <option>Entrada</option>
+                                    <option>Salida</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="table is-striped is-hoverable is-fullwidth">
+                            
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre Completo</th>
+                                    <th><abbr title="ID">ID</abbr></th>
+                                    <th><abbr title="Estado">Estado</abbr></th>
+                                    <th>Hora</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Ana Lucía Flores</td>
+                                    <td>A00123</td>
+                                    <td><span class="tag is-success">Presente</span></td>
+                                    <td>07:58 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Carlos Miguel Pérez</td>
+                                    <td>C00456</td>
+                                    <td><span class="tag is-warning">Tarde</span></td>
+                                    <td>08:10 AM</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Diana Sofía Herrera</td>
+                                    <td>D00789</td>
+                                    <td><span class="tag is-danger">Ausente</span></td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Ernesto Gómez Paz</td>
+                                    <td>E01011</td>
+                                    <td><span class="tag is-info">Presente</span></td>
+                                    <td>05:05 PM</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+</html>
