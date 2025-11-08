@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Completo de Registro de Colegio - Bulma</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style>
+        /* Estilos para centrar y limitar el ancho del formulario */
+        .container {
+            margin-top: 30px;
+            margin-bottom: 50px;
+            max-width: 700px; /* Aumentamos el ancho para que quepan más campos */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="box">
+        <h1 class="title is-3 has-text-centered has-text-primary">🏫 Registro Completo de Colegio</h1>
+        <hr>
+
+        <form action="#" method="POST">
+
+            <h2 class="title is-5 is-size-6-mobile mb-4">1. Identificación y Código</h2>
+            <div class="columns is-multiline">
+                
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="id_colegio">ID de Colegio (Sistema)</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-static" type="text" value="Automático" id="id_colegio" name="id_colegio" readonly>
+                            <span class="icon is-small is-left"><i class="fas fa-key"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="nombre">Nombre del Colegio</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="I.E.P. Ejemplo" id="nombre" name="nombre" required>
+                            <span class="icon is-small is-left"><i class="fas fa-building"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="codigo">Código Modular / RUC</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Ej: 12345678901" id="codigo" name="codigo" required>
+                            <span class="icon is-small is-left"><i class="fas fa-hashtag"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="tipo_colegio">Tipo de Gestión</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="tipo_colegio" name="tipo_colegio" required>
+                                    <option value="" disabled selected>Seleccione</option>
+                                    <option value="publico">Público</option>
+                                    <option value="privado">Privado</option>
+                                    <option value="cooperativo">Cooperativo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <hr>
+
+            <h2 class="title is-5 is-size-6-mobile mb-4">2. Ubicación Geográfica</h2>
+            <div class="field">
+                <label class="label" for="direccion">Dirección Completa</label>
+                <div class="control has-icons-left">
+                    <input class="input" type="text" placeholder="Av. Los Tulipanes 456" id="direccion" name="direccion" required>
+                    <span class="icon is-small is-left"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label" for="departamento">Departamento</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Ej: Piura" id="departamento" name="departamento" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label" for="provincia">Provincia</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Ej: Sullana" id="provincia" name="provincia" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label" for="distrito">Distrito</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Ej: Bellavista" id="distrito" name="distrito" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <h2 class="title is-5 is-size-6-mobile mb-4">3. Contacto y Director</h2>
+            <div class="columns is-multiline">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="telefono">Teléfono</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="tel" placeholder="(+51) 987 654 321" id="telefono" name="telefono">
+                            <span class="icon is-small is-left"><i class="fas fa-phone"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="email">Email Institucional</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="email" placeholder="contacto@colegio.edu.pe" id="email" name="email" required>
+                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-full">
+                    <div class="field">
+                        <label class="label" for="director">Nombre del Director/a</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Lic. María Torres" id="director" name="director" required>
+                            <span class="icon is-small is-left"><i class="fas fa-user-tie"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            
+            <h2 class="title is-5 is-size-6-mobile mb-4">4. Detalles Operacionales</h2>
+            <div class="columns is-multiline">
+                
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="nivel_educativo">Nivel Educativo</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="nivel_educativo" name="nivel_educativo" required>
+                                    <option value="" disabled selected>Seleccione un nivel</option>
+                                    <option value="inicial">Inicial</option>
+                                    <option value="primaria">Primaria</option>
+                                    <option value="secundaria">Secundaria</option>
+                                    <option value="mixto">Mixto (P. y S.)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="fecha_fundacion">Fecha de Fundación</label>
+                        <div class="control">
+                            <input class="input" type="date" id="fecha_fundacion" name="fecha_fundacion">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="numero_aulas">Número de Aulas</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="number" placeholder="Ej: 15" id="numero_aulas" name="numero_aulas" min="1" required>
+                            <span class="icon is-small is-left"><i class="fas fa-chalkboard"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="capacidad_estudiantes">Capacidad de Estudiantes</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="number" placeholder="Ej: 600" id="capacidad_estudiantes" name="capacidad_estudiantes" min="1" required>
+                            <span class="icon is-small is-left"><i class="fas fa-user-graduate"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <h2 class="title is-5 is-size-6-mobile mb-4">5. Administración del Registro</h2>
+            <div class="columns is-multiline">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="activo">Estado Operativo</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="activo" value="true" checked>
+                                Activo
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="activo" value="false">
+                                Inactivo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="fecha_registro">Fecha de Registro</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-static" type="text" value="Sistema - HOY" id="fecha_registro" name="fecha_registro" readonly>
+                            <span class="icon is-small is-left"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mt-4">
+
+            <div class="field is-grouped is-grouped-centered" style="margin-top: 40px;">
+                <div class="control">
+                    <button class="button is-primary is-large" type="submit">
+                        <span class="icon is-medium"><i class="fas fa-check-circle"></i></span>
+                        <span>Guardar Registro</span>
+                    </button>
+                </div>
+                <div class="control">
+                    <button class="button is-light is-large" type="reset">
+                        <span class="icon is-medium"><i class="fas fa-times-circle"></i></span>
+                        <span>Cancelar</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
