@@ -45,7 +45,7 @@
         .page-header {
             margin-bottom: 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 0px 0px 12px 12px;
+            border-radius: 0;
             padding: 1.5rem 2rem;
             color: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -104,6 +104,43 @@
         /* Contenedor del contenido */
         .content-wrapper {
             padding: 2rem 1.5rem;
+        }
+
+        /* Estilos para tarjetas móvil simplificadas */
+        .mobile-card {
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: white;
+        }
+
+        .mobile-card-date {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #363636;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f5f5f5;
+        }
+
+        .mobile-card-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.25rem 0;
+        }
+
+        .mobile-card-label {
+            font-weight: 600;
+            color: #7a7a7a;
+            font-size: 0.875rem;
+        }
+
+        .mobile-card-value {
+            color: #363636;
+            font-size: 0.875rem;
+            text-align: right;
         }
 
         /* Media Queries específicas para el encabezado */
@@ -366,96 +403,143 @@
 
                     <hr>
 
-                    <!-- TARJETAS MÓVIL -->
+                    <!-- TARJETAS MÓVIL SIMPLIFICADAS -->
                     <div class="is-hidden-desktop">
                         <h2 class="title is-5">Resumen de Registros</h2>
                         
                         <!-- Tarjeta 1: Entrada -->
-                        <div class="box card-row has-background-light">
-                            <p class="is-size-5 has-text-weight-bold has-text-primary"><i class="fas fa-calendar-alt"></i> 2025-11-06</p>
-                            <hr class="my-2">
-                            <p class="heading">Nombres:</p>
-                            <p class="subtitle is-6">Juan Pérez</p>
-                            <p class="heading">ID.Reg:</p>
-                            <p class="subtitle is-6">15432</p>
-                            <div class="columns is-mobile">
-                                <div class="column is-half">
-                                    <p class="heading">Movimiento:</p>
-                                    <p class="subtitle is-6"><span class="tag is-success is-large">Entrada</span></p>
-                                </div>
-                                <div class="column is-half">
-                                    <p class="heading">Hora:</p>
-                                    <p class="subtitle is-6 has-text-weight-bold">08:00:15</p>
-                                </div>
+                        <div class="mobile-card">
+                            <div class="mobile-card-date">
+                                <i class="fas fa-calendar-alt"></i> 2025-11-06
                             </div>
-                            <p class="heading">Colegio:</p>
-                            <p class="is-size-6">San José Obrero</p>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Nombres:</span>
+                                <span class="mobile-card-value">Juan Pérez</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">ID.Reg:</span>
+                                <span class="mobile-card-value">15432</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Movimiento:</span>
+                                <span class="mobile-card-value"><span class="tag is-success">Entrada</span></span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Hora:</span>
+                                <span class="mobile-card-value">08:00:15</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Colegio:</span>
+                                <span class="mobile-card-value">San José Obrero</span>
+                            </div>
                         </div>
 
                         <!-- Tarjeta 2: Salida -->
-                        <div class="box card-row has-background-info-light">
-                            <p class="is-size-5 has-text-weight-bold has-text-info-dark"><i class="fas fa-calendar-alt"></i> 2025-11-06</p>
-                            <hr class="my-2">
-                            <p class="heading">Nombres:</p>
-                            <p class="subtitle is-6">Juan Pérez</p>
-                            <p class="heading">ID.Reg:</p>
-                            <p class="subtitle is-6">15433</p>
-                            <div class="columns is-mobile">
-                                <div class="column is-half">
-                                    <p class="heading">Movimiento:</p>
-                                    <p class="subtitle is-6"><span class="tag is-info is-large">Salida</span></p>
-                                </div>
-                                <div class="column is-half">
-                                    <p class="heading">Hora:</p>
-                                    <p class="subtitle is-6 has-text-weight-bold">17:01:30</p>
-                                </div>
+                        <div class="mobile-card">
+                            <div class="mobile-card-date">
+                                <i class="fas fa-calendar-alt"></i> 2025-11-06
                             </div>
-                            <p class="heading">Colegio:</p>
-                            <p class="is-size-6">San José Obrero</p>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Nombres:</span>
+                                <span class="mobile-card-value">Juan Pérez</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">ID.Reg:</span>
+                                <span class="mobile-card-value">15433</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Movimiento:</span>
+                                <span class="mobile-card-value"><span class="tag is-info">Salida</span></span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Hora:</span>
+                                <span class="mobile-card-value">17:01:30</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Colegio:</span>
+                                <span class="mobile-card-value">San José Obrero</span>
+                            </div>
                         </div>
 
                         <!-- Tarjeta 3: Entrada -->
-                        <div class="box card-row has-background-success-light">
-                            <p class="is-size-5 has-text-weight-bold has-text-success-dark"><i class="fas fa-calendar-alt"></i> 2025-11-07</p>
-                            <hr class="my-2">
-                            <p class="heading">Nombres:</p>
-                            <p class="subtitle is-6">Ana Gómez</p>
-                            <p class="heading">ID.Reg:</p>
-                            <p class="subtitle is-6">15434</p>
-                            <div class="columns is-mobile">
-                                <div class="column is-half">
-                                    <p class="heading">Movimiento:</p>
-                                    <p class="subtitle is-6"><span class="tag is-success is-large">Entrada</span></p>
-                                </div>
-                                <div class="column is-half">
-                                    <p class="heading">Hora:</p>
-                                    <p class="subtitle is-6 has-text-weight-bold">08:35:45</p>
-                                </div>
+                        <div class="mobile-card">
+                            <div class="mobile-card-date">
+                                <i class="fas fa-calendar-alt"></i> 2025-11-07
                             </div>
-                            <p class="heading">Colegio:</p>
-                            <p class="is-size-6">Santa Úrsula</p>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Nombres:</span>
+                                <span class="mobile-card-value">Ana Gómez</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">ID.Reg:</span>
+                                <span class="mobile-card-value">15434</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Movimiento:</span>
+                                <span class="mobile-card-value"><span class="tag is-success">Entrada</span></span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Hora:</span>
+                                <span class="mobile-card-value">08:35:45</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Colegio:</span>
+                                <span class="mobile-card-value">Santa Úrsula</span>
+                            </div>
                         </div>
 
                         <!-- Tarjeta 4: Ausente -->
-                        <div class="box card-row has-background-danger-light">
-                            <p class="is-size-5 has-text-weight-bold has-text-danger-dark"><i class="fas fa-calendar-alt"></i> 2025-11-08</p>
-                            <hr class="my-2">
-                            <p class="heading">Nombres:</p>
-                            <p class="subtitle is-6">Ana Gómez</p>
-                            <p class="heading">ID.Reg:</p>
-                            <p class="subtitle is-6">---</p>
-                            <div class="columns is-mobile">
-                                <div class="column is-half">
-                                    <p class="heading">Movimiento:</p>
-                                    <p class="subtitle is-6"><span class="tag is-danger is-large">Ausente</span></p>
-                                </div>
-                                <div class="column is-half">
-                                    <p class="heading">Hora:</p>
-                                    <p class="subtitle is-6 has-text-weight-bold">- - -</p>
-                                </div>
+                        <div class="mobile-card">
+                            <div class="mobile-card-date">
+                                <i class="fas fa-calendar-alt"></i> 2025-11-08
                             </div>
-                            <p class="heading">Colegio:</p>
-                            <p class="is-size-6">Santa Úrsula</p>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Nombres:</span>
+                                <span class="mobile-card-value">Ana Gómez</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">ID.Reg:</span>
+                                <span class="mobile-card-value">---</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Movimiento:</span>
+                                <span class="mobile-card-value"><span class="tag is-danger">Ausente</span></span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Hora:</span>
+                                <span class="mobile-card-value">- - -</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Colegio:</span>
+                                <span class="mobile-card-value">Santa Úrsula</span>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta 5: Salida -->
+                        <div class="mobile-card">
+                            <div class="mobile-card-date">
+                                <i class="fas fa-calendar-alt"></i> 2025-11-09
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Nombres:</span>
+                                <span class="mobile-card-value">Luis Torres</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">ID.Reg:</span>
+                                <span class="mobile-card-value">15435</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Movimiento:</span>
+                                <span class="mobile-card-value"><span class="tag is-info">Salida</span></span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Hora:</span>
+                                <span class="mobile-card-value">15:45:00</span>
+                            </div>
+                            <div class="mobile-card-row">
+                                <span class="mobile-card-label">Colegio:</span>
+                                <span class="mobile-card-value">Teresa de la Cuna</span>
+                            </div>
                         </div>
                         
                         <div class="has-text-centered mt-4">
