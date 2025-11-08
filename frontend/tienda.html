@@ -3,246 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Edugana | Registro de Tienda</title>
+    <title>Edugana | Matricular Tienda</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <link rel="stylesheet" href="tienda.css"> 
+    
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
-
-    <style>
-        /* Variables de Color para fácil edición */
-        :root {
-            --primary-color: #00d1b2; /* Cian original de Bulma (Botón Principal) */
-            --accent-color: #3298dc; /* Azul agradable (Logo, Navbar, Focus) */
-            --light-bg: #f9fbfd; /* Fondo de la app, muy suave */
-            --white-card-bg: #ffffff; 
-            --border-color: #e0e6ed; 
-            --text-dark: #363636;
-            --text-medium: #606f7b;
-            --text-light: #a0a0a0;
-            --input-bg: #f5f8fb; 
-            --shadow-light: rgba(0, 0, 0, 0.08);
-            --shadow-medium: rgba(0, 0, 0, 0.15);
-        }
-
-        html, body {
-            height: 100%;
-            background-color: var(--light-bg); 
-            color: var(--text-dark); 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            padding-top: 52px; 
-        }
-        
-        /* 1. NAVBAR SUPERIOR */
-        .navbar {
-            background-color: var(--white-card-bg); 
-            border-bottom: 1px solid var(--border-color); 
-            box-shadow: 0 2px 4px var(--shadow-light); 
-        }
-        .navbar-item {
-            color: var(--text-dark) !important; 
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-        .navbar-item.brand-text { 
-            color: var(--accent-color) !important; 
-        }
-        .navbar-item .icon.brand-icon { 
-            color: var(--accent-color) !important;
-            font-size: 1.2em;
-        }
-
-        /* Contenedor principal que centra el formulario */
-        .app-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 2rem 1rem; 
-            min-height: calc(100vh - 52px); 
-        }
-        
-        /* Contenedor del formulario (.box) */
-        .box {
-            background-color: var(--white-card-bg); 
-            border: none;
-            border-radius: 18px; 
-            box-shadow: 0 10px 30px var(--shadow-medium); 
-            padding: 3rem 2rem; 
-            width: 100%;
-            max-width: 480px; 
-        }
-
-        /* LOGO Y ENCABEZADO */
-        .header-content {
-            text-align: center;
-            margin-bottom: 2.5rem; 
-        }
-        .logo-placeholder {
-            display: inline-flex; 
-            justify-content: center;
-            align-items: center;
-            width: 70px; 
-            height: 70px;
-            background-color: var(--accent-color); 
-            border-radius: 50%;
-            margin-bottom: 1.2rem;
-            font-size: 2.2rem; 
-            color: var(--white-card-bg); 
-            box-shadow: 0 5px 15px rgba(50, 152, 220, 0.4); 
-        }
-
-        /* Títulos */
-        .title {
-            color: var(--text-dark) !important; 
-            font-size: 1.8rem !important; 
-            font-weight: 700;
-            margin-bottom: 0.35rem !important;
-        }
-        .subtitle {
-            font-size: 0.9rem !important;
-            color: var(--text-medium) !important; 
-            margin-bottom: 0 !important;
-        }
-
-        /* Bloques de Formulario (campos y sus etiquetas) */
-        .field {
-            margin-bottom: 1.5rem; 
-        }
-        .field:last-of-type { 
-            margin-bottom: 2rem;
-        }
-
-        /* Etiquetas */
-        .label {
-            color: var(--text-medium) !important; 
-            font-weight: 600; 
-            margin-bottom: 0.6rem; 
-            font-size: 0.95rem;
-        }
-
-        /* Campos de Entrada (Input, Select, File) */
-        .input, .select select, .textarea {
-            background-color: var(--input-bg); 
-            border: 1px solid var(--border-color); 
-            color: var(--text-dark); 
-            border-radius: 10px; 
-            transition: all 0.3s ease;
-            padding-left: 1.25em; 
-            height: 3.0em; 
-            font-size: 1rem;
-        }
-
-        /* Estilos específicos para el campo de Archivo (File) */
-        .file-cta {
-            background-color: var(--accent-color); /* Color de acento para el botón de archivo */
-            border-color: transparent;
-            color: var(--white-card-bg);
-            border-radius: 8px;
-            font-weight: 600;
-            height: 3.2em; /* Altura generosa */
-            padding-left: 1.5em;
-            padding-right: 1.5em;
-        }
-
-        .file-name {
-            border-radius: 8px;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-medium);
-            padding-left: 1em;
-            padding-right: 1em;
-            height: 3.2em;
-            font-size: 0.95rem;
-        }
-        
-        /* Focus en los Inputs */
-        .input:focus, .select select:focus, .textarea:focus {
-            border-color: var(--accent-color) !important; 
-            box-shadow: 0 0 0 0.15em rgba(50, 152, 220, 0.2); 
-        }
-
-        /* Íconos en Inputs */
-        .control.has-icons-left .icon, .control.has-icons-right .icon {
-            color: var(--text-light); 
-        }
-        .control.has-icons-left .input:focus + .icon {
-            color: var(--accent-color) !important; 
-        }
-        .input.is-success {
-            border-color: #48c78e !important; 
-            box-shadow: 0 0 0 0.15em rgba(72, 199, 142, 0.25) !important;
-        }
-        .help.is-success {
-            color: #48c78e !important;
-        }
-        
-        /* Enlaces */
-        a {
-            color: var(--accent-color); 
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        /* Separador (hr) */
-        hr {
-            background-color: var(--border-color);
-            height: 1px;
-            margin: 2.5rem 0; 
-        }
-        
-        /* Botones (Centrado mejorado para móvil) */
-        .footer-buttons {
-            display: flex;
-            justify-content: center; 
-            gap: 15px; 
-            margin-top: 3rem; 
-        }
-        .footer-buttons .control {
-            flex-grow: 1;
-            max-width: 50%;
-        }
-        .button {
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            height: 3.2em; 
-            width: 100%; 
-            font-size: 1.05rem; 
-        }
-        .button.is-primary {
-            background-color: var(--primary-color); 
-            border-color: transparent;
-            box-shadow: 0 5px 15px rgba(0, 209, 178, 0.35); 
-            color: var(--white-card-bg); 
-        }
-        .button.is-light {
-            background-color: var(--input-bg); 
-            color: var(--text-medium); 
-            border: 1px solid var(--border-color);
-            box-shadow: none;
-        }
-    </style>
+    
 </head>
 <body>
 
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item is-size-5" href="#">
-          <span class="icon brand-icon mr-2"><i class="fas fa-graduation-cap"></i></span>
-          <span class="brand-text">Edugana</span>
-        </a>
-      </div>
-    </nav>
-    
+    <div class="top-header-degraded">
+        <div class="container is-fluid">
+            <div class="level is-mobile pt-3 pb-3">
+                <div class="level-left">
+                    <div class="level-item">
+                        <span class="icon is-large mr-3 has-text-white">
+                            <i class="fas fa-store fa-2x"></i> </span>
+                        <h1 class="title is-4 has-text-white mb-0">Matricular Tiendas</h1>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <span class="navbar-item has-text-white-ter is-size-6">EduGana</span>
+                        <span class="icon is-large has-text-white">
+                            <i class="fas fa-coins fa-lg"></i> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="app-container">
         <div class="box">
             
-            <div class="header-content">
-                <div class="logo-placeholder"><i class="fas fa-store"></i></div> 
-                <h1 class="title is-4">Registro de Tiendas</h1>
-                <p class="subtitle is-6">Crea tu cuenta para administrar tu negocio.</p>
+            <div class="header-content-simple">
+                <p class="subtitle is-6 has-text-centered">Complete la siguiente información para formalizar la inscripción.</p>
             </div>
             
             <form action="#" method="POST" enctype="multipart/form-data">
+                <h2 class="section-title">Datos de la Tienda</h2>
 
                 <div class="field">
                     <label class="label">Nombre de la Tienda <span class="has-text-danger">(*)</span></label>
@@ -251,13 +51,20 @@
                     </div>
                 </div>
 
-                <div class="field">
-                    <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
-                    <div class="control has-icons-left">
-                        <input class="input" type="email" placeholder="contacto@tutienda.com" required>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-envelope"></i>
-                        </span>
+                <div class="field is-grouped is-grouped-multiline">
+                    <div class="field control is-expanded">
+                        <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="email" placeholder="contacto@tutienda.com" required>
+                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                        </div>
+                    </div>
+                    <div class="field control is-expanded">
+                        <label class="label">Teléfono de Contacto <span class="has-text-danger">(*)</span></label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="tel" placeholder="Ej: +51 987 654 321" required>
+                            <span class="icon is-small is-left"><i class="fas fa-phone"></i></span>
+                        </div>
                     </div>
                 </div>
 
@@ -265,46 +72,18 @@
                     <label class="label">Contraseña <span class="has-text-danger">(*)</span></label>
                     <div class="control has-icons-right">
                         <input class="input is-success" type="password" placeholder="Crea una contraseña segura" required>
-                        <span class="icon is-small is-right">
-                            <i class="fas fa-check"></i>
-                        </span>
+                        <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                         <p class="help is-success">Contraseña aceptada</p>
                     </div>
                 </div>
 
-                <div class="field">
-                    <label class="label">Subir Logo o Foto de Tienda (Opcional)</label>
-                    <div class="file is-fullwidth is-boxed">
-                        <label class="file-label">
-                            <input class="file-input" type="file" name="resume" accept="image/*">
-                            <span class="file-cta">
-                                <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">
-                                    Seleccionar archivo...
-                                </span>
-                            </span>
-                            <span class="file-name">
-                                No hay archivo subido
-                            </span>
-                        </label>
-                    </div>
-                </div>
-                <hr>
+                <h2 class="section-title">Ubicación y Logo</h2>
 
                 <div class="field">
-                    <label class="label">Teléfono de Contacto (Opcional)</label>
-                    <div class="control">
-                        <input class="input" type="tel" placeholder="Ej: +51 987 654 321">
-                    </div>
-                </div>
-                
-                <div class="field">
-                    <label class="label">País de Ubicación (Opcional)</label>
+                    <label class="label">País de Ubicación <span class="has-text-danger">(*)</span></label>
                     <div class="control">
                         <div class="select is-fullwidth">
-                            <select>
+                            <select required>
                                 <option value="">Selecciona el país...</option>
                                 <option>Perú</option>
                                 <option>Chile</option>
@@ -315,13 +94,27 @@
                     </div>
                 </div>
 
-                <hr>
+                <div class="field">
+                    <label class="label">Subir Logo de Tienda (Opcional)</label>
+                    <div class="file is-fullwidth is-boxed">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="logo" accept="image/*">
+                            <span class="file-cta">
+                                <span class="file-icon"><i class="fas fa-upload"></i></span>
+                                <span class="file-label">Seleccionar archivo...</span>
+                            </span>
+                            <span class="file-name">No hay archivo subido</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <hr class="form-divider">
 
                 <div class="field">
                     <div class="control">
                         <label class="checkbox">
                             <input type="checkbox" required>
-                            <span class="has-text-danger">(*)</span> Acepto los <a href="#">Términos y Condiciones</a>
+                            <span class="has-text-danger">(*)</span> Acepto los <a href="#">términos y condiciones de matrícula</a>.
                         </label>
                     </div>
                 </div>
@@ -329,13 +122,14 @@
                 <div class="footer-buttons">
                     <div class="control">
                         <button class="button is-primary" type="submit">
-                            <span class="icon is-small"><i class="fas fa-store"></i></span>
+                            <span class="icon"><i class="fas fa-check"></i></span>
                             <span>Matricular Tienda</span>
                         </button>
                     </div>
                     <div class="control">
-                        <button class="button is-light" type="reset">
-                            Cancelar
+                        <button class="button is-danger is-light" type="reset">
+                            <span class="icon"><i class="fas fa-redo-alt"></i></span>
+                            <span>Limpiar Formulario</span>
                         </button>
                     </div>
                 </div>
@@ -345,12 +139,14 @@
     </div>
 
 <script>
-    // Pequeño script para mostrar el nombre del archivo seleccionado
+    // Script para mostrar el nombre del archivo seleccionado (aún necesario en el HTML)
     const fileInput = document.querySelector('.file-input');
     fileInput.onchange = () => {
         if (fileInput.files.length > 0) {
             const fileName = document.querySelector('.file-name');
             fileName.textContent = fileInput.files[0].name;
+        } else {
+            document.querySelector('.file-name').textContent = 'No hay archivo subido';
         }
     }
 </script>
