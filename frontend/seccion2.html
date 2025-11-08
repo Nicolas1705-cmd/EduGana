@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario Técnico Avanzado - Bulma.io</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style>
+        /* Estilos para centrar y limitar el ancho del formulario, dándole el toque "moderno y limpio" */
+        .centered-container {
+            margin-top: 40px;
+            max-width: 650px; /* Un poco más ancho para los campos adicionales */
+        }
+        .box {
+            padding: 2.5rem;
+            border-top: 5px solid #209cee; /* Borde de color Info de Bulma */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un look más moderno */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container centered-container">
+    <div class="box">
+        <h1 class="title is-3 has-text-centered has-text-info">🛠️ Configuración de Cuenta de Sistema</h1>
+        <p class="subtitle is-6 has-text-centered">Define tu identidad y tus preferencias de acceso.</p>
+
+        <form action="#" method="POST">
+
+            <h2 class="subtitle is-5 has-text-weight-bold has-text-grey-dark">1. Identidad y Acceso</h2>
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label" for="user_id">ID de Usuario / Nickname</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-info" type="text" placeholder="Ej: dev_alfa_101" id="user_id" name="user_id" required>
+                            <span class="icon is-small is-left"><i class="fas fa-user-tag"></i></span>
+                        </div>
+                        <p class="help is-info">Identificador único del sistema.</p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label" for="nombre">Nombre Completo</label>
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Tu nombre real" id="nombre" name="nombre" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="password">Contraseña</label>
+                <div class="control has-icons-right">
+                    <input class="input is-success" type="password" placeholder="Contraseña segura" id="password" name="password" required minlength="8">
+                    <span class="icon is-small is-right"><i class="fas fa-lock"></i></span>
+                </div>
+                <p class="help is-success">Mínimo 8 caracteres, al menos una mayúscula y un número.</p>
+            </div>
+            
+            <hr>
+
+            <h2 class="subtitle is-5 has-text-weight-bold has-text-grey-dark">2. Roles y Seguridad</h2>
+
+            <div class="columns">
+                <div class="column is-one-third">
+                    <div class="field">
+                        <label class="label" for="rol">Rol</label>
+                        <div class="control">
+                            <div class="select is-fullwidth is-info">
+                                <select id="rol" name="rol" required>
+                                    <option value="">Selecciona Rol</option>
+                                    <option value="admin">Administrador</option>
+                                    <option value="developer">Desarrollador</option>
+                                    <option value="auditor">Auditor</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-two-thirds">
+                    <div class="field">
+                        <label class="label">Autenticación de Dos Factores (2FA)</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="two_fa" value="enabled">
+                                <span class="icon is-small"><i class="fas fa-shield-alt"></i></span> **Habilitar** (Recomendado)
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="two_fa" value="disabled" checked>
+                                Deshabilitar
+                            </label>
+                        </div>
+                        <p class="help">Aumenta la seguridad de tu cuenta.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="timezone">Zona Horaria Estándar (Obligatorio)</label>
+                <div class="control has-icons-left">
+                    <input class="input" type="text" placeholder="Ej: America/Lima o UTC-5" id="timezone" name="timezone" required>
+                    <span class="icon is-small is-left"><i class="fas fa-clock"></i></span>
+                </div>
+            </div>
+
+            <hr>
+
+            <h2 class="subtitle is-5 has-text-weight-bold has-text-grey-dark">3. Preferencias</h2>
+
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="theme">Tema de Interfaz</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="theme" name="theme">
+                                    <option value="light">Claro (Predeterminado)</option>
+                                    <option value="dark">Oscuro (Dark Mode)</option>
+                                    <option value="system">Sistema</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="telefono">Teléfono (Opcional)</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="tel" placeholder="Para alertas urgentes" id="telefono" name="telefono">
+                            <span class="icon is-small is-left"><i class="fas fa-phone"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="field">
+                <label class="label" for="comments">Comentarios Adicionales (Opcional)</label>
+                <div class="control">
+                    <textarea class="textarea" placeholder="Notas sobre el acceso o requerimientos especiales" id="comments" name="comments"></textarea>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" name="terms" required>
+                        Acepto los <a href="#">**Términos y Políticas**</a> de uso del entorno.
+                    </label>
+                </div>
+            </div>
+
+            <div class="field is-grouped is-grouped-centered" style="margin-top: 30px;">
+                <div class="control">
+                    <button class="button is-info is-large" type="submit">
+                        <span class="icon"><i class="fas fa-user-plus"></i></span>
+                        <span>**Finalizar Registro**</span>
+                    </button>
+                </div>
+                <div class="control">
+                    <button class="button is-light is-large" type="reset">
+                        <span class="icon"><i class="fas fa-redo"></i></span>
+                        <span>Reiniciar</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

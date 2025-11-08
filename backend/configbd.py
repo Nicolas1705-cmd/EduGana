@@ -1,3 +1,5 @@
+from flask import Flask, request, jsonify
+from flask_bcrypt import Bcrypt
 import psycopg2
 
 # Datos de conexión (ajústalos según tu base)
@@ -5,7 +7,7 @@ DB_NAME = "edugana_db"
 DB_USER = "postgres"
 DB_PASS = "System.2025*"
 DB_HOST = "35.237.18.79"
-DB_PORT = "5432" 
+DB_PORT = "5432"
 
 def get_db_connection():
     """
