@@ -3,52 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Edugana | Registro de Tienda</title>
+    <title>Edugana | Registro de Tienda (Claro)</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
 
     <style>
-        /* Estilos base para Dark Mode y pantalla completa (móvil) */
+        /* Estilos base para Light Mode y pantalla completa (móvil) */
         html, body {
             height: 100%;
-            background-color: #1a1a2e; /* Fondo oscuro y profundo */
-            color: #e0e0e0;
+            background-color: #f0f2f5; /* Fondo muy claro, un gris suave */
+            color: #363636; /* Color de texto oscuro general */
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            /* Importante: Añadir padding al body para que el contenido no quede debajo del navbar fijo */
-            padding-top: 52px; 
+            padding-top: 52px; /* Espacio para el Navbar fijo */
         }
         
         /* 1. BARRA DE NAVEGACIÓN (NAVBAR) */
         .navbar {
-            background-color: #1a1a2e; /* Mismo fondo que el body para integrar */
-            border-bottom: 1px solid #313155; /* Separador sutil */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Sombra para elevarlo */
+            background-color: #ffffff; /* Fondo blanco */
+            border-bottom: 1px solid #dbdbdb; /* Separador sutil gris claro */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Sombra muy suave */
         }
         .navbar-item {
-            color: #f0f0f0 !important;
+            color: #363636 !important; /* Texto oscuro */
             font-weight: 700;
-            font-size: 1.25rem; /* Tamaño de fuente para el título */
+            font-size: 1.25rem;
         }
         .navbar-item.has-text-primary {
-             color: #00d1b2 !important; /* Color de acento para la marca */
+             color: #00d1b2 !important; /* Color de acento (cian) */
         }
 
         /* Contenedor principal que centra y limita el ancho en móviles */
         .app-container {
-            /* Eliminamos min-height: 100vh; si queremos que la página desplace el contenido */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Alinear arriba para que el formulario no esté centrado en el medio de la pantalla */
+            align-items: flex-start;
             padding: 1.5rem 0.75rem; 
         }
         
-        /* Contenedor del formulario (.box) */
+        /* Contenedor del formulario (.box) con diseño Light Mode mejorado */
         .box {
-            background-color: #24243e; 
+            background-color: #ffffff; /* Fondo blanco puro para el contenedor */
             border: none;
             border-radius: 16px; 
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
             padding: 2.5rem 1.5rem; 
             width: 100%;
             max-width: 450px; 
@@ -63,47 +61,81 @@
             display: inline-block;
             width: 60px;
             height: 60px;
-            background-color: #00d1b2; 
+            background-color: #00d1b2; /* Color de acento */
             border-radius: 50%;
             margin-bottom: 1rem;
             line-height: 60px;
             font-size: 1.8rem;
-            color: #24243e;
+            color: #ffffff; /* Ícono blanco sobre acento */
         }
 
         /* Títulos */
         .title {
-            color: #f0f0f0 !important;
+            color: #363636 !important; /* Texto oscuro */
             font-size: 1.6rem !important; 
             font-weight: 700;
             margin-bottom: 0.25rem !important;
         }
         .subtitle {
             font-size: 0.85rem !important;
-            color: #a0a0c0 !important; 
+            color: #7a7a7a !important; /* Gris suave */
             margin-bottom: 0 !important;
         }
 
-        /* Inputs y Selects */
+        /* Etiquetas */
+        .label {
+            color: #4a4a4a !important; /* Texto de etiqueta oscuro */
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Campos de Entrada (Input, Select) */
         .input, .select select, .textarea {
-            background-color: #313155; 
-            border: 1px solid #4a4a70; 
-            color: #f0f0f0;
+            background-color: #f7f7f7; /* Fondo de campo ligeramente gris */
+            border: 1px solid #dbdbdb; /* Borde gris claro */
+            color: #363636; /* Texto de entrada oscuro */
             border-radius: 10px; 
             transition: all 0.3s ease;
             padding-left: 1.25em; 
             height: 2.8em; 
         }
+
+        .input::placeholder, .textarea::placeholder {
+            color: #b5b5b5; /* Placeholder gris claro */
+        }
+        
+        /* Focus en los Inputs */
         .input:focus, .select select:focus, .textarea:focus {
-            border-color: #00d1b2 !important; 
+            border-color: #00d1b2 !important; /* Usar el color primario al enfocar */
             box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.3); 
         }
-        .label {
-            color: #c0c0c0 !important; 
-            font-weight: 500;
-            margin-bottom: 0.5rem;
+
+        /* Íconos y Texto de Éxito */
+        .control.has-icons-left .icon, .control.has-icons-right .icon {
+            color: #b5b5b5; /* Íconos gris claro */
+        }
+        .input.is-success {
+            border-color: #48c78e !important; 
+            box-shadow: 0 0 0 0.125em rgba(72, 199, 142, 0.3) !important;
+        }
+        .help.is-success {
+            color: #48c78e !important;
+        }
+        
+        /* Enlaces */
+        a {
+            color: #00d1b2; /* Color de acento consistente */
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
 
+        /* Separador (hr) */
+        hr {
+            background-color: #dbdbdb;
+            height: 1px;
+            margin: 2rem 0;
+        }
+        
         /* Botones (Centrado mejorado para móvil) */
         .footer-buttons {
             display: flex;
@@ -125,19 +157,14 @@
         .button.is-primary {
             background-color: #00d1b2; 
             border-color: transparent;
-            box-shadow: 0 4px 10px rgba(0, 209, 178, 0.4); 
+            box-shadow: 0 4px 10px rgba(0, 209, 178, 0.3); /* Sombra para primario */
+            color: #ffffff; /* Texto blanco en botón primario */
         }
         .button.is-light {
-            background-color: #444466; 
-            color: #f0f0f0;
-            border-color: transparent;
-        }
-
-        /* Separador */
-        hr {
-            background-color: #4a4a70;
-            height: 1px;
-            margin: 2rem 0;
+            background-color: #f0f0f0; /* Gris muy claro para secundario */
+            color: #4a4a4a; /* Texto oscuro en botón secundario */
+            border: 1px solid #dbdbdb;
+            box-shadow: none;
         }
         
     </style>
