@@ -3,14 +3,14 @@
 /* ------------------------------------- */
 :root {
     --primary-color: #5850ec;   /* Azul/Púrpura para botón principal */
-    --danger-color: #ff3860;    /* Rojo para botón limpiar */
+    --danger-color: #ff3860;    
     --accent-color: #5850ec;    /* Color de acento para enlaces, focus, etc. */
-    --light-bg: #f5f7fa;        /* Fondo Principal Claro (similar al de la imagen) */
+    --light-bg: #f5f7fa;        /* Fondo Principal Claro */
     --card-bg: #ffffff;         /* Fondo del Contenedor/Formulario (blanco puro) */
-    --border-color: #e0e6ed;    /* Bordes y Separadores */
-    --text-dark: #363636;       /* Texto principal oscuro */
-    --text-medium: #606f7b;     /* Texto secundario/etiquetas */
-    --input-bg: #fbfdff;        /* Fondo del Input (casi blanco) */
+    --border-color: #e0e6ed;    /* Color del borde, suave y visible */
+    --text-dark: #363636;       
+    --text-medium: #606f7b;     
+    --input-bg: #fbfdff;        
     --shadow-light: rgba(0, 0, 0, 0.08);
 }
 
@@ -19,24 +19,30 @@ html, body {
     background-color: var(--light-bg); 
     color: var(--text-dark); 
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    padding-top: 0; /* No necesitamos padding-top porque la barra superior no es fixed */
+    padding-top: 0; 
 }
 
 /* ------------------------------------- */
-/* 2. ENCABEZADO SUPERIOR DEGRADADO (top-header-degraded) */
+/* 2. ENCABEZADO SUPERIOR DEGRADADO */
 /* ------------------------------------- */
 .top-header-degraded {
-    background: linear-gradient(90deg, #5850ec 0%, #764ba2 100%); /* Degradado original de la imagen */
+    background: linear-gradient(90deg, #5850ec 0%, #764ba2 100%); 
     padding: 1rem 0;
     box-shadow: 0 2px 4px var(--shadow-light);
-    color: white; /* Asegura que el texto sea blanco */
+    color: white; 
+}
+.top-header-degraded .level-item {
+    align-items: center; 
 }
 .top-header-degraded .title {
     color: white !important;
     font-weight: 700;
 }
-.top-header-degraded .navbar-item {
-    color: rgba(255, 255, 255, 0.8) !important; /* Texto EduGana más sutil */
+.top-header-degraded .subtitle {
+    /* Estilo para 'EduGana' debajo del título */
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: normal;
+    font-size: 0.85rem !important; 
 }
 .top-header-degraded .icon {
     color: white !important;
@@ -55,157 +61,69 @@ html, body {
 /* ------------------------------------- */
 .box {
     background-color: var(--card-bg); 
+    /* BORDE DEL FORMULARIO: 1px sólido del color claro */
     border: 1px solid var(--border-color);
     border-radius: 12px; 
-    box-shadow: 0 10px 30px var(--shadow-light); /* Sombra más suave */
+    box-shadow: 0 10px 30px var(--shadow-light); 
     padding: 3rem 2rem; 
     width: 100%;
     max-width: 750px; 
-    margin-top: 1.5rem; /* Margen para separarlo del encabezado */
+    margin-top: 1.5rem; 
 }
 
-/* Encabezado simple dentro de la caja */
-.header-content-simple {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+/* **ESTILOS DE LOS CAMPOS CON BORDE** */
+.input, .select select, .textarea {
+    background-color: var(--input-bg); 
+    /* Borde aplicado aquí */
+    border: 1px solid var(--border-color); 
+    color: var(--text-dark); 
+    border-radius: 8px; 
+    height: 3.0em; 
 }
-.header-content-simple .title {
-    color: var(--text-dark) !important;
-    font-weight: 700;
-    margin-bottom: 0.2rem !important;
-}
-.header-content-simple .subtitle {
-    color: var(--text-medium) !important;
-    font-size: 0.85rem !important;
+.input:focus, .select select:focus, .textarea:focus {
+    /* El borde cambia de color al hacer focus */
+    border-color: var(--accent-color) !important; 
+    box-shadow: 0 0 0 0.15em rgba(88, 80, 236, 0.2); 
 }
 
-/* Títulos de sección como "Datos Personales" */
+/* Títulos de sección */
 .section-title {
-    color: var(--accent-color); /* Color azul del "Nuevo Alumno" */
+    color: var(--accent-color); 
     font-weight: bold;
     font-size: 1.15rem;
     margin-bottom: 1.5rem;
-    margin-top: 2rem; /* Espacio antes de cada nueva sección */
+    margin-top: 2rem; 
 }
-
-/* Bloques de Formulario y Etiquetas */
-.field { margin-bottom: 1.5rem; }
+/* Estilos restantes de botones y etiquetas para mantener el look and feel */
 .label {
     color: var(--text-medium) !important; 
     font-weight: 600; 
     margin-bottom: 0.6rem; 
     font-size: 0.95rem;
 }
-
-/* Inputs, Selects, etc. */
-.input, .select select, .textarea {
-    background-color: var(--input-bg); 
-    border: 1px solid var(--border-color); 
-    color: var(--text-dark); 
-    border-radius: 8px; 
-    height: 3.0em; 
-}
-.input::placeholder, .textarea::placeholder {
-    color: var(--text-medium); 
-}
-.input:focus, .select select:focus, .textarea:focus {
-    border-color: var(--accent-color) !important; 
-    box-shadow: 0 0 0 0.15em rgba(88, 80, 236, 0.2); /* Sombra de enfoque con color de acento */
-}
-
-/* Íconos en Inputs */
-.control.has-icons-left .icon, .control.has-icons-right .icon {
-    color: var(--text-medium); 
-}
-/* Estilo del input is-success */
-.input.is-success {
-    border-color: #48c78e !important;
-    box-shadow: 0 0 0 0.15em rgba(72, 199, 142, 0.2);
-}
-.help.is-success {
-    color: #48c78e !important;
-}
-
-/* Campo de Archivo (File) */
-.file-cta {
-    background-color: var(--input-bg); /* Fondo más claro para el botón */
-    border: 1px solid var(--border-color);
-    color: var(--text-medium);
-    border-radius: 8px;
-    font-weight: 600;
-    height: 3.2em;
-}
-.file-name {
-    border-radius: 8px;
-    background-color: var(--input-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-medium);
-    height: 3.2em;
-}
-
-/* Separador (hr) - Dividir secciones del formulario */
 .form-divider {
     background-color: var(--border-color);
     height: 1px;
     margin: 2.5rem 0; 
 }
-
-/* Checkbox (Términos y Condiciones) */
 .checkbox a {
     color: var(--accent-color);
     font-weight: 600;
 }
-
-/* Botones - Alineación a la izquierda (como en la imagen del alumno) */
 .footer-buttons {
     display: flex;
     justify-content: flex-start; 
     gap: 15px; 
     margin-top: 3rem; 
 }
-.button {
-    border-radius: 8px;
-    height: 3.2em; 
-    font-size: 1.05rem; 
-    font-weight: 600;
-}
 .button.is-primary {
     background-color: var(--primary-color); 
-    box-shadow: 0 5px 15px rgba(88, 80, 236, 0.3); /* Sombra de acento */
-    color: var(--card-bg); /* Texto blanco para el botón principal */
+    box-shadow: 0 5px 15px rgba(88, 80, 236, 0.3); 
+    color: var(--card-bg); 
 }
-.button.is-danger.is-light { /* Botón de limpiar */
+.button.is-danger.is-light { 
     background-color: var(--input-bg); 
-    border: 1px solid var(--danger-color); /* Borde rojo */
-    color: var(--danger-color); /* Texto rojo */
+    border: 1px solid var(--danger-color); 
+    color: var(--danger-color); 
     box-shadow: none;
-}
-.button.is-danger.is-light:hover {
-    background-color: var(--danger-color);
-    color: white !important;
-}
-
-/* Media queries para responsividad (manteniendo lo de Bulma) */
-@media screen and (max-width: 768px) {
-    .box {
-        padding: 2rem 1rem;
-        max-width: 100%; /* Ocupa todo el ancho en móvil */
-    }
-    .top-header-degraded .title.is-4 {
-        font-size: 1.25rem;
-    }
-    .top-header-degraded .navbar-item.is-size-6 {
-        font-size: 0.85rem;
-    }
-    .section-title {
-        font-size: 1.0rem;
-    }
-    .footer-buttons {
-        flex-direction: column; /* Apila botones en móvil */
-        gap: 10px;
-    }
-    .footer-buttons .control {
-        max-width: 100%;
-    }
 }
