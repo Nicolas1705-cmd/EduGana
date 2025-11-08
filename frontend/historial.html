@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Asistencias - Bulma.io</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        /* Estilo para centrar y añadir margen al contenedor principal */
+        .page-container {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+        /* Estilo para hacer que la tabla sea desplazable horizontalmente en móviles */
+        .table-container {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="section">
+        <div class="container page-container">
+            <div class="box">
+                <div class="block">
+                    <h1 class="title is-3 has-text-primary">
+                        <i class="fas fa-calendar-check"></i> Historial de Asistencias
+                    </h1>
+                    <p class="subtitle is-6">Registro detallado de entradas y salidas del empleado: **Juan Pérez (ID: 45789)**</p>
+                </div>
+                
+                <div class="table-container">
+                    <table class="table is-striped is-hoverable is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th><abbr title="Identificador">ID Reg.</abbr></th>
+                                <th>Fecha</th>
+                                <th>Hora de Registro</th>
+                                <th>Tipo de Movimiento</th>
+                                <th>Estado</th>
+                                <th>Ubicación/Dispositivo</th>
+                                <th>Detalles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>**15432**</td>
+                                <td>2025-11-06</td>
+                                <td>08:00:15</td>
+                                <td><span class="tag is-success is-light">Entrada <i class="fas fa-sign-in-alt ml-1"></i></span></td>
+                                <td><span class="tag is-success">Normal</span></td>
+                                <td>Oficina Central</td>
+                                <td>Registro a tiempo.</td>
+                            </tr>
+                            <tr>
+                                <td>**15433**</td>
+                                <td>2025-11-06</td>
+                                <td>17:01:30</td>
+                                <td><span class="tag is-info is-light">Salida <i class="fas fa-sign-out-alt ml-1"></i></span></td>
+                                <td><span class="tag is-success">Normal</span></td>
+                                <td>Oficina Central</td>
+                                <td>Jornada completada.</td>
+                            </tr>
+                            <tr>
+                                <td>**15434**</td>
+                                <td>2025-11-07</td>
+                                <td>08:35:45</td>
+                                <td><span class="tag is-success is-light">Entrada <i class="fas fa-sign-in-alt ml-1"></i></span></td>
+                                <td><span class="tag is-warning">Tarde</span></td>
+                                <td>Oficina Central</td>
+                                <td>**Retraso de 35 minutos.**</td>
+                            </tr>
+                            <tr>
+                                <td>**- - -**</td>
+                                <td>2025-11-08</td>
+                                <td>- - -</td>
+                                <td><span class="tag is-danger is-light">Ausente <i class="fas fa-user-times ml-1"></i></span></td>
+                                <td><span class="tag is-danger">Falta</span></td>
+                                <td>N/A</td>
+                                <td>Sin registro de entrada.</td>
+                            </tr>
+                            <tr>
+                                <td>**15435**</td>
+                                <td>2025-11-09</td>
+                                <td>15:45:00</td>
+                                <td><span class="tag is-info is-light">Salida <i class="fas fa-sign-out-alt ml-1"></i></span></td>
+                                <td><span class="tag is-link">Temprana</span></td>
+                                <td>Dispositivo Móvil</td>
+                                <td>Permiso de salida anticipada.</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7">
+                                    <p class="has-text-right is-size-7">Datos actualizados al 07 de Noviembre de 2025.</p>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <a class="pagination-previous" title="This is the first page" disabled>Anterior</a>
+                    <a class="pagination-next">Siguiente</a>
+                    <ul class="pagination-list">
+                        <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+                        <li><span class="pagination-ellipsis">&hellip;</span></li>
+                        <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
+                        <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a></li>
+                        <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
+                        <li><span class="pagination-ellipsis">&hellip;</span></li>
+                        <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
