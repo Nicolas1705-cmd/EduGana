@@ -145,10 +145,23 @@
 
         .recompensa-card-main .card-footer {
             margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .recompensa-card-main .button.is-fullwidth {
             font-weight: 600;
+        }
+
+        .recompensa-card-main .button-group {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .recompensa-card-main .button-group .button {
+            flex: 1;
         }
 
         .recompensa-card-main.no-disponible {
@@ -311,15 +324,36 @@
                 font-size: 0.95rem;
             }
 
+            .recompensa-card-main .button-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .recompensa-card-main .button-group .button {
+                width: 100%;
+            }
+
             /* Paginación */
             .pagination {
                 flex-wrap: wrap;
+                gap: 0.5rem;
             }
 
             .pagination-previous,
             .pagination-next {
                 flex-grow: 1;
-                margin-bottom: 0.5rem;
+                justify-content: center;
+            }
+
+            .pagination-list {
+                width: 100%;
+                margin-top: 0.5rem;
+                justify-content: center;
+            }
+
+            .pagination-info {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.75rem;
             }
 
             .empty-state {
@@ -398,19 +432,58 @@
         .pagination-previous,
         .pagination-next {
             transition: all 0.3s ease;
+            font-weight: 600;
         }
 
-        .pagination-link:hover,
-        .pagination-previous:hover,
-        .pagination-next:hover {
+        .pagination-previous,
+        .pagination-next {
+            padding: 0.5rem 1rem;
+            background-color: white;
+        }
+
+        .pagination-previous:hover:not([disabled]),
+        .pagination-next:hover:not([disabled]) {
             background-color: #667eea;
             color: white;
             border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .pagination-previous[disabled],
+        .pagination-next[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #f5f5f5;
         }
 
         .pagination-link.is-current {
             background-color: #667eea;
             border-color: #667eea;
+            font-weight: bold;
+        }
+
+        .pagination-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.5rem 1rem;
+            background-color: #667eea;
+            color: white;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .pagination-info strong {
+            font-weight: 700;
+        }
+
+        #pagination {
+            margin-top: 3rem !important;
+        }
+
+        .pagination-list {
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -494,10 +567,24 @@
 
                 <!-- Paginación -->
                 <nav class="pagination is-centered mt-5" role="navigation" aria-label="pagination" id="pagination" style="display: none;">
-                    <a class="pagination-previous" onclick="cambiarPagina(-1)">Anterior</a>
-                    <a class="pagination-next" onclick="cambiarPagina(1)">Siguiente</a>
+                    <button class="pagination-previous button" id="btnAnterior" onclick="cambiarPagina(-1)">
+                        <span class="icon">
+                            <i class="fas fa-chevron-left"></i>
+                        </span>
+                        <span>Anterior</span>
+                    </button>
+                    <button class="pagination-next button" id="btnSiguiente" onclick="cambiarPagina(1)">
+                        <span>Siguiente</span>
+                        <span class="icon">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                    </button>
                     <ul class="pagination-list">
-                        <li><a class="pagination-link is-current" aria-label="Página 1" id="currentPage">1</a></li>
+                        <li>
+                            <span class="pagination-info">
+                                Página <strong id="currentPage">1</strong> de <strong id="totalPages">1</strong>
+                            </span>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -690,6 +777,10 @@
                             <span class="icon"><i class="fas fa-times"></i></span>
                             <span>No Disponible</span>
                         </button>
+                        <button class="button is-info is-light is-fullwidth" onclick="verDetalle(${recompensa.id})">
+                            <span class="icon"><i class="fas fa-info-circle"></i></span>
+                            <span>Ver Detalles</span>
+                        </button>
                     `;
                 } else if (!tienePuntos) {
                     botonHtml = `
@@ -697,13 +788,23 @@
                             <span class="icon"><i class="fas fa-lock"></i></span>
                             <span>Puntos Insuficientes</span>
                         </button>
+                        <button class="button is-info is-light is-fullwidth" onclick="verDetalle(${recompensa.id})">
+                            <span class="icon"><i class="fas fa-info-circle"></i></span>
+                            <span>Ver Detalles</span>
+                        </button>
                     `;
                 } else {
                     botonHtml = `
-                        <button class="button is-success is-fullwidth" onclick="abrirModalCanjear(${recompensa.id}, '${recompensa.nombre}', ${recompensa.puntos})">
-                            <span class="icon"><i class="fas fa-check-circle"></i></span>
-                            <span>Canjear</span>
-                        </button>
+                        <div class="button-group">
+                            <button class="button is-success" onclick="abrirModalCanjear(${recompensa.id}, '${recompensa.nombre}', ${recompensa.puntos})">
+                                <span class="icon"><i class="fas fa-check-circle"></i></span>
+                                <span>Canjear</span>
+                            </button>
+                            <button class="button is-info is-light" onclick="verDetalle(${recompensa.id})">
+                                <span class="icon"><i class="fas fa-info-circle"></i></span>
+                                <span>Ver Detalles</span>
+                            </button>
+                        </div>
                     `;
                 }
                 
@@ -720,10 +821,6 @@
                     </div>
                     <div class="card-footer">
                         ${botonHtml}
-                        <button class="button is-info is-light is-fullwidth mt-2" onclick="verDetalle(${recompensa.id})">
-                            <span class="icon"><i class="fas fa-info-circle"></i></span>
-                            <span>Ver Detalles</span>
-                        </button>
                     </div>
                 `;
                 
@@ -734,7 +831,24 @@
             const totalPaginas = Math.ceil(recompensasFiltradas.length / itemsPorPagina);
             if (totalPaginas > 1) {
                 pagination.style.display = 'flex';
-                document.getElementById('currentPage').textContent = `${paginaActual} de ${totalPaginas}`;
+                document.getElementById('currentPage').textContent = paginaActual;
+                document.getElementById('totalPages').textContent = totalPaginas;
+                
+                // Habilitar/deshabilitar botones
+                const btnAnterior = document.getElementById('btnAnterior');
+                const btnSiguiente = document.getElementById('btnSiguiente');
+                
+                if (paginaActual === 1) {
+                    btnAnterior.disabled = true;
+                } else {
+                    btnAnterior.disabled = false;
+                }
+                
+                if (paginaActual === totalPaginas) {
+                    btnSiguiente.disabled = true;
+                } else {
+                    btnSiguiente.disabled = false;
+                }
             } else {
                 pagination.style.display = 'none';
             }
