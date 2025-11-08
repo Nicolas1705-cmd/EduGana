@@ -17,11 +17,15 @@
         .nfc-scan-area .icon {
             margin-right: 5px;
         }
+        /* Ajuste para que el contenido no quede debajo de la navbar fija */
+        body {
+            padding-top: 52px; 
+        }
     </style>
 </head>
 <body>
 
-    <nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="#">
                 <span class="icon-text has-text-white">
@@ -45,27 +49,7 @@
 
             <hr>
 
-            <div class="box has-background-white-ter">
-                <div class="nfc-scan-area">
-                    <p class="is-size-4 has-text-weight-bold">
-                        <span class="icon is-large has-text-info">
-                            <i class="fas fa-wifi fa-rotate-270"></i>
-                        </span>
-                        Acerca la Tarjeta/Tag NFC
-                    </p>
-                    <p class="has-text-grey">
-                        La asistencia se registrará automáticamente (Inicio o Fin).
-                    </p>
-                    <div class="field mt-4 is-grouped is-grouped-centered">
-                        <div class="control is-expanded is-loading">
-                            <input class="input is-large" type="text" placeholder="Esperando escaneo..." disabled>
-                        </div>
-                        <div class="control">
-                             <button class="button is-light is-large" disabled>Registrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
 
             <h2 class="title is-4 mt-5">
                 Historial de las Últimas 20 Asistencias Registradas 🕒
