@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -8,11 +8,30 @@
     <script defer src="https://use.fontawesome.com/releases/v6.4.2/js/all.js"></script>
     <style>
         body {
+            /* Se ha cambiado el color principal a 'primary' para que coincida con la imagen original */
             background-color: #f5f5f5;
         }
         .main-content {
             padding-top: 30px;
             padding-bottom: 30px;
+        }
+        /* Color para el título principal */
+        .has-text-primary {
+            color: #00d1b2 !important; 
+        }
+        /* Ajuste de color del box de registro para que se parezca más al diseño */
+        .box.has-background-white-ter {
+            background-color: white !important; /* Blanco */
+            box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+        }
+        /* Color del botón principal para que sea como el verde menta de la imagen */
+        .button.is-primary {
+            background-color: #00d1b2; 
+            border-color: transparent;
+            color: #fff;
+        }
+        .button.is-primary:hover {
+            background-color: #00b89c; 
         }
     </style>
 </head>
@@ -63,7 +82,7 @@
 
             <div class="column is-two-thirds">
                 <div class="box">
-                    <h2 class="title is-5 has-text-centered">✅ Asistencias del Día</h2>
+                    <h2 class="title is-5 has-text-centered has-text-success">✅ Asistencias del Día</h2>
                     
                     <div class="field has-addons mb-4">
                         <div class="control has-icons-left is-expanded">
@@ -71,14 +90,13 @@
                             <span class="icon is-left"><i class="fas fa-search"></i></span>
                         </div>
                         <div class="control">
-                            <span class="select">
+                            <div class="select">
                                 <select>
                                     <option>Mostrar todos</option>
-                                    <option>Presentes</option>
-                                    <option>Ausentes</option>
-                                    <option>Tardes</option>
+                                    <option>Entrada</option>
+                                    <option>Salida</option>
                                 </select>
-                            </span>
+                            </div>
                         </div>
                     </div>
                     
@@ -89,8 +107,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nombre Completo</th>
-                                    <th>ID</th>
-                                    <th><abbr title="Estado de Asistencia">Estado</abbr></th>
+                                    <th><abbr title="Movimiento de Entrada o Salida">Movimiento</abbr></th>
                                     <th>Hora</th>
                                 </tr>
                             </thead>
@@ -99,23 +116,26 @@
                                 <tr>
                                     <td>1</td>
                                     <td>Ana Lucía Flores</td>
-                                    <td>A00123</td>
-                                    <td><span class="tag is-success">Presente</span></td>
+                                    <td><span class="tag is-success">Entrada</span></td>
                                     <td>07:58 AM</td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
                                     <td>Carlos Miguel Pérez</td>
-                                    <td>C00456</td>
-                                    <td><span class="tag is-warning">Tarde</span></td>
+                                    <td><span class="tag is-warning">Entrada</span></td>
                                     <td>08:10 AM</td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
                                     <td>Diana Sofía Herrera</td>
-                                    <td>D00789</td>
-                                    <td><span class="tag is-danger">Ausente</span></td>
+                                    <td><span class="tag is-danger">Entrada</span></td>
                                     <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Ernesto Gómez Paz</td>
+                                    <td><span class="tag is-info">Salida</span></td>
+                                    <td>05:05 PM</td>
                                 </tr>
                             </tbody>
                         </table>
