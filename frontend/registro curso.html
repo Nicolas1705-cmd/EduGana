@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Curso</title>
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ======== ESTILOS GENERALES ======== */
+    body {
+      background: linear-gradient(135deg, #00c4a7 0%, #3273dc 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .form-box {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+      padding: 2.5rem 2rem;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1.title {
+      color: #3273dc;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    p.subtitle {
+      color: #7a7a7a;
+      margin-bottom: 2rem;
+    }
+
+    label.label {
+      font-weight: 600;
+      color: #363636;
+    }
+
+    .button.is-primary {
+      background-color: #3273dc;
+      border-color: transparent;
+      font-weight: 600;
+      transition: 0.3s ease-in-out;
+    }
+
+    .button.is-primary:hover {
+      background-color: #00c4a7;
+      color: #fff;
+    }
+
+    .button.is-light {
+      color: #363636;
+    }
+
+    /* ======== RESPONSIVE ======== */
+    @media screen and (max-width: 768px) {
+      .form-box {
+        padding: 1.8rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="form-box">
+        <h1 class="title has-text-centered">Registro de Curso</h1>
+        <p class="subtitle has-text-centered">Completa la información para inscribirte</p>
+
+        <form action="#" method="POST">
+
+          <!-- Nombre Completo -->
+          <div class="field">
+            <label class="label">Nombre Completo</label>
+            <div class="control has-icons-left">
+              <input class="input" type="text" name="nombre" placeholder="Tu nombre completo" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Correo Electrónico -->
+          <div class="field">
+            <label class="label">Correo Electrónico</label>
+            <div class="control has-icons-left">
+              <input class="input" type="email" name="email" placeholder="ejemplo@correo.com" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="field">
+            <label class="label">Contraseña</label>
+            <div class="control has-icons-left">
+              <input class="input is-success" type="password" name="password" placeholder="Crea una contraseña segura" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+            <p class="help is-success">Tu contraseña parece segura</p>
+          </div>
+
+          <!-- Teléfono -->
+          <div class="field">
+            <label class="label">Teléfono (opcional)</label>
+            <div class="control has-icons-left">
+              <input class="input" type="tel" name="telefono" placeholder="Ej: +34 600 123 456">
+              <span class="icon is-small is-left">
+                <i class="fas fa-phone"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- País -->
+          <div class="field">
+            <label class="label">País (opcional)</label>
+            <div class="control has-icons-left">
+              <div class="select is-fullwidth">
+                <select name="pais">
+                  <option value="">Selecciona tu país</option>
+                  <option>España</option>
+                  <option>México</option>
+                  <option>Argentina</option>
+                  <option>Colombia</option>
+                </select>
+              </div>
+              <span class="icon is-small is-left">
+                <i class="fas fa-globe"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Curso -->
+          <div class="field">
+            <label class="label">Curso a Inscribirse</label>
+            <div class="control has-icons-left">
+              <div class="select is-fullwidth">
+                <select name="curso" required>
+                  <option value="">Selecciona un curso</option>
+                  <option>Desarrollo Web</option>
+                  <option>Diseño Gráfico</option>
+                  <option>Marketing Digital</option>
+                  <option>Inteligencia Artificial</option>
+                </select>
+              </div>
+              <span class="icon is-small is-left">
+                <i class="fas fa-book"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Términos -->
+          <div class="field mt-4">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" required>
+                Acepto los <a href="#">términos y condiciones</a>
+              </label>
+            </div>
+          </div>
+
+          <!-- Botones -->
+          <div class="field is-grouped is-grouped-centered mt-5">
+            <div class="control">
+              <button type="submit" class="button is-primary">
+                <span class="icon">
+                  <i class="fas fa-paper-plane"></i>
+                </span>
+                <span>Enviar Registro</span>
+              </button>
+            </div>
+            <div class="control">
+              <button type="reset" class="button is-light">
+                <span class="icon">
+                  <i class="fas fa-rotate-left"></i>
+                </span>
+                <span>Cancelar</span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
