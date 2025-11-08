@@ -3,28 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Control de Asistencias - Colegio San Marcos</title> 
+    <title>Sistema de Control de Asistencias - Colegio San Marcos</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v6.4.2/js/all.js"></script>
     <style>
+        /* 1. ESTILOS GLOBALES Y BARRA FIJA */
         body {
-            /* Se ha cambiado el color principal a 'primary' para que coincida con la imagen original */
             background-color: #f5f5f5;
+            /* Agregamos padding al top del body para que el contenido no quede debajo de la barra fija */
+            padding-top: 60px; /* Suficiente espacio para la barra */
         }
+        
+        /* Estilo EXACTO del encabezado EDUGANA (Fijo en la parte superior) */
+        .app-header {
+            width: 100%;
+            background-color: #209ce8; /* Azul Bulma "info" */
+            padding: 10px 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            
+            /* PROPIEDADES PARA HACERLA FIJA ARRIBA */
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 100; /* Asegura que esté por encima de otros elementos */
+
+            display: flex; 
+            align-items: center;
+        }
+        .app-header i {
+            margin-right: 8px;
+        }
+        .app-header span {
+            text-transform: uppercase;
+        }
+
+        /* 2. ESTILOS DEL CONTENIDO PRINCIPAL */
         .main-content {
             padding-top: 30px;
             padding-bottom: 30px;
+            /* Ya no necesitamos el padding-top excesivo aquí gracias al padding del body */
         }
-        /* Color para el título principal */
-        .has-text-primary {
-            color: #00d1b2 !important; 
+        
+        /* Color para el título principal del sistema (Sistema de Control de Asistencias) */
+        .system-title {
+            color: #00d1b2 !important;
         }
-        /* Ajuste de color del box de registro para que se parezca más al diseño */
+        
+        /* Ajuste de color del box de registro */
         .box.has-background-white-ter {
-            background-color: white !important; /* Blanco */
+            background-color: white !important; 
             box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
         }
-        /* Color del botón principal para que sea como el verde menta de la imagen */
+        
+        /* Color del botón principal */
         .button.is-primary {
             background-color: #00d1b2; 
             border-color: transparent;
@@ -37,8 +71,12 @@
 </head>
 <body>
 
+    <div class="app-header">
+        <i class="fas fa-graduation-cap"></i> <span>EDUGANA</span>
+    </div>
+
     <div class="container main-content">
-        <h1 class="title is-2 has-text-centered has-text-primary mb-6">Sistema de Control de Asistencias | Colegio San Marcos</h1>
+        <h1 class="title is-2 has-text-centered system-title mb-6">Sistema de Control de Asistencias | Colegio San Marcos</h1>
         
         <div class="columns">
 
