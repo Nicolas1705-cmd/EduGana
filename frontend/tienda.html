@@ -3,228 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Edugana | Registro de Tienda</title>
+    <title>Edugana | Matricular Tienda</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <link rel="stylesheet" href="tienda.css"> 
+    
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
-
-    <style>
-        /* Estilos base para Light Mode y pantalla completa (móvil) */
-        html, body {
-            height: 100%;
-            background-color: #f0f2f5; 
-            color: #363636; 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            padding-top: 52px; /* Espacio para el Navbar fijo */
-        }
-        
-        /* 1. BARRA DE NAVEGACIÓN (NAVBAR) */
-        .navbar {
-            background-color: #ffffff; 
-            border-bottom: 1px solid #dbdbdb; 
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); 
-        }
-        .navbar-item {
-            color: #363636 !important; 
-            font-weight: 700;
-            font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-        }
-        .navbar-item.has-text-primary {
-             color: #00d1b2 !important; 
-        }
-        .navbar-item .icon {
-            margin-right: 0.5rem;
-            color: #00d1b2;
-        }
-
-        /* Contenedor principal que centra y limita el ancho en móviles */
-        .app-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Alinea el formulario en la parte superior del espacio disponible */
-            padding: 1.5rem 0.75rem; 
-        }
-        
-        /* Contenedor del formulario (.box) con diseño Light Mode mejorado */
-        .box {
-            background-color: #ffffff; 
-            border: none;
-            border-radius: 18px; /* Ligeramente más redondeado */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Sombra más definida */
-            padding: 2.75rem 1.75rem; /* Aumento ligero del padding para más espacio */
-            width: 100%;
-            max-width: 450px; 
-        }
-
-        /* LOGO Y ENCABEZADO - MEJORA DEL ÍCONO DE TIENDA */
-        .header-content {
-            text-align: center;
-            margin-bottom: 2.25rem; /* Un poco más de espacio */
-        }
-        .logo-placeholder {
-            display: inline-flex; /* Usar flexbox para centrar bien el icono */
-            justify-content: center;
-            align-items: center;
-            width: 70px; /* Tamaño del círculo del logo */
-            height: 70px;
-            background-color: #00d1b2; 
-            border-radius: 50%;
-            margin-bottom: 1.25rem; 
-            font-size: 2.2rem; /* Tamaño del icono dentro del círculo */
-            color: #ffffff; 
-            box-shadow: 0 4px 10px rgba(0, 209, 178, 0.4); /* Sombra para el logo */
-        }
-
-        /* Títulos */
-        .title {
-            color: #363636 !important; 
-            font-size: 1.75rem !important; /* Ligeramente más grande */
-            font-weight: 700;
-            margin-bottom: 0.35rem !important;
-        }
-        .subtitle {
-            font-size: 0.9rem !important; /* Ligeramente más grande */
-            color: #7a7a7a !important; 
-            margin-bottom: 0 !important;
-        }
-
-        /* Etiquetas */
-        .label {
-            color: #4a4a4a !important; 
-            font-weight: 500;
-            margin-bottom: 0.6rem; /* Más espacio debajo de las etiquetas */
-        }
-
-        /* Campos de Entrada (Input, Select) */
-        .field:not(:last-child) {
-            margin-bottom: 1.5rem; /* Espacio entre campos para mejor legibilidad móvil */
-        }
-        .input, .select select, .textarea {
-            background-color: #f7f7f7; 
-            border: 1px solid #dbdbdb; 
-            color: #363636; 
-            border-radius: 10px; 
-            transition: all 0.3s ease;
-            padding-left: 1.25em; 
-            height: 3em; /* Un poco más de altura para tocar */
-        }
-
-        .input::placeholder, .textarea::placeholder {
-            color: #b5b5b5; 
-        }
-        
-        /* Focus en los Inputs */
-        .input:focus, .select select:focus, .textarea:focus {
-            border-color: #00d1b2 !important; 
-            box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.3); 
-        }
-
-        /* Íconos y Texto de Éxito */
-        .control.has-icons-left .icon {
-            color: #b5b5b5; /* Íconos gris claro */
-            left: 0.75em; /* Ajuste para centrado visual */
-        }
-        .control.has-icons-right .icon {
-            right: 0.75em; /* Ajuste para centrado visual */
-        }
-        .input.is-success {
-            border-color: #48c78e !important; 
-            box-shadow: 0 0 0 0.125em rgba(72, 199, 142, 0.3) !important;
-        }
-        .help.is-success {
-            color: #48c78e !important;
-            font-size: 0.8em;
-            margin-top: 0.3em;
-        }
-        
-        /* Enlaces */
-        a {
-            color: #00d1b2; 
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        /* Separador (hr) */
-        hr {
-            background-color: #dbdbdb;
-            height: 1px;
-            margin: 2.5rem 0; /* Más espacio alrededor del separador */
-        }
-        
-        /* Botones (Centrado y mejorado para móvil) */
-        .footer-buttons {
-            display: flex;
-            justify-content: center; 
-            gap: 15px; /* Más espacio entre botones */
-            margin-top: 3rem; /* Más margen superior */
-        }
-        .footer-buttons .control {
-            flex-grow: 1;
-            max-width: 50%;
-        }
-        .button {
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            height: 3.2em; /* Altura un poco mayor para mejor tacto */
-            width: 100%; 
-            font-size: 1rem;
-            display: inline-flex; /* Asegura que el contenido del botón se centre */
-            align-items: center;
-            justify-content: center;
-        }
-        .button.is-primary {
-            background-color: #00d1b2; 
-            border-color: transparent;
-            box-shadow: 0 5px 15px rgba(0, 209, 178, 0.4); /* Sombra más pronunciada */
-            color: #ffffff; 
-        }
-        .button.is-primary:hover {
-            background-color: #00e0c0;
-            box-shadow: 0 7px 18px rgba(0, 209, 178, 0.5);
-            transform: translateY(-1px); /* Efecto sutil */
-        }
-        .button.is-primary .icon {
-            color: #ffffff; /* Asegurar icono blanco en botón primario */
-            margin-right: 0.5em;
-        }
-        .button.is-light {
-            background-color: #f0f0f0; 
-            color: #4a4a4a; 
-            border: 1px solid #dbdbdb;
-            box-shadow: none;
-        }
-        .button.is-light:hover {
-            background-color: #e8e8e8;
-            border-color: #c9c9c9;
-            transform: translateY(-1px);
-        }
-        
-    </style>
+    
 </head>
 <body>
 
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item is-size-5" href="#">
-          <span class="icon"><i class="fas fa-graduation-cap"></i></span>
-          Edugana
-        </a>
-      </div>
-    </nav>
-    
+    <div class="top-header-degraded">
+        <div class="container is-fluid">
+            <div class="level is-mobile pt-3 pb-3">
+                <div class="level-left">
+                    <div class="level-item">
+                        <span class="icon is-large mr-3 has-text-white">
+                            <i class="fas fa-store fa-2x"></i> </span>
+                        <h1 class="title is-4 has-text-white mb-0">Matricular Tiendas</h1>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <span class="navbar-item has-text-white-ter is-size-6">EduGana</span>
+                        <span class="icon is-large has-text-white">
+                            <i class="fas fa-coins fa-lg"></i> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="app-container">
         <div class="box">
             
-            <div class="header-content">
-                <div class="logo-placeholder"><i class="fas fa-store-alt"></i></div> 
-                <h1 class="title is-4">Registro de Tiendas</h1>
-                <p class="subtitle is-6">Creación de cuenta para administrar tu negocio.</p>
+            <div class="header-content-simple">
+                <p class="subtitle is-6 has-text-centered">Complete la siguiente información para formalizar la inscripción.</p>
             </div>
             
-            <form action="#" method="POST">
+            <form action="#" method="POST" enctype="multipart/form-data">
+                <h2 class="section-title">Datos de la Tienda</h2>
 
                 <div class="field">
                     <label class="label">Nombre de la Tienda <span class="has-text-danger">(*)</span></label>
@@ -233,13 +51,20 @@
                     </div>
                 </div>
 
-                <div class="field">
-                    <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
-                    <div class="control has-icons-left">
-                        <input class="input" type="email" placeholder="contacto@tutienda.com" required>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-envelope"></i>
-                        </span>
+                <div class="field is-grouped is-grouped-multiline">
+                    <div class="field control is-expanded">
+                        <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="email" placeholder="contacto@tutienda.com" required>
+                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                        </div>
+                    </div>
+                    <div class="field control is-expanded">
+                        <label class="label">Teléfono de Contacto <span class="has-text-danger">(*)</span></label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="tel" placeholder="Ej: +51 987 654 321" required>
+                            <span class="icon is-small is-left"><i class="fas fa-phone"></i></span>
+                        </div>
                     </div>
                 </div>
 
@@ -247,27 +72,18 @@
                     <label class="label">Contraseña <span class="has-text-danger">(*)</span></label>
                     <div class="control has-icons-right">
                         <input class="input is-success" type="password" placeholder="Crea una contraseña segura" required>
-                        <span class="icon is-small is-right">
-                            <i class="fas fa-check"></i>
-                        </span>
+                        <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
                         <p class="help is-success">Contraseña aceptada</p>
                     </div>
                 </div>
 
-                <hr>
+                <h2 class="section-title">Ubicación y Logo</h2>
 
                 <div class="field">
-                    <label class="label">Teléfono de Contacto (Opcional)</label>
-                    <div class="control">
-                        <input class="input" type="tel" placeholder="Ej: +51 987 654 321">
-                    </div>
-                </div>
-                
-                <div class="field">
-                    <label class="label">País de Ubicación (Opcional)</label>
+                    <label class="label">País de Ubicación <span class="has-text-danger">(*)</span></label>
                     <div class="control">
                         <div class="select is-fullwidth">
-                            <select>
+                            <select required>
                                 <option value="">Selecciona el país...</option>
                                 <option>Perú</option>
                                 <option>Chile</option>
@@ -278,13 +94,27 @@
                     </div>
                 </div>
 
-                <hr>
+                <div class="field">
+                    <label class="label">Subir Logo de Tienda (Opcional)</label>
+                    <div class="file is-fullwidth is-boxed">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="logo" accept="image/*">
+                            <span class="file-cta">
+                                <span class="file-icon"><i class="fas fa-upload"></i></span>
+                                <span class="file-label">Seleccionar archivo...</span>
+                            </span>
+                            <span class="file-name">No hay archivo subido</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <hr class="form-divider">
 
                 <div class="field">
                     <div class="control">
                         <label class="checkbox">
                             <input type="checkbox" required>
-                            <span class="has-text-danger">(*)</span> Acepto los <a href="#">Términos y Condiciones</a>
+                            <span class="has-text-danger">(*)</span> Acepto los <a href="#">términos y condiciones de matrícula</a>.
                         </label>
                     </div>
                 </div>
@@ -292,13 +122,14 @@
                 <div class="footer-buttons">
                     <div class="control">
                         <button class="button is-primary" type="submit">
-                            <span class="icon is-small"><i class="fas fa-store-alt"></i></span>
+                            <span class="icon"><i class="fas fa-check"></i></span>
                             <span>Matricular Tienda</span>
                         </button>
                     </div>
                     <div class="control">
-                        <button class="button is-light" type="reset">
-                            Cancelar
+                        <button class="button is-danger is-light" type="reset">
+                            <span class="icon"><i class="fas fa-redo-alt"></i></span>
+                            <span>Limpiar Formulario</span>
                         </button>
                     </div>
                 </div>
@@ -306,6 +137,19 @@
             </form>
         </div>
     </div>
+
+<script>
+    // Script para mostrar el nombre del archivo seleccionado (aún necesario en el HTML)
+    const fileInput = document.querySelector('.file-input');
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector('.file-name');
+            fileName.textContent = fileInput.files[0].name;
+        } else {
+            document.querySelector('.file-name').textContent = 'No hay archivo subido';
+        }
+    }
+</script>
 
 </body>
 </html>

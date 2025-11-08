@@ -60,6 +60,214 @@
       
     }
 
+    .page-header .title,
+
+.page-header .subtitle {
+
+  color: white !important;
+
+}
+
+
+
+.page-header .icon {
+
+  color: white;
+
+}
+
+
+
+.page-header .icon-text {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+}
+
+
+
+.page-header .icon-text .icon {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+/* Puntos del usuario */
+
+.user-points {
+
+  background: rgba(255, 255, 255, 0.2);
+
+  border-radius: 50px;
+
+  padding: 0.75rem 1.5rem;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.5rem;
+
+  font-size: 1.2rem;
+
+  font-weight: bold;
+
+}
+
+
+
+.user-points .icon {
+
+  font-size: 1.5rem;
+
+}
+
+
+
+/* Media Queries específicas para el encabezado */
+
+@media screen and (max-width: 768px) {
+
+  .page-header .level {
+
+    display: block !important;
+
+    text-align: center;
+
+  }
+
+  .page-header .level-left,
+
+  .page-header .level-right {
+
+    margin-bottom: 1rem;
+
+    text-align: center;
+  }
+
+  .page-header .level-item {
+
+    display: block;
+
+    margin-bottom: 0.5rem;
+  }
+  .page-header .title.is-2 {
+
+    font-size: 1.3rem;
+  }
+  .page-header .subtitle.is-5 {
+
+    font-size: 0.95rem;
+
+  }
+  .page-header {
+
+    padding: 1.25rem 1rem;
+
+  }
+
+
+
+  .page-header .icon-text {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+  }
+
+
+
+  .user-points {
+
+    font-size: 1rem;
+
+    padding: 0.6rem 1.2rem;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    justify-content: center;
+
+  }
+
+
+
+  .user-points .icon {
+
+    font-size: 1.2rem;
+
+  }
+
+}
+
+
+
+/* Pantallas muy pequeñas */
+
+@media screen and (max-width: 480px) {
+
+  .page-header .title.is-2 {
+
+    font-size: 1.1rem;
+
+  }
+
+
+
+  .page-header .subtitle.is-5 {
+
+    font-size: 0.85rem;
+
+  }
+
+
+
+  .user-points {
+
+    font-size: 0.9rem;
+
+    padding: 0.5rem 1rem;
+
+  }
+
+
+
+  .user-points .icon {
+
+    font-size: 1.2rem;
+
+  }
+
+}
+
+
+
+/* Tablet */
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+
+  .page-header {
+
+    padding: 1.75rem 1.5rem;
+
+  }
+
+}
+
     .page-header .title {
       font-size: 1.9rem;
       font-weight: 700;

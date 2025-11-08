@@ -39,10 +39,256 @@
     .button.is-primary:hover {
       background-color: #1e40af;
     }
+    .page-header {
+
+  margin-bottom: 2rem;
+
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  border-radius: 0px 0px 12px 12px;
+
+  padding: 2rem;
+
+  color: white;
+
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+}
+
+
+
+.page-header .title,
+
+.page-header .subtitle {
+
+  color: white !important;
+
+}
+
+
+
+.page-header .icon {
+
+  color: white;
+
+}
+
+
+
+.page-header .icon-text {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+}
+
+
+
+.page-header .icon-text .icon {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+/* Puntos del usuario */
+
+.user-points {
+
+  background: rgba(255, 255, 255, 0.2);
+
+  border-radius: 50px;
+
+  padding: 0.75rem 1.5rem;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.5rem;
+
+  font-size: 1.2rem;
+
+  font-weight: bold;
+
+}
+
+
+
+.user-points .icon {
+
+  font-size: 1.5rem;
+
+}
+
+
+
+/* Media Queries específicas para el encabezado */
+
+@media screen and (max-width: 768px) {
+
+  .page-header .level {
+
+    display: block !important;
+
+    text-align: center;
+
+  }
+
+
+
+  .page-header .level-left,
+
+  .page-header .level-right {
+
+    margin-bottom: 1rem;
+
+    text-align: center;
+
+  }
+
+
+
+  .page-header .level-item {
+
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+  }
+
+
+
+  .page-header .title.is-2 {
+
+    font-size: 1.3rem;
+
+  }
+
+
+
+  .page-header .subtitle.is-5 {
+
+    font-size: 0.95rem;
+
+  }
+
+
+
+  .page-header {
+
+    padding: 1.25rem 1rem;
+
+  }
+
+
+
+  .page-header .icon-text {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+  }
+
+
+
+  .user-points {
+
+    font-size: 1rem;
+
+    padding: 0.6rem 1.2rem;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    justify-content: center;
+
+  }
+
+
+
+  .user-points .icon {
+
+    font-size: 1.2rem;
+
+  }
+
+}
+
+
+
+/* Pantallas muy pequeñas */
+
+@media screen and (max-width: 480px) {
+
+  .page-header .title.is-2 {
+
+    font-size: 1.1rem;
+
+  }
+
+
+
+  .page-header .subtitle.is-5 {
+
+    font-size: 0.85rem;
+
+  }
+
+
+
+  .user-points {
+
+    font-size: 0.9rem;
+
+    padding: 0.5rem 1rem;
+
+  }
+
+
+
+  .user-points .icon {
+
+    font-size: 1.2rem;
+
+  }
+
+}
+
+
+
+/* Tablet */
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+
+  .page-header {
+
+    padding: 1.75rem 1.5rem;
+
+  }
+
+}
+
+
+
   </style>
+
 </head>
 
 <body>
+<<<<<<< HEAD
   <!-- Barra superior -->
   <nav class="navbar" role="navigation">
     <div class="navbar-brand">
@@ -51,13 +297,78 @@
       </a>
     </div>
   </nav>
+=======
+  <div class="page-header">
 
-  <!-- Formulario -->
+  <div class="level">
+
+    <div class="level-left">
+
+      <div class="level-item">
+
+        <div>
+
+          <h1 class="title is-2">
+
+            <span class="icon-text">
+
+              <span class="icon has-text-white mr-3">
+
+                <i class="fas fa-gift fa-lg"></i>
+
+              </span>
+
+              <span>Registrar Usuario</span>
+
+            </span>
+
+          </h1>
+
+          <p class="subtitle is-5 mt-2">EduGana</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="level-right">
+
+      <div class="level-item">
+
+        <div class="user-points">
+
+          <span class="icon">
+
+            <i class="fas fa-coins"></i>
+
+          </span>
+
+          <span id="userPoints"></span>
+
+          <span></span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+>>>>>>> 66614d2f10df4504732dbd909c9552fa5302a85f
+
   <section class="section">
     <div class="container form-container">
       <div class="box">
+<<<<<<< HEAD
         <h1 class="title has-text-centered">Registro de Curso</h1>
         <form id="cursoForm" novalidate>
+=======
+        
+        <form id="registroForm" novalidate>
+>>>>>>> 66614d2f10df4504732dbd909c9552fa5302a85f
 
           <!-- Nombre del Curso -->
           <div class="field">
