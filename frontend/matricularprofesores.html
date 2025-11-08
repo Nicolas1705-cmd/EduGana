@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Matrícula de Profesor - Bulma</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style>
+        /* Estilos para centrar y limitar el ancho del formulario */
+        .container {
+            margin-top: 30px;
+            margin-bottom: 50px;
+            max-width: 700px; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="box">
+        <h1 class="title is-3 has-text-centered has-text-info">🧑‍🏫 Matrícula de Profesor</h1>
+        <hr>
+
+        <form action="#" method="POST">
+
+            <h2 class="title is-5 is-size-6-mobile mb-4">1. Datos Personales</h2>
+            <div class="columns is-multiline">
+                
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="id_profesor">ID de Profesor (Sistema)</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-static" type="text" value="Automático" id="id_profesor" name="id_profesor" readonly>
+                            <span class="icon is-small is-left"><i class="fas fa-id-badge"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="dni">DNI / Cédula</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Ej: 12345678" id="dni" name="dni" required maxlength="15">
+                            <span class="icon is-small is-left"><i class="fas fa-address-card"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column is-full">
+                    <div class="field">
+                        <label class="label" for="nombre_completo">Nombre Completo</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Juan Pérez López" id="nombre_completo" name="nombre_completo" required>
+                            <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="fecha_nacimiento">Fecha de Nacimiento</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                            <span class="icon is-small is-left"><i class="fas fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="genero">Género</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="genero" name="genero" required>
+                                    <option value="" disabled selected>Seleccione</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                                    <option value="O">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <hr>
+
+            <h2 class="title is-5 is-size-6-mobile mb-4">2. Contacto y Ubicación</h2>
+            <div class="columns is-multiline">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="email">Email Personal</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="email" placeholder="profesor.juan@ejemplo.com" id="email" name="email" required>
+                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="telefono">Teléfono / Celular</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="tel" placeholder="(+51) 987 654 321" id="telefono" name="telefono" required>
+                            <span class="icon is-small is-left"><i class="fas fa-mobile-alt"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-full">
+                    <div class="field">
+                        <label class="label" for="direccion">Dirección de Residencia</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Calle Los Álamos 123" id="direccion" name="direccion" required>
+                            <span class="icon is-small is-left"><i class="fas fa-home"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            
+            <h2 class="title is-5 is-size-6-mobile mb-4">3. Datos Laborales y Matrícula</h2>
+            <div class="columns is-multiline">
+                
+                <div class="column is-full">
+                    <div class="field">
+                        <label class="label" for="especialidad">Título / Especialidad</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Licenciado en Matemáticas" id="especialidad" name="especialidad" required>
+                            <span class="icon is-small is-left"><i class="fas fa-graduation-cap"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="nivel_asignado">Nivel Asignado</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="nivel_asignado" name="nivel_asignado" required>
+                                    <option value="" disabled selected>Seleccione un nivel</option>
+                                    <option value="inicial">Inicial</option>
+                                    <option value="primaria">Primaria</option>
+                                    <option value="secundaria">Secundaria</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="fecha_contratacion">Fecha de Contratación</label>
+                        <div class="control">
+                            <input class="input" type="date" id="fecha_contratacion" name="fecha_contratacion" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="activo">Estado</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="activo" value="true" checked>
+                                Contratado (Activo)
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="activo" value="false">
+                                Inactivo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label" for="fecha_registro">Fecha de Registro</label>
+                        <div class="control has-icons-left">
+                            <input class="input is-static" type="text" value="Sistema - HOY" id="fecha_registro" name="fecha_registro" readonly>
+                            <span class="icon is-small is-left"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mt-4">
+
+            <div class="field is-grouped is-grouped-centered" style="margin-top: 40px;">
+                <div class="control">
+                    <button class="button is-info is-large" type="submit">
+                        <span class="icon is-medium"><i class="fas fa-user-plus"></i></span>
+                        <span>Matricular Profesor</span>
+                    </button>
+                </div>
+                <div class="control">
+                    <button class="button is-light is-large" type="reset">
+                        <span class="icon is-medium"><i class="fas fa-eraser"></i></span>
+                        <span>Limpiar Formulario</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

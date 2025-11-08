@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Recompensas - EduGana</title>
+    
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+        
+        .main-container {
+            padding: 2rem 1.5rem;
+        }
+        
+        .page-header {
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .page-header .title,
+        .page-header .subtitle {
+            color: white !important;
+        }
+
+        .page-header .icon {
+            color: white;
+        }
+
+        .page-header .icon-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .page-header .icon-text .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Puntos del usuario */
+        .user-points {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .user-points .icon {
+            font-size: 1.5rem;
+        }
+        
+        .search-section {
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .search-section .input {
+            border-radius: 6px 0 0 6px;
+        }
+
+        .search-section .button {
+            transition: all 0.3s ease;
+        }
+
+        .search-section .button:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Tarjetas de recompensas */
+        .recompensas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .recompensa-card-main {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            border-top: 4px solid #667eea;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .recompensa-card-main:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+
+        .recompensa-card-main .card-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .recompensa-card-main .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #363636;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .recompensa-card-main .card-description {
+            color: #7a7a7a;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .recompensa-card-main .card-points {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .recompensa-card-main .card-footer {
+            margin-top: auto;
+        }
+
+        .recompensa-card-main .button.is-fullwidth {
+            font-weight: 600;
+        }
+
+        .recompensa-card-main.no-disponible {
+            opacity: 0.6;
+            border-top-color: #dbdbdb;
+        }
+
+        .recompensa-card-main.no-disponible .card-icon,
+        .recompensa-card-main.no-disponible .card-points {
+            color: #7a7a7a;
+        }
+
+        .recompensa-card-main.sin-puntos {
+            border-top-color: #ff6b6b;
+        }
+        
+
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #7a7a7a;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+        
+        .loader-container {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .loader-container.is-active {
+            display: block;
+        }
+
+
+
+        /* Responsive: Mostrar tabla en desktop, tarjetas en móvil */
+        @media screen and (max-width: 768px) {
+            .main-container {
+                padding: 1rem 0.75rem;
+            }
+
+            .page-header .level {
+                display: block !important;
+                text-align: center;
+            }
+
+            .page-header .level-left,
+            .page-header .level-right {
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+
+            .page-header .level-item {
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+
+            .page-header .title.is-2 {
+                font-size: 1.3rem;
+            }
+
+            .page-header .subtitle.is-5 {
+                font-size: 0.95rem;
+            }
+
+            .page-header {
+                padding: 1.25rem 1rem;
+            }
+
+            .page-header .icon-text {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .user-points {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+                margin: 0 auto;
+                display: flex;
+                justify-content: center;
+            }
+
+            .user-points .icon {
+                font-size: 1.2rem;
+            }
+
+            .recompensas-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .recompensa-card-main {
+                padding: 1.25rem;
+            }
+
+            .recompensa-card-main .card-icon {
+                font-size: 2.5rem;
+            }
+
+            .recompensa-card-main .card-title {
+                font-size: 1.25rem;
+            }
+
+            .recompensa-card-main .card-description {
+                font-size: 0.9rem;
+            }
+
+            .recompensa-card-main .card-points {
+                font-size: 1.3rem;
+            }
+
+            .search-section {
+                padding: 1rem;
+            }
+
+            .search-section .field.has-addons {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .search-section .control.is-expanded {
+                flex: 1 1 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .search-section .button {
+                flex: 1;
+            }
+
+            /* Ajustar modales en móvil */
+            .modal-card {
+                max-width: 95%;
+                margin: 0 auto;
+            }
+
+            .modal-card-head,
+            .modal-card-foot {
+                padding: 1rem;
+            }
+
+            .modal-card-body {
+                padding: 1.25rem;
+            }
+
+            .modal-card-title {
+                font-size: 1.1rem;
+            }
+
+            /* Botones en tarjetas más grandes en móvil */
+            .recompensa-card-main .button {
+                padding: 0.75rem 1rem;
+                font-size: 0.95rem;
+            }
+
+            /* Paginación */
+            .pagination {
+                flex-wrap: wrap;
+            }
+
+            .pagination-previous,
+            .pagination-next {
+                flex-grow: 1;
+                margin-bottom: 0.5rem;
+            }
+
+            .empty-state {
+                padding: 2rem 1rem;
+            }
+
+            .empty-state i {
+                font-size: 3rem;
+            }
+
+            .empty-state .title {
+                font-size: 1.25rem;
+            }
+
+            .empty-state .subtitle {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Tablet */
+        @media screen and (min-width: 769px) and (max-width: 1023px) {
+            .main-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .recompensas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page-header {
+                padding: 1.75rem 1.5rem;
+            }
+        }
+
+        /* Desktop grande */
+        @media screen and (min-width: 1024px) {
+            .recompensas-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Pantallas muy pequeñas */
+        @media screen and (max-width: 480px) {
+            .page-header .title.is-2 {
+                font-size: 1.1rem;
+            }
+
+            .page-header .subtitle.is-5 {
+                font-size: 0.85rem;
+            }
+
+            .user-points {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .recompensa-card-main .card-icon {
+                font-size: 2rem;
+            }
+
+            .recompensa-card-main .card-title {
+                font-size: 1.1rem;
+            }
+
+            .recompensa-card-main .card-points {
+                font-size: 1.2rem;
+            }
+
+            .button {
+                font-size: 0.85rem !important;
+            }
+        }
+
+        /* Estilos adicionales */
+        .pagination-link,
+        .pagination-previous,
+        .pagination-next {
+            transition: all 0.3s ease;
+        }
+
+        .pagination-link:hover,
+        .pagination-previous:hover,
+        .pagination-next:hover {
+            background-color: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .pagination-link.is-current {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="container">
+            <!-- Encabezado -->
+            <div class="page-header">
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <div>
+                                <h1 class="title is-2">
+                                    <span class="icon-text">
+                                        <span class="icon has-text-white mr-3">
+                                            <i class="fas fa-gift fa-lg"></i>
+                                        </span>
+                                        <span>Catálogo de Recompensas</span>
+                                    </span>
+                                </h1>
+                                <p class="subtitle is-5 mt-2">Canjea tus puntos por increíbles premios</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <div class="user-points">
+                                <span class="icon">
+                                    <i class="fas fa-coins"></i>
+                                </span>
+                                <span id="userPoints">2500</span>
+                                <span>puntos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Búsqueda y Filtros -->
+            <div class="search-section box">
+                <div class="field has-addons">
+                    <div class="control is-expanded has-icons-left">
+                        <input class="input" type="text" id="searchInput" placeholder="Buscar recompensas...">
+                        <span class="icon is-left">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <div class="control">
+                        <button class="button is-info" onclick="buscarRecompensas()">
+                            Buscar
+                        </button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-light" onclick="limpiarBusqueda()">
+                            <span class="icon">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loader -->
+            <div class="loader-container" id="loader">
+                <button class="button is-loading is-large is-white"></button>
+                <p class="mt-3">Cargando recompensas...</p>
+            </div>
+
+            <!-- Grid de Recompensas -->
+            <div id="recompensasContainer">
+                <div class="recompensas-grid" id="recompensasGrid">
+                    <!-- Las tarjetas se cargarán aquí dinámicamente -->
+                </div>
+
+                <!-- Estado vacío -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <i class="fas fa-search"></i>
+                    <h3 class="title is-4">No se encontraron recompensas</h3>
+                    <p class="subtitle is-6">Intenta buscar con otros términos</p>
+                </div>
+
+                <!-- Paginación -->
+                <nav class="pagination is-centered mt-5" role="navigation" aria-label="pagination" id="pagination" style="display: none;">
+                    <a class="pagination-previous" onclick="cambiarPagina(-1)">Anterior</a>
+                    <a class="pagination-next" onclick="cambiarPagina(1)">Siguiente</a>
+                    <ul class="pagination-list">
+                        <li><a class="pagination-link is-current" aria-label="Página 1" id="currentPage">1</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación para Canjear -->
+    <div class="modal" id="canjearModal">
+        <div class="modal-background" onclick="cerrarModal()"></div>
+        <div class="modal-card">
+            <header class="modal-card-head" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <p class="modal-card-title has-text-white">
+                    <span class="icon">
+                        <i class="fas fa-gift"></i>
+                    </span>
+                    Confirmar Canje
+                </p>
+                <button class="delete" aria-label="close" onclick="cerrarModal()"></button>
+            </header>
+            <section class="modal-card-body">
+                <p class="mb-4">¿Estás seguro de que deseas canjear esta recompensa?</p>
+                <div class="notification is-info is-light">
+                    <strong id="recompensaNombre"></strong>
+                    <p class="mt-2">Se descontarán <strong id="recompensaPuntos"></strong> puntos de tu cuenta.</p>
+                </div>
+                <div class="notification is-warning is-light" id="sinPuntosWarning" style="display: none;">
+                    <strong>⚠️ No tienes suficientes puntos</strong>
+                    <p class="mt-2">Te faltan <strong id="puntosFaltantes"></strong> puntos para canjear esta recompensa.</p>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" id="btnConfirmarCanje" onclick="confirmarCanje()">
+                    <span class="icon">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span>Canjear Ahora</span>
+                </button>
+                <button class="button" onclick="cerrarModal()">Cancelar</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal de Detalle -->
+    <div class="modal" id="detailModal">
+        <div class="modal-background" onclick="cerrarModalDetalle()"></div>
+        <div class="modal-card">
+            <header class="modal-card-head" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <p class="modal-card-title has-text-white">
+                    <span class="icon">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                    Detalle de Recompensa
+                </p>
+                <button class="delete" aria-label="close" onclick="cerrarModalDetalle()"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="content has-text-centered">
+                    <div class="mb-4">
+                        <span class="icon has-text-info" style="font-size: 4rem;">
+                            <i class="fas fa-gift"></i>
+                        </span>
+                    </div>
+                    <h2 class="title is-3" id="detailNombre">-</h2>
+                    <p class="subtitle is-5 has-text-grey" id="detailDescripcion">-</p>
+                    
+                    <div class="my-5">
+                        <span class="tag is-warning is-large">
+                            <span class="icon">
+                                <i class="fas fa-star"></i>
+                            </span>
+                            <span id="detailPuntos" style="font-size: 1.2rem; font-weight: bold;">- puntos</span>
+                        </span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <span id="detailEstado">-</span>
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot" style="justify-content: center;">
+                <button class="button is-info" onclick="cerrarModalDetalle()">Cerrar</button>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let recompensasData = [];
+        let recompensasFiltradas = [];
+        let paginaActual = 1;
+        let itemsPorPagina = 6;
+        let idCanjear = null;
+        let userPoints = 2500; // Puntos del usuario (se obtendría de la API)
+
+        // Cargar recompensas al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarRecompensas();
+        });
+
+        // Función para cargar recompensas desde la API
+        async function cargarRecompensas() {
+            const loader = document.getElementById('loader');
+            const container = document.getElementById('recompensasContainer');
+            
+            loader.classList.add('is-active');
+            container.style.display = 'none';
+
+            try {
+                // Aquí debes reemplazar con tu URL de API real
+                const response = await fetch('http://localhost:5000/recompensas');
+                
+                if (!response.ok) {
+                    throw new Error('Error al cargar recompensas');
+                }
+                
+                const data = await response.json();
+                recompensasData = data.recompensas || [];
+                recompensasFiltradas = [...recompensasData];
+                
+                mostrarRecompensas();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                
+                // Datos de ejemplo para pruebas (quitar cuando tengas la API real)
+                recompensasData = [
+                    { id: 1, nombre: 'Audífonos Bluetooth', descripcion: 'Audífonos inalámbricos premium con cancelación de ruido', puntos: 800, disponible: true, icono: 'fa-headphones' },
+                    { id: 2, nombre: 'Tablet 10"', descripcion: 'Tablet Android 10 pulgadas, 64GB, ideal para estudiar', puntos: 3500, disponible: true, icono: 'fa-tablet-alt' },
+                    { id: 3, nombre: 'Smartphone', descripcion: 'Celular Android último modelo, 128GB, cámara HD', puntos: 5000, disponible: false, icono: 'fa-mobile-alt' },
+                    { id: 4, nombre: 'Laptop Gamer', descripcion: 'Laptop 15" Intel i7, 16GB RAM, ideal para programar', puntos: 8500, disponible: true, icono: 'fa-laptop' },
+                    { id: 5, nombre: 'Mouse Gamer RGB', descripcion: 'Mouse inalámbrico con iluminación RGB y 6 botones', puntos: 350, disponible: true, icono: 'fa-computer-mouse' },
+                    { id: 6, nombre: 'Teclado Mecánico', descripcion: 'Teclado mecánico retroiluminado para gaming y programación', puntos: 600, disponible: true, icono: 'fa-keyboard' },
+                    { id: 7, nombre: 'Smartwatch', descripcion: 'Reloj inteligente con monitor de actividad y notificaciones', puntos: 1200, disponible: true, icono: 'fa-clock' },
+                    { id: 8, nombre: 'Webcam Full HD', descripcion: 'Cámara web 1080p con micrófono incorporado', puntos: 450, disponible: true, icono: 'fa-video' },
+                    { id: 9, nombre: 'Mochila Antirrobo', descripcion: 'Mochila para laptop con puerto USB y seguridad antirrobo', puntos: 280, disponible: true, icono: 'fa-backpack' },
+                    { id: 10, nombre: 'Curso Premium', descripcion: 'Acceso a curso online de tu elección por 6 meses', puntos: 500, disponible: true, icono: 'fa-graduation-cap' },
+                    { id: 11, nombre: 'Gift Card $50', descripcion: 'Tarjeta de regalo de $50 para tiendas online', puntos: 2000, disponible: true, icono: 'fa-gift-card' },
+                    { id: 12, nombre: 'Consola Nintendo Switch', descripcion: 'Consola de videojuegos Nintendo Switch + juego incluido', puntos: 6000, disponible: false, icono: 'fa-gamepad' }
+                ];
+                recompensasFiltradas = [...recompensasData];
+                mostrarRecompensas();
+            } finally {
+                loader.classList.remove('is-active');
+                container.style.display = 'block';
+            }
+        }
+
+        // Función para mostrar recompensas en el grid
+        function mostrarRecompensas() {
+            const grid = document.getElementById('recompensasGrid');
+            const emptyState = document.getElementById('emptyState');
+            const pagination = document.getElementById('pagination');
+            
+            grid.innerHTML = '';
+            
+            if (recompensasFiltradas.length === 0) {
+                emptyState.style.display = 'block';
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            // Calcular paginación
+            const inicio = (paginaActual - 1) * itemsPorPagina;
+            const fin = inicio + itemsPorPagina;
+            const recompensasPagina = recompensasFiltradas.slice(inicio, fin);
+            
+            // Generar tarjetas
+            recompensasPagina.forEach(recompensa => {
+                const card = document.createElement('div');
+                const tienePuntos = userPoints >= recompensa.puntos;
+                const puedeRescatar = recompensa.disponible && tienePuntos;
+                
+                let cardClass = 'recompensa-card-main';
+                if (!recompensa.disponible) {
+                    cardClass += ' no-disponible';
+                } else if (!tienePuntos) {
+                    cardClass += ' sin-puntos';
+                }
+                
+                card.className = cardClass;
+                
+                const icono = recompensa.icono || 'fa-gift';
+                
+                let botonHtml = '';
+                if (!recompensa.disponible) {
+                    botonHtml = `
+                        <button class="button is-fullwidth" disabled>
+                            <span class="icon"><i class="fas fa-times"></i></span>
+                            <span>No Disponible</span>
+                        </button>
+                    `;
+                } else if (!tienePuntos) {
+                    botonHtml = `
+                        <button class="button is-danger is-light is-fullwidth" onclick="verDetalle(${recompensa.id})">
+                            <span class="icon"><i class="fas fa-lock"></i></span>
+                            <span>Puntos Insuficientes</span>
+                        </button>
+                    `;
+                } else {
+                    botonHtml = `
+                        <button class="button is-success is-fullwidth" onclick="abrirModalCanjear(${recompensa.id}, '${recompensa.nombre}', ${recompensa.puntos})">
+                            <span class="icon"><i class="fas fa-check-circle"></i></span>
+                            <span>Canjear</span>
+                        </button>
+                    `;
+                }
+                
+                card.innerHTML = `
+                    <div class="card-icon">
+                        <i class="fas ${icono}"></i>
+                    </div>
+                    <div class="card-title">${recompensa.nombre}</div>
+                    <div class="card-description">${recompensa.descripcion}</div>
+                    <div class="card-points">
+                        <i class="fas fa-star"></i>
+                        <span>${recompensa.puntos}</span>
+                        <span style="font-size: 0.9rem; font-weight: normal;">puntos</span>
+                    </div>
+                    <div class="card-footer">
+                        ${botonHtml}
+                        <button class="button is-info is-light is-fullwidth mt-2" onclick="verDetalle(${recompensa.id})">
+                            <span class="icon"><i class="fas fa-info-circle"></i></span>
+                            <span>Ver Detalles</span>
+                        </button>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+            
+            // Mostrar/ocultar paginación
+            const totalPaginas = Math.ceil(recompensasFiltradas.length / itemsPorPagina);
+            if (totalPaginas > 1) {
+                pagination.style.display = 'flex';
+                document.getElementById('currentPage').textContent = `${paginaActual} de ${totalPaginas}`;
+            } else {
+                pagination.style.display = 'none';
+            }
+        }
+
+        // Función de búsqueda
+        function buscarRecompensas() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                recompensasFiltradas = [...recompensasData];
+            } else {
+                recompensasFiltradas = recompensasData.filter(r => 
+                    r.nombre.toLowerCase().includes(searchTerm) ||
+                    r.descripcion.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            paginaActual = 1;
+            mostrarRecompensas();
+        }
+
+        // Limpiar búsqueda
+        function limpiarBusqueda() {
+            document.getElementById('searchInput').value = '';
+            buscarRecompensas();
+        }
+
+        // Enter en búsqueda
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarRecompensas();
+            }
+        });
+
+        // Cambiar página
+        function cambiarPagina(direccion) {
+            const totalPaginas = Math.ceil(recompensasFiltradas.length / itemsPorPagina);
+            paginaActual += direccion;
+            
+            if (paginaActual < 1) paginaActual = 1;
+            if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+            
+            mostrarRecompensas();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Ver detalle
+        function verDetalle(id) {
+            const recompensa = recompensasData.find(r => r.id === id);
+            if (recompensa) {
+                document.getElementById('detailNombre').textContent = recompensa.nombre;
+                document.getElementById('detailDescripcion').textContent = recompensa.descripcion;
+                document.getElementById('detailPuntos').textContent = recompensa.puntos + ' puntos';
+                document.getElementById('detailEstado').innerHTML = recompensa.disponible 
+                    ? '<span class="tag is-success is-large">Disponible</span>' 
+                    : '<span class="tag is-danger is-large">No disponible</span>';
+                
+                document.getElementById('detailModal').classList.add('is-active');
+            }
+        }
+
+        function cerrarModalDetalle() {
+            document.getElementById('detailModal').classList.remove('is-active');
+        }
+
+        // Modal de canjear
+        function abrirModalCanjear(id, nombre, puntos) {
+            idCanjear = id;
+            document.getElementById('recompensaNombre').textContent = nombre;
+            document.getElementById('recompensaPuntos').textContent = puntos;
+            
+            const tienePuntos = userPoints >= puntos;
+            const btnConfirmar = document.getElementById('btnConfirmarCanje');
+            const warningPuntos = document.getElementById('sinPuntosWarning');
+            
+            if (!tienePuntos) {
+                const faltantes = puntos - userPoints;
+                document.getElementById('puntosFaltantes').textContent = faltantes;
+                warningPuntos.style.display = 'block';
+                btnConfirmar.disabled = true;
+            } else {
+                warningPuntos.style.display = 'none';
+                btnConfirmar.disabled = false;
+            }
+            
+            document.getElementById('canjearModal').classList.add('is-active');
+        }
+
+        function cerrarModal() {
+            document.getElementById('canjearModal').classList.remove('is-active');
+            idCanjear = null;
+        }
+
+        async function confirmarCanje() {
+            if (idCanjear === null) return;
+            
+            const recompensa = recompensasData.find(r => r.id === idCanjear);
+            
+            if (!recompensa || userPoints < recompensa.puntos) {
+                mostrarNotificacion('No tienes suficientes puntos', 'danger');
+                return;
+            }
+            
+            try {
+                // Aquí llamarías a tu API para canjear
+                // const response = await fetch(`http://localhost:5000/canjear/${idCanjear}`, {
+                //     method: 'POST'
+                // });
+                
+                // Simular canje exitoso
+                userPoints -= recompensa.puntos;
+                document.getElementById('userPoints').textContent = userPoints;
+                
+                cerrarModal();
+                mostrarNotificacion('¡Recompensa canjeada exitosamente! 🎉', 'success');
+                
+                // Actualizar las tarjetas para reflejar los nuevos puntos
+                mostrarRecompensas();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarNotificacion('Error al canjear la recompensa', 'danger');
+            }
+        }
+
+        // Función para mostrar notificaciones
+        function mostrarNotificacion(mensaje, tipo) {
+            const notification = document.createElement('div');
+            notification.className = `notification is-${tipo} is-light`;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '9999';
+            notification.style.minWidth = '300px';
+            notification.innerHTML = `
+                <button class="delete" onclick="this.parentElement.remove()"></button>
+                ${mensaje}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
