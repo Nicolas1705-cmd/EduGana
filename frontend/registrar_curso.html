@@ -1,417 +1,833 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Registro de Curso EDUGANA - Bulma</title> 
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+
     <style>
+
         /* AJUSTE DE COLOR: Color primario azul para EDUGANA y botones de acción */
+
         .is-primary { 
+
             background-color: #3273DC !important; /* Azul FUERTE para los botones */
+
         }
+
         .has-text-primary { 
+
             color: #3273DC !important; 
+
         }
+
         /* Los inputs mantienen el estilo verde/cian para el borde */
+
         .input.is-success, 
+
         .textarea.is-success, 
+
         .select select.is-success, 
+
         .input.is-success:focus, 
+
         .select select.is-success:focus {
+
             border-color: #00BFA5 !important; 
+
             box-shadow: 0 0 0 0.125em rgba(0, 191, 165, 0.25); 
+
         }
+
         .help.is-success {
+
             color: #00BFA5;
+
         }
+
         .checkbox a {
+
             color: #F14668; /* Rojo de Bulma (danger) para el enlace de T&C */
+
         }
+
         .box {
+
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+
             margin-top: 0; 
+
             margin-bottom: 0;
+
         }
+
         .form-container-alignment {
+
             max-width: 600px;
+
             margin-left: auto;
+
             margin-right: auto;
+
         }
+
         .top-header {
+
             margin-bottom: 1.5rem;
+
         }
+
         /* Optimización para móvil */
+
         @media screen and (max-width: 768px) {
+
             .section {
+
                 padding-left: 1rem;
+
                 padding-right: 1rem;
+
             }
+
         }
+
     .page-header {
+
+
 
   margin-bottom: 2rem;
 
+
+
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+
 
   border-radius: 0px 0px 12px 12px;
 
+
+
   padding: 2rem;
+
+
 
   color: white;
 
+
+
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 
+
+
 }
+
+
+
+
 
 
 
 .page-header .title,
 
+
+
 .page-header .subtitle {
+
+
 
   color: white !important;
 
+
+
 }
+
+
+
+
 
 
 
 .page-header .icon {
 
+
+
   color: white;
 
+
+
 }
+
+
+
+
 
 
 
 .page-header .icon-text {
 
+
+
   display: inline-flex;
+
+
 
   align-items: center;
 
+
+
   gap: 0.75rem;
 
+
+
 }
+
+
+
+
 
 
 
 .page-header .icon-text .icon {
 
+
+
   display: inline-flex;
+
+
 
   align-items: center;
 
+
+
   justify-content: center;
 
+
+
 }
+
+
+
+
 
 
 
 /* Puntos del usuario */
 
+
+
 .user-points {
+
+
 
   background: rgba(255, 255, 255, 0.2);
 
+
+
   border-radius: 50px;
+
+
 
   padding: 0.75rem 1.5rem;
 
+
+
   display: inline-flex;
+
+
 
   align-items: center;
 
+
+
   gap: 0.5rem;
+
+
 
   font-size: 1.2rem;
 
+
+
   font-weight: bold;
 
+
+
 }
+
+
+
+
 
 
 
 .user-points .icon {
 
+
+
   font-size: 1.5rem;
 
+
+
 }
+
+
+
+
 
 
 
 /* Media Queries específicas para el encabezado */
 
+
+
 @media screen and (max-width: 768px) {
+
+
 
   .page-header .level {
 
+
+
     display: block !important;
+
+
 
     text-align: center;
 
+
+
   }
+
+
+
+
 
 
 
   .page-header .level-left,
 
+
+
   .page-header .level-right {
+
+
 
     margin-bottom: 1rem;
 
+
+
     text-align: center;
 
+
+
   }
+
+
+
+
 
 
 
   .page-header .level-item {
 
+
+
     display: block;
+
+
 
     margin-bottom: 0.5rem;
 
+
+
   }
+
+
+
+
 
 
 
   .page-header .title.is-2 {
 
+
+
     font-size: 1.3rem;
 
+
+
   }
+
+
+
+
 
 
 
   .page-header .subtitle.is-5 {
 
+
+
     font-size: 0.95rem;
 
+
+
   }
+
+
+
+
 
 
 
   .page-header {
 
+
+
     padding: 1.25rem 1rem;
 
+
+
   }
+
+
+
+
 
 
 
   .page-header .icon-text {
 
+
+
     display: flex;
+
+
 
     justify-content: center;
 
+
+
     flex-wrap: wrap;
 
+
+
   }
+
+
+
+
 
 
 
   .user-points {
 
+
+
     font-size: 1rem;
+
+
 
     padding: 0.6rem 1.2rem;
 
+
+
     margin: 0 auto;
+
+
 
     display: flex;
 
+
+
     justify-content: center;
 
+
+
   }
+
+
+
+
 
 
 
   .user-points .icon {
 
+
+
     font-size: 1.2rem;
+
+
 
   }
 
+
+
 }
+
+
+
+
 
 
 
 /* Pantallas muy pequeñas */
 
+
+
 @media screen and (max-width: 480px) {
+
+
 
   .page-header .title.is-2 {
 
+
+
     font-size: 1.1rem;
 
+
+
   }
+
+
+
+
 
 
 
   .page-header .subtitle.is-5 {
 
+
+
     font-size: 0.85rem;
 
+
+
   }
+
+
+
+
 
 
 
   .user-points {
 
+
+
     font-size: 0.9rem;
+
+
 
     padding: 0.5rem 1rem;
 
+
+
   }
+
+
+
+
 
 
 
   .user-points .icon {
 
+
+
     font-size: 1.2rem;
+
+
 
   }
 
+
+
 }
+
+
+
+
 
 
 
 /* Tablet */
 
+
+
 @media screen and (min-width: 769px) and (max-width: 1023px) {
+
+
 
   .page-header {
 
+
+
     padding: 1.75rem 1.5rem;
+
+
 
   }
 
+
+
 }
+
     </style>
+
 </head>
+
 <body>
+
     <div class="page-header">
+
+
 
   <div class="level">
 
+
+
     <div class="level-left">
 
+
+
       <div class="level-item">
+
+
 
         <div>
 
+
+
           <h1 class="title is-2">
+
+
 
             <span class="icon-text">
 
+
+
               <span class="icon has-text-white mr-3">
+
+
 
                 <i class="fas fa-gift fa-lg"></i>
 
+
+
               </span>
+
+
 
               <span>Nuevo Curso</span>
 
+
+
             </span>
+
+
 
           </h1>
 
+
+
           <p class="subtitle is-5 mt-2">EDUGANA</p>
+
+
 
         </div>
 
+
+
       </div>
 
+
+
     </div>
+
+
 
     <div class="level-right">
 
+
+
       <div class="level-item">
+
+
 
         <div class="user-points">
 
+
+
           <span class="icon">
+
+
 
             <i class="fas fa-coins"></i>
 
+
+
           </span>
+
+
 
           <span id="userPoints"></span>
 
+
+
           <span></span>
 
+
+
         </div>
+
+
 
       </div>
 
+
+
     </div>
+
+
 
   </div>
 
+
+
 </div>
 
+
+
     <section class="section">
+
         <div class="container form-container-alignment">
+
             
+
             <div class="top-header">
+
                 <div class="has-text-centered" style="margin-bottom: 1.5rem;">
+
                 </div>
+
                 <h2 class="subtitle is-5 has-text-left">Inscripción al Curso - Completa tus datos para registrarte</h2>
+
             </div>
+
             
+
             <div class="box">
+
                 <form action="procesar_registro.php" method="POST">
+
                     
-                    <div class="field">
-                        <label class="label">Nombre Completo <span class="has-text-danger">(*)</span></label>
-                        <div class="control">
-                            <input class="input is-success" type="text" placeholder="Ej: Juan Pérez García" required>
-                        </div>
-                    </div>
-                    
-                    <div class="field">
-                        <label class="label">Nombre Curso <span class="has-text-danger">(*)</span></label>
-                        <div class="control">
-                            <input class="input is-success" type="text" placeholder="Ej: Fundamentos de Marketing Digital" required>
-                        </div>
-                    </div>
 
                     <div class="field">
-                        <label class="label">ID Alumno <span class="has-text-danger">(*)</span></label>
+
+                        <label class="label">Nombre Completo <span class="has-text-danger">(*)</span></label>
+
                         <div class="control">
-                            <input class="input is-success" type="text" placeholder="Ej: A12345" required>
+
+                            <input class="input is-success" type="text" placeholder="Ej: Juan Pérez García" required>
+
                         </div>
+
                     </div>
+
+                    
+
+                    <div class="field">
+
+                        <label class="label">Nombre Curso <span class="has-text-danger">(*)</span></label>
+
+                        <div class="control">
+
+                            <input class="input is-success" type="text" placeholder="Ej: Fundamentos de Marketing Digital" required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="field">
+
+                        <label class="label">ID Alumno <span class="has-text-danger">(*)</span></label>
+
+                        <div class="control">
+
+                            <input class="input is-success" type="text" placeholder="Ej: A12345" required>
+
+                        </div>
+
+                    </div>
+
+
 
                     <div class="field" style="margin-top: 2rem;">
+
                         <div class="control">
+
                             <label class="checkbox">
+
                                 <input type="checkbox" required>
+
                                 Acepto los <a href="#" class="has-text-danger" style="text-decoration: underline;">Términos y Condiciones</a> <span class="has-text-danger">(*)</span>
+
                             </label>
+
                         </div>
+
                     </div>
+
                     
+
                     <div class="field is-grouped is-grouped-centered is-grouped-mobile" style="margin-top: 1.5rem;">
+
                         <div class="control is-expanded">
+
                             <button class="button is-primary is-fullwidth" type="submit">
+
                                 Registrarme
+
                             </button>
+
                         </div>
+
                         <div class="control is-expanded">
+
                             <button class="button is-light is-fullwidth" type="reset">
+
                                 Reiniciar
+
                             </button>
+
                         </div>
+
                     </div>
+
+
 
                 </form>
+
             </div>
+
         </div>
+
     </section>
 
+
+
 </body>
+
 </html>
