@@ -7,7 +7,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
-        /* Estilos generales (Tema CLARO) */
+        /* Estilo personalizado para asegurar el color azul profundo/brillante en la barra */
+        .navbar.is-primary, .button.is-primary {
+            background-color: #3273dc !important; /* Azul primario fuerte de Bulma */
+            color: #fff !important;
+        }
+
+        /* Estilos para el espacio debajo del navbar fijo */
+        body {
+            padding-top: 52px; 
+        }
         .page-container {
             margin-top: 2rem;
             margin-bottom: 3rem;
@@ -18,7 +27,11 @@
         .card-row {
             margin-bottom: 1rem;
         }
-        /* CLASES DE RESPONSIVIDAD DE BULMA (Asegura la funcionalidad PC/Móvil) */
+        /* Clase para asegurar mayúsculas */
+        .is-uppercase-text {
+            text-transform: uppercase;
+        }
+        /* CLASES DE RESPONSIVIDAD DE BULMA */
         @media screen and (max-width: 1023px) {
             .is-hidden-desktop { display: inherit !important; }
             .is-hidden-touch { display: none !important; }
@@ -27,20 +40,29 @@
 </head>
 <body>
 
+    
+<nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <span class="icon-text has-text-white">
+                    <span class="icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </span>
+                    <span class="has-text-weight-bold is-size-5 is-uppercase-text">EDUGANA</span>
+                </span>
+            </a>
+            
+</div>
+    </nav>
+
     <section class="section">
         <div class="container page-container">
-            <div class="block pt-0 pb-2">
-                <p class="title is-4 has-text-link is-paddingless is-marginless">
-                    <i class="fas fa-graduation-cap"></i> Edugana
-                </p>
-                </div>
-            
             <div class="box">
                 <div class="block">
-                    <h1 class="title is-3 has-text-primary">
+                    <h1 class="title is-3 has-text-success">
                         <i class="fas fa-calendar-check"></i> Historial de Asistencias
                     </h1>
-                    <p class="subtitle is-6">Registro detallado de entradas y salidas del empleado: **Juan Pérez (ID: 45789)**</p>
+                    <p class="subtitle is-6">Registro detallado de entradas y salidas del estudiante: **Juan Pérez (ID: 45789)**</p>
                 </div>
 
                 ---
