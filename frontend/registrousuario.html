@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Usuario</title>
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+  <!-- Font Awesome (para íconos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      background: #f4f6fb;
+      font-family: "Poppins", sans-serif;
+    }
+    .form-container {
+      max-width: 500px;
+      margin-top: 60px;
+    }
+    .title {
+      font-weight: 700;
+      color: #363636;
+    }
+    .button.is-primary:hover {
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container form-container">
+      <div class="box">
+        <h1 class="title has-text-centered">Registro de Usuario</h1>
+        <form>
+          
+          <!-- Nombre Completo -->
+          <div class="field">
+            <label class="label">Nombre Completo</label>
+            <div class="control has-icons-left">
+              <input class="input" type="text" placeholder="Ingresa tu nombre completo" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Correo Electrónico -->
+          <div class="field">
+            <label class="label">Correo Electrónico</label>
+            <div class="control has-icons-left">
+              <input class="input" type="email" placeholder="ejemplo@correo.com" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="field">
+            <label class="label">Contraseña</label>
+            <div class="control has-icons-left">
+              <input class="input is-success" type="password" placeholder="Crea una contraseña segura" required>
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+            <p class="help is-success">Tu contraseña es segura</p>
+          </div>
+
+          <!-- Teléfono (opcional) -->
+          <div class="field">
+            <label class="label">Teléfono (opcional)</label>
+            <div class="control has-icons-left">
+              <input class="input" type="tel" placeholder="Ejemplo: +51 999 999 999">
+              <span class="icon is-small is-left">
+                <i class="fas fa-phone"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- País -->
+          <div class="field">
+            <label class="label">País</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select>
+                  <option value="">Selecciona tu país</option>
+                  <option>Perú</option>
+                  <option>México</option>
+                  <option>Colombia</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Términos y Condiciones -->
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" required>
+                Acepto los <a href="#">términos y condiciones</a>
+              </label>
+            </div>
+          </div>
+
+          <!-- Botones -->
+          <div class="field is-grouped is-grouped-centered mt-5">
+            <div class="control">
+              <button class="button is-primary" type="submit">
+                <span class="icon"><i class="fas fa-paper-plane"></i></span>
+                <span>Enviar</span>
+              </button>
+            </div>
+            <div class="control">
+              <button class="button is-light" type="reset">
+                <span class="icon"><i class="fas fa-rotate-left"></i></span>
+                <span>Cancelar</span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
