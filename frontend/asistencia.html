@@ -3,108 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Asistencia - Bulma</title>
+    <title>Registro de Asistencia NFC - Colegio</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <style>
         /* Estilos opcionales para centrar y dar espacio */
-        .registro-container {
-            margin-top: 30px;
+        .nfc-scan-area {
+            text-align: center;
+            padding: 30px;
+            border: 2px dashed #dbdbdb;
+            border-radius: 6px;
+            margin-bottom: 20px;
         }
-        .header-tile {
-            background-color: #485fc7; /* Color principal de Bulma (Primary) */
-            color: white;
-            padding: 20px;
-            border-radius: 6px 6px 0 0;
+        .nfc-scan-area .icon {
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
 
-<section class="section">
-    <div class="container registro-container">
-        
-        <div class="tile is-ancestor">
-            <div class="tile is-parent is-12">
-                <div class="tile is-child box header-tile">
-                    <h1 class="title is-4 has-text-white">
-                        <i class="fas fa-clipboard-check"></i> Registro de Asistencia
-                    </h1>
-                    <p class="subtitle is-6 has-text-white-ter">Clase: **Matemáticas Avanzadas** - Fecha: **07/11/2025**</p>
+    <section class="section">
+        <div class="container">
+            <h1 class="title is-2 has-text-centered">
+                Registro de Asistencia NFC
+            </h1>
+            <p class="subtitle has-text-centered">
+                Sistema de Control de Entrada y Salida
+            </p>
+
+            <hr>
+
+            <div class="box has-background-white-ter">
+                <div class="nfc-scan-area">
+                    <p class="is-size-4 has-text-weight-bold">
+                        <span class="icon is-large has-text-info">
+                            <i class="fas fa-wifi fa-rotate-270"></i>
+                        </span>
+                        Acerca la Tarjeta/Tag NFC
+                    </p>
+                    <p class="has-text-grey">
+                        La asistencia se registrará automáticamente (Inicio o Fin).
+                    </p>
+                    <div class="field mt-4 is-grouped is-grouped-centered">
+                        <div class="control is-expanded is-loading">
+                            <input class="input is-large" type="text" placeholder="Esperando escaneo..." disabled>
+                        </div>
+                        <div class="control">
+                             <button class="button is-light is-large" disabled>Registrar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="tile is-ancestor">
-            <div class="tile is-parent is-12">
-                <div class="tile is-child box">
-                    
-                    <form id="attendance-form">
-                        <div class="table-container">
-                            <table class="table is-striped is-fullwidth is-hoverable">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nombre Completo</th>
-                                        <th>Cédula/DNI</th>
-                                        <th class="has-text-centered">Asistencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Ana María García</td>
-                                        <td>12345678</td>
-                                        <td class="has-text-centered">
-                                            <label class="switch">
-                                                <input type="checkbox" name="alumno_1" checked>
-                                                <span class="check"></span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Carlos José López</td>
-                                        <td>87654321</td>
-                                        <td class="has-text-centered">
-                                            <label class="switch">
-                                                <input type="checkbox" name="alumno_2">
-                                                <span class="check"></span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Sofía Elena Martínez</td>
-                                        <td>54321098</td>
-                                        <td class="has-text-centered">
-                                            <label class="switch">
-                                                <input type="checkbox" name="alumno_3" checked>
-                                                <span class="check"></span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+            <h2 class="title is-4 mt-5">
+                Historial de Asistencia
+            </h2>
+            <div class="table-container">
+                <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Colegio</th>
+                            <th>Fecha/Hora</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>**Juan Pérez**</td>
+                            <td>**Colegio Nacional**</td>
+                            <td>08/11/2025 07:45:12</td>
+                            <td><span class="tag is-success is-light">INICIO</span></td>
+                        </tr>
+                        <tr>
+                            <td>**María López**</td>
+                            <td>**Colegio Nacional**</td>
+                            <td>08/11/2025 15:30:40</td>
+                            <td><span class="tag is-info is-light">FIN</span></td>
+                        </tr>
+                         <tr>
+                            <td>**Carlos García**</td>
+                            <td>**Colegio Nacional**</td>
+                            <td>08/11/2025 08:05:00</td>
+                            <td><span class="tag is-success is-light">INICIO</span></td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+
+            ---
+
+            <h2 class="title is-4 mt-5">
+                👥 Últimos 20 Alumnos Registrados
+            </h2>
+            <div class="box">
+                <div class="content">
+
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <span class="icon is-large has-text-primary">
+                                    <i class="fas fa-user-circle fa-2x"></i>
+                                </span>
+                            </figure>
                         </div>
-                        
-                        <div class="field is-grouped is-grouped-centered">
-                            <p class="control">
-                                <button type="submit" class="button is-primary is-large">
-                                    <span class="icon"><i class="fas fa-save"></i></span>
-                                    <span>Guardar Asistencia</span>
-                                </button>
-                            </p>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>Alumno: Ana Torres</strong> <small class="has-text-grey">ID: 1002345</small>
+                                    <br>
+                                    <small>Registro: 01/10/2025 - 14:30 | Nivel: Primaria B</small>
+                                </p>
+                            </div>
                         </div>
-                    </form>
+                        <div class="media-right">
+                            <span class="tag is-primary">Activo</span>
+                        </div>
+                    </article>
+                    <hr class="my-3"> <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <span class="icon is-large has-text-primary">
+                                    <i class="fas fa-user-circle fa-2x"></i>
+                                </span>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>Alumno: Ricardo Soto</strong> <small class="has-text-grey">ID: 1002346</small>
+                                    <br>
+                                    <small>Registro: 05/10/2025 - 09:15 | Nivel: Secundaria C</small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="media-right">
+                            <span class="tag is-primary">Activo</span>
+                        </div>
+                    </article>
+                    <hr class="my-3">
+
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <span class="icon is-large has-text-warning">
+                                    <i class="fas fa-user-circle fa-2x"></i>
+                                </span>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>Alumno: Elena Vidal</strong> <small class="has-text-grey">ID: 1002347</small>
+                                    <br>
+                                    <small>Registro: 20/09/2025 - 16:00 | Nivel: Inicial A</small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="media-right">
+                            <span class="tag is-warning">Inactivo</span>
+                        </div>
+                    </article>
+                    <hr class="my-3">
+
+                    <p class="has-text-centered has-text-grey-light">
+                        ... Aquí irían 17 registros más ...
+                    </p>
 
                 </div>
             </div>
+
         </div>
+    </section>
 
-    </div>
-</section>
-
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 </body>
 </html>
