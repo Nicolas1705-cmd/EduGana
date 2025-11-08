@@ -3,37 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Historial de Asistencias - Bulma.io</title>
-=======
-    <title>Historial de Asistencias - Vista Alumno (Bulma) - Corregido</title>
->>>>>>> 0b76f4262f72ffbe332c7afed3b944f20151fa1d
+    <title>Historial de Asistencias - San Pedro Chanell (Bulma)</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
-        /* Estilo para centrar y añadir margen al contenedor principal */
+        /* Estilos generales */
         .page-container {
-<<<<<<< HEAD
-            margin-top: 3rem;
-            margin-bottom: 3rem;
-        }
-        /* Estilo para hacer que la tabla sea desplazable horizontalmente en móviles */
-        .table-container {
-            overflow-x: auto;
-        }
-=======
             margin-top: 2rem;
             margin-bottom: 3rem;
         }
-        /* Estilo para que la tabla tradicional sea desplazable horizontalmente en pantallas intermedias/pequeñas */
         .table-container {
             overflow-x: auto;
         }
-        /* Estilo para espaciado en la vista de cards (móvil) */
         .card-row {
             margin-bottom: 1rem;
         }
->>>>>>> 0b76f4262f72ffbe332c7afed3b944f20151fa1d
+        /* CLASES DE RESPONSIVIDAD DE BULMA (Asegura la funcionalidad PC/Móvil) */
+        @media screen and (max-width: 1023px) {
+            .is-hidden-desktop { display: inherit !important; }
+            .is-hidden-touch { display: none !important; }
+        }
+        /* Estilo para simular el tema oscuro de la imagen (Opcional, pero ayuda a la visualización) */
+        body {
+            background-color: #2a2a2a; /* Fondo oscuro */
+        }
+        .box {
+            background-color: #1e1e1e; /* Color de la tarjeta */
+            color: #f5f5f5; /* Texto claro */
+        }
+        .title, .subtitle, .label, th {
+            color: #f5f5f5 !important;
+        }
+        .input {
+             background-color: #444; /* Campos de entrada oscuros */
+             border-color: #333;
+             color: #f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -41,200 +46,173 @@
     <section class="section">
         <div class="container page-container">
             <div class="box">
-<<<<<<< HEAD
                 <div class="block">
-                    <h1 class="title is-3 has-text-primary">
+                    <h1 class="title is-3 has-text-success">
                         <i class="fas fa-calendar-check"></i> Historial de Asistencias
                     </h1>
-                    <p class="subtitle is-6">Registro detallado de entradas y salidas del empleado: **Juan Pérez (ID: 45789)**</p>
+                    <p class="subtitle is-6">Registro detallado de entradas y salidas del estudiante: **Juan Pérez (ID: 45789)**</p>
+                </div>
+
+                <div class="is-hidden-touch mb-5">
+                    <form>
+                        <div class="columns is-vcentered">
+                            <div class="column is-3">
+                                <label class="label is-size-7">Inicio (Fecha)</label>
+                                <div class="control">
+                                    <input class="input is-small" type="date" placeholder="dd/mm/aaaa">
+                                </div>
+                            </div>
+                            <div class="column is-3">
+                                <label class="label is-size-7">Fin (Fecha)</label>
+                                <div class="control">
+                                    <input class="input is-small" type="date" placeholder="dd/mm/aaaa">
+                                </div>
+                            </div>
+                            <div class="column is-3">
+                                <label class="label is-size-7">Colegio (Filtro)</label>
+                                <div class="control">
+                                    <input class="input is-small" type="text" placeholder="Buscar Colegio...">
+                                </div>
+                            </div>
+                            <div class="column is-3">
+                                <label class="label is-size-7 has-text-white-ter">Buscar</label>
+                                <div class="control">
+                                    <button class="button is-success is-small is-light is-fullwidth">
+                                        <i class="fas fa-search mr-1"></i> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 
-                <div class="table-container">
-                    <table class="table is-striped is-hoverable is-fullwidth">
-                        <thead>
-                            <tr>
-                                <th><abbr title="Identificador">ID Reg.</abbr></th>
-                                <th>Fecha</th>
-                                <th>Hora de Registro</th>
-                                <th>Tipo de Movimiento</th>
-                                <th>Estado</th>
-                                <th>Ubicación/Dispositivo</th>
-                                <th>Detalles</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>**15432**</td>
-                                <td>2025-11-06</td>
-                                <td>08:00:15</td>
-                                <td><span class="tag is-success is-light">Entrada <i class="fas fa-sign-in-alt ml-1"></i></span></td>
-                                <td><span class="tag is-success">Normal</span></td>
-                                <td>Oficina Central</td>
-                                <td>Registro a tiempo.</td>
-                            </tr>
-                            <tr>
-                                <td>**15433**</td>
-                                <td>2025-11-06</td>
-                                <td>17:01:30</td>
-                                <td><span class="tag is-info is-light">Salida <i class="fas fa-sign-out-alt ml-1"></i></span></td>
-                                <td><span class="tag is-success">Normal</span></td>
-                                <td>Oficina Central</td>
-                                <td>Jornada completada.</td>
-                            </tr>
-                            <tr>
-                                <td>**15434**</td>
-                                <td>2025-11-07</td>
-                                <td>08:35:45</td>
-                                <td><span class="tag is-success is-light">Entrada <i class="fas fa-sign-in-alt ml-1"></i></span></td>
-                                <td><span class="tag is-warning">Tarde</span></td>
-                                <td>Oficina Central</td>
-                                <td>**Retraso de 35 minutos.**</td>
-                            </tr>
-                            <tr>
-                                <td>**- - -**</td>
-                                <td>2025-11-08</td>
-                                <td>- - -</td>
-                                <td><span class="tag is-danger is-light">Ausente <i class="fas fa-user-times ml-1"></i></span></td>
-                                <td><span class="tag is-danger">Falta</span></td>
-                                <td>N/A</td>
-                                <td>Sin registro de entrada.</td>
-                            </tr>
-                            <tr>
-                                <td>**15435**</td>
-                                <td>2025-11-09</td>
-                                <td>15:45:00</td>
-                                <td><span class="tag is-info is-light">Salida <i class="fas fa-sign-out-alt ml-1"></i></span></td>
-                                <td><span class="tag is-link">Temprana</span></td>
-                                <td>Dispositivo Móvil</td>
-                                <td>Permiso de salida anticipada.</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="7">
-                                    <p class="has-text-right is-size-7">Datos actualizados al 07 de Noviembre de 2025.</p>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
-                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                    <a class="pagination-previous" title="This is the first page" disabled>Anterior</a>
-                    <a class="pagination-next">Siguiente</a>
-                    <ul class="pagination-list">
-                        <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
-                        <li><span class="pagination-ellipsis">&hellip;</span></li>
-                        <li><a class="pagination-link" aria-label="Goto page 45">45</a></li>
-                        <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a></li>
-                        <li><a class="pagination-link" aria-label="Goto page 47">47</a></li>
-                        <li><span class="pagination-ellipsis">&hellip;</span></li>
-                        <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
-                    </ul>
-                </nav>
-=======
-                <div class="block has-text-centered">
-                    <h1 class="title is-4 has-text-info">
-                        <i class="fas fa-user-clock"></i> Mi Historial de Asistencias
-                    </h1>
-                    <p class="subtitle is-6">Consulta tus registros de la semana.</p>
-                </div>
-
-                ---
-
                 <div class="is-hidden-touch">
-                    <h2 class="title is-5">Vista Detallada (PC/Tablet)</h2>
                     <div class="table-container">
                         <table class="table is-striped is-hoverable is-fullwidth">
                             <thead>
                                 <tr>
+                                    <th><abbr title="Identificador de Registro">ID.Reg.</abbr></th>
                                     <th>Fecha</th>
-                                    <th>Hora</th>
-                                    <th>Movimiento</th>
+                                    <th>Hora de Registro</th>
+                                    <th>Tipo de Movimiento</th>
                                     <th>Estado</th>
-                                    <th>Detalles</th>
+                                    <th>Colegio</th> 
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>**15432**</td>
                                     <td>2025-11-06</td>
-                                    <td>**08:00:15**</td>
-                                    <td><span class="tag is-success is-light">Entrada <i class="fas fa-sign-in-alt ml-1"></i></span></td>
+                                    <td>08:00:15</td>
+                                    <td><span class="tag is-success is-light">Entrada</span></td>
                                     <td><span class="tag is-success">Normal</span></td>
-                                    <td>Registro a tiempo.</td>
+                                    <td>San Pedro Chanell</td> 
                                 </tr>
                                 <tr>
+                                    <td>**15433**</td>
+                                    <td>2025-11-06</td>
+                                    <td>17:01:30</td>
+                                    <td><span class="tag is-info is-light">Salida</span></td>
+                                    <td><span class="tag is-success">Normal</span></td>
+                                    <td>San Pedro Chanell</td>
+                                </tr>
+                                <tr>
+                                    <td>**15434**</td>
                                     <td>2025-11-07</td>
-                                    <td>**08:35:45**</td>
-                                    <td><span class="tag is-success is-light">Entrada <i class="fas fa-sign-in-alt ml-1"></i></span></td>
+                                    <td>08:35:45</td>
+                                    <td><span class="tag is-success is-light">Entrada</span></td>
                                     <td><span class="tag is-warning">Tarde</span></td>
-                                    <td>Retraso de 35 minutos.</td>
+                                    <td>San Pedro Chanell</td>
                                 </tr>
                                 <tr>
+                                    <td>**---**</td>
                                     <td>2025-11-08</td>
                                     <td>- - -</td>
-                                    <td><span class="tag is-danger is-light">Ausente <i class="fas fa-user-times ml-1"></i></span></td>
+                                    <td><span class="tag is-danger is-light">Ausente</span></td>
                                     <td><span class="tag is-danger">Falta</span></td>
-                                    <td>Sin registro de entrada.</td>
+                                    <td>San Pedro Chanell</td>
+                                </tr>
+                                <tr>
+                                    <td>**15435**</td>
+                                    <td>2025-11-09</td>
+                                    <td>15:45:00</td>
+                                    <td><span class="tag is-info is-light">Salida</span></td>
+                                    <td><span class="tag is-link">Temprana</span></td>
+                                    <td>San Pedro Chanell</td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6"> 
+                                        <p class="has-text-right is-size-7">Datos actualizados al 07 de Noviembre de 2025.</p>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
-                    
+
                     <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                        <a class="pagination-previous" disabled>Anterior</a>
-                        <a class="pagination-next">Siguiente</a>
+                        <a class="pagination-previous has-background-dark has-text-light" disabled>Anterior</a>
+                        <a class="pagination-next has-background-dark has-text-light">Siguiente</a>
                         <ul class="pagination-list">
-                            <li><a class="pagination-link is-current" aria-label="Page 1" aria-current="page">1</a></li>
-                            <li><a class="pagination-link" aria-label="Goto page 2">2</a></li>
+                            <li><a class="pagination-link has-background-dark has-text-light" aria-label="Goto page 1">1</a></li>
+                            <li><span class="pagination-ellipsis has-text-light">&hellip;</span></li>
+                            <li><a class="pagination-link is-current has-background-info" aria-label="Page 46" aria-current="page">46</a></li>
+                            <li><span class="pagination-ellipsis has-text-light">&hellip;</span></li>
+                            <li><a class="pagination-link has-background-dark has-text-light" aria-label="Goto page 86">86</a></li>
                         </ul>
                     </nav>
                 </div>
 
-                ---
-
                 <div class="is-hidden-desktop">
-                    <h2 class="title is-5">Resumen de Registros</h2>
+                    <h2 class="title is-5 has-text-light">Resumen de Registros</h2>
                     
                     <div class="box card-row has-background-light">
                         <p class="is-size-5 has-text-weight-bold has-text-info"><i class="fas fa-calendar-alt"></i> 2025-11-06</p>
                         <hr class="my-2">
+                        <p class="heading has-text-dark">ID.Reg:</p>
+                        <p class="subtitle is-6 has-text-dark">**15432**</p>
                         <div class="columns is-mobile">
                             <div class="column is-half">
-                                <p class="heading">Movimiento:</p>
+                                <p class="heading has-text-dark">Movimiento:</p>
                                 <p class="subtitle is-6"><span class="tag is-success is-large">Entrada</span></p>
                             </div>
                             <div class="column is-half">
-                                <p class="heading">Hora:</p>
-                                <p class="subtitle is-6 has-text-weight-bold">08:00:15</p>
+                                <p class="heading has-text-dark">Hora:</p>
+                                <p class="subtitle is-6 has-text-weight-bold has-text-dark">08:00:15</p>
                             </div>
                         </div>
-                        <p class="heading">Estado:</p>
-                        <p class="is-size-6"><span class="tag is-success is-light">Registro a tiempo.</span></p>
+                        <p class="heading has-text-dark">Estado:</p>
+                        <p class="is-size-6"><span class="tag is-success is-light">Normal</span></p>
+                        <p class="heading has-text-dark">Colegio:</p>
+                        <p class="is-size-6 has-text-dark">San Pedro Chanell</p>
                     </div>
 
                     <div class="box card-row has-background-warning-light">
                         <p class="is-size-5 has-text-weight-bold has-text-warning-dark"><i class="fas fa-calendar-alt"></i> 2025-11-07</p>
                         <hr class="my-2">
+                        <p class="heading has-text-dark">ID.Reg:</p>
+                        <p class="subtitle is-6 has-text-dark">**15434**</p>
                         <div class="columns is-mobile">
                             <div class="column is-half">
-                                <p class="heading">Movimiento:</p>
+                                <p class="heading has-text-dark">Movimiento:</p>
                                 <p class="subtitle is-6"><span class="tag is-success is-large">Entrada</span></p>
                             </div>
                             <div class="column is-half">
-                                <p class="heading">Hora:</p>
-                                <p class="subtitle is-6 has-text-weight-bold">08:35:45</p>
+                                <p class="heading has-text-dark">Hora:</p>
+                                <p class="subtitle is-6 has-text-weight-bold has-text-dark">08:35:45</p>
                             </div>
                         </div>
-                        <p class="heading">Estado:</p>
+                        <p class="heading has-text-dark">Estado:</p>
                         <p class="is-size-6"><span class="tag is-warning">¡Tarde! (35 min)</span></p>
+                        <p class="heading has-text-dark">Colegio:</p>
+                        <p class="is-size-6 has-text-dark">San Pedro Chanell</p>
                     </div>
                     
                     <div class="has-text-centered mt-4">
                         <button class="button is-info is-outlined is-fullwidth is-small">Cargar Registros Anteriores</button>
                     </div>
                 </div>
->>>>>>> 0b76f4262f72ffbe332c7afed3b944f20151fa1d
 
             </div>
         </div>
