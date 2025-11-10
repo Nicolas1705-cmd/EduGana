@@ -90,6 +90,19 @@
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
+
+        /* Círculo para el icono de moneda */
+        .icon-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;              
+            height: 40px;
+            background-color: rgba(255,255,255,0.2); 
+            border-radius: 50%;        
+            color: white;             
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -105,7 +118,7 @@
                             <span class="icon has-text-white mr-5">
                                 <i class="fas fa-store fa-lg"></i>
                             </span>
-                            <span>Vista de Matricular Tiendas</span>
+                            <span>Matricular Tiendas</span>
                         </span>
                     </h1>
                     <p class="subtitle is-5 mt-3">EduGana</p>
@@ -124,30 +137,14 @@
     </div>
 </header>
 
-<style>
-/* Círculo para el icono de moneda */
-.icon-circle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;              /* tamaño del círculo */
-    height: 40px;
-    background-color: rgba(255,255,255,0.2); /* fondo semitransparente */
-    border-radius: 50%;        /* hace el círculo */
-    color: white;             /* color del icono */
-    font-size: 1.2rem;
-}
-</style>
-
-
-
-
 <div class="centered-container">
     <div class="box has-background-white">
         <h1 class="title is-3 has-text-centered is-branded">Registrar Tienda</h1>
         <p class="subtitle is-6 has-text-centered has-text-grey">Completa los datos de la tienda</p>
 
         <form action="listadotiendas.html" method="POST" enctype="multipart/form-data">
+
+            <!-- Nombre de la tienda -->
             <div class="field">
                 <label class="label" for="nombre_tienda">Nombre de la Tienda <span class="required-star">*</span></label>
                 <div class="control has-icons-left">
@@ -156,6 +153,7 @@
                 </div>
             </div>
 
+            <!-- RUC -->
             <div class="field">
                 <label class="label" for="ruc">RUC / Identificación <span class="required-star">*</span></label>
                 <div class="control has-icons-left">
@@ -164,14 +162,48 @@
                 </div>
             </div>
 
+            <!-- NUEVOS CAMPOS PARA PERÚ -->
             <div class="field">
-                <label class="label" for="direccion">Dirección <span class="required-star">*</span></label>
+                <label class="label" for="regimen">Régimen Tributario</label>
                 <div class="control has-icons-left">
-                    <input class="input is-medium" type="text" id="direccion" name="direccion" placeholder="Ej: Av. Principal 123" required>
+                    <div class="select is-medium is-fullwidth">
+                        <select id="regimen" name="regimen">
+                            <option value="">Seleccionar régimen</option>
+                            <option value="RUS">RUS</option>
+                            <option value="RER">RER</option>
+                            <option value="MYPE">MYPE</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    <span class="icon is-small is-left"><i class="fas fa-clipboard-list"></i></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="departamento">Departamento</label>
+                <div class="control has-icons-left">
+                    <input class="input is-medium" type="text" id="departamento" name="departamento" placeholder="Ej: Lima" required>
                     <span class="icon is-small is-left"><i class="fas fa-map-marker-alt"></i></span>
                 </div>
             </div>
 
+            <div class="field">
+                <label class="label" for="provincia">Provincia</label>
+                <div class="control has-icons-left">
+                    <input class="input is-medium" type="text" id="provincia" name="provincia" placeholder="Ej: Lima" required>
+                    <span class="icon is-small is-left"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="distrito">Distrito</label>
+                <div class="control has-icons-left">
+                    <input class="input is-medium" type="text" id="distrito" name="distrito" placeholder="Ej: Miraflores" required>
+                    <span class="icon is-small is-left"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+            </div>
+
+            <!-- Correo -->
             <div class="field">
                 <label class="label" for="correo">Correo Electrónico</label>
                 <div class="control has-icons-left">
@@ -180,6 +212,7 @@
                 </div>
             </div>
 
+            <!-- Teléfono -->
             <div class="field">
                 <label class="label" for="telefono">Teléfono</label>
                 <div class="control has-icons-left">
@@ -188,6 +221,7 @@
                 </div>
             </div>
 
+            <!-- Categoría -->
             <div class="field">
                 <label class="label" for="categoria">Categoría / Rubro</label>
                 <div class="control has-icons-left">
@@ -205,7 +239,7 @@
                 </div>
             </div>
 
-            <!-- Campo de imagen -->
+            <!-- Imagen -->
             <div class="field">
                 <label class="label" for="imagen_tienda">Imagen de la Tienda</label>
                 <div class="file has-name is-fullwidth">
@@ -226,6 +260,7 @@
                 </div>
             </div>
 
+            <!-- Botón -->
             <div class="field mt-5">
                 <div class="control">
                     <button class="button is-primary is-fullwidth is-large" type="submit">
