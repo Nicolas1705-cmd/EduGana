@@ -2,151 +2,265 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Edugana | Matricular Tienda</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista de Matricular Tiendas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
-    <link rel="stylesheet" href="tienda.css"> 
-    
-    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
-    
+    <style>
+        /* 🎨 Colores de marca */
+        :root {
+            --brand-color-start: #667eea;
+            --brand-color-end: #764ba2;
+        }
+
+        body {
+            background-color: #ebf0f5; 
+            min-height: 100vh;
+        }
+
+        /* --- Encabezado --- */
+        .page-header {
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--brand-color-start) 0%, var(--brand-color-end) 100%);
+            border-radius: 0px 0px 12px 12px;
+            padding: 2rem 1.5rem;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .page-header .title, .page-header .subtitle, .page-header .icon {
+            color: white !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            .page-header .level { display: block !important; text-align: center; }
+            .page-header .level-item { margin-bottom: 0.5rem; }
+            .page-header .title.is-2 { font-size: 1.3rem; }
+        }
+
+        /* --- Botones --- */
+        .button.is-primary {
+            background: linear-gradient(90deg, var(--brand-color-start) 0%, var(--brand-color-end) 100%);
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .button.is-primary:hover {
+            background: linear-gradient(90deg, #5c7ee0 0%, #6d4ba0 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(118, 75, 162, 0.4);
+        }
+
+        /* --- Formulario --- */
+        .centered-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: calc(100vh - 120px);
+            padding: 2rem 1rem;
+        }
+
+        .box {
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+            border-radius: 10px;
+        }
+
+        .required-star {
+            color: #ff3860;
+            margin-left: 3px;
+            font-weight: bold;
+        }
+
+        .title.is-branded {
+            color: var(--brand-color-end);
+        }
+
+        /* Previsualización de imagen */
+        .image-preview {
+            display: none;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 150px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
 
-    <div class="top-header-degraded">
-        <div class="container is-fluid">
-            <div class="level is-mobile pt-3 pb-3">
-                <div class="level-left">
-                    <div class="level-item">
-                        <span class="icon is-large mr-3 has-text-white">
-                            <i class="fas fa-store fa-2x"></i> 
-                        </span>
-                        <div>
-                            <h1 class="title is-4 has-text-white mb-0">Matricular Tiendas</h1>
-                            <p class="subtitle is-7 has-text-white-ter mb-0 mt-1 is-uppercase">EduGana</p>
-                        </div>
-                    </div>
-                </div>
-                </div>
-        </div>
-    </div>
-
-    <div class="app-container">
-        <div class="box">
-            
-            <div class="header-content-simple">
-                <p class="subtitle is-6 has-text-centered">Complete la siguiente información para formalizar la inscripción.</p>
-            </div>
-            
-            <form action="#" method="POST" enctype="multipart/form-data">
-                
-                <h2 class="section-title">Datos de la Tienda</h2>
-
-                <div class="field">
-                    <label class="label">Nombre de la Tienda <span class="has-text-danger">(*)</span></label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="Ej: Tienda de Libros 'El Lector'" required>
-                    </div>
-                </div>
-
-                <div class="field is-grouped is-grouped-multiline">
-                    <div class="field control is-expanded">
-                        <label class="label">Correo Electrónico <span class="has-text-danger">(*)</span></label>
-                        <div class="control has-icons-left">
-                            <input class="input" type="email" placeholder="contacto@tutienda.com" required>
-                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-                        </div>
-                    </div>
-                    <div class="field control is-expanded">
-                        <label class="label">Teléfono de Contacto <span class="has-text-danger">(*)</span></label>
-                        <div class="control has-icons-left">
-                            <input class="input" type="tel" placeholder="Ej: +51 987 654 321" required>
-                            <span class="icon is-small is-left"><i class="fas fa-phone"></i></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label">Contraseña <span class="has-text-danger">(*)</span></label>
-                    <div class="control has-icons-right">
-                        <input class="input is-success" type="password" placeholder="Crea una contraseña segura" required>
-                        <span class="icon is-small is-right"><i class="fas fa-check"></i></span>
-                        <p class="help is-success">Contraseña aceptada</p>
-                    </div>
-                </div>
-
-                <h2 class="section-title">Ubicación y Logo</h2>
-
-                <div class="field">
-                    <label class="label">País de Ubicación <span class="has-text-danger">(*)</span></label>
-                    <div class="control">
-                        <div class="select is-fullwidth">
-                            <select required>
-                                <option value="">Selecciona el país...</option>
-                                <option>Perú</option>
-                                <option>Chile</option>
-                                <option>Ecuador</option>
-                                <option>Bolivia</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label">Subir Logo de Tienda (Opcional)</label>
-                    <div class="file is-fullwidth is-boxed">
-                        <label class="file-label">
-                            <input class="file-input" type="file" name="logo" accept="image/*">
-                            <span class="file-cta">
-                                <span class="file-icon"><i class="fas fa-upload"></i></span>
-                                <span class="file-label">Seleccionar archivo...</span>
+<header class="page-header pt-5 pb-5">
+    <div class="level">
+        <!-- Lado izquierdo: Título + Texto -->
+        <div class="level-left">
+            <div class="level-item">
+                <div>
+                    <h1 class="title is-2 is-size-3-mobile mb-2">
+                        <span class="icon-text">
+                            <span class="icon has-text-white mr-5">
+                                <i class="fas fa-store fa-lg"></i>
                             </span>
-                            <span class="file-name">No hay archivo subido</span>
-                        </label>
-                    </div>
+                            <span>Vista de Matricular Tiendas</span>
+                        </span>
+                    </h1>
+                    <p class="subtitle is-5 mt-3">EduGana</p>
                 </div>
-                
-                <hr class="form-divider">
+            </div>
+        </div>
 
-                <div class="field">
-                    <div class="control">
-                        <label class="checkbox">
-                            <input type="checkbox" required>
-                            <span class="has-text-danger">(*)</span> Acepto los <a href="#">términos y condiciones de matrícula</a>.
-                        </label>
-                    </div>
-                </div>
-
-                <div class="footer-buttons">
-                    <div class="control">
-                        <button class="button is-primary" type="submit">
-                            <span class="icon"><i class="fas fa-check"></i></span>
-                            <span>Matricular Tienda</span>
-                        </button>
-                    </div>
-                    <div class="control">
-                        <button class="button is-danger is-light" type="reset">
-                            <span class="icon"><i class="fas fa-redo-alt"></i></span>
-                            <span>Limpiar Formulario</span>
-                        </button>
-                    </div>
-                </div>
-
-            </form>
+        <!-- Lado derecho: Icono de moneda dentro de círculo -->
+        <div class="level-right">
+            <div class="level-item">
+                <span class="icon-circle">
+                    <i class="fas fa-coins fa-lg"></i>
+                </span>
+            </div>
         </div>
     </div>
+</header>
+
+<style>
+/* Círculo para el icono de moneda */
+.icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;              /* tamaño del círculo */
+    height: 40px;
+    background-color: rgba(255,255,255,0.2); /* fondo semitransparente */
+    border-radius: 50%;        /* hace el círculo */
+    color: white;             /* color del icono */
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+
+<div class="centered-container">
+    <div class="box has-background-white">
+        <h1 class="title is-3 has-text-centered is-branded">Registrar Tienda</h1>
+        <p class="subtitle is-6 has-text-centered has-text-grey">Completa los datos de la tienda</p>
+
+        <form action="listadotiendas.html" method="POST" enctype="multipart/form-data">
+            <div class="field">
+                <label class="label" for="nombre_tienda">Nombre de la Tienda <span class="required-star">*</span></label>
+                <div class="control has-icons-left">
+                    <input class="input is-medium" type="text" id="nombre_tienda" name="nombre_tienda" placeholder="Ej: Tienda San Pedro" required>
+                    <span class="icon is-small is-left"><i class="fas fa-store"></i></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="ruc">RUC / Identificación <span class="required-star">*</span></label>
+                <div class="control has-icons-left">
+                    <input class="input is-medium" type="text" id="ruc" name="ruc" placeholder="Ej: 20456789012" required>
+                    <span class="icon is-small is-left"><i class="fas fa-id-card"></i></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="direccion">Dirección <span class="required-star">*</span></label>
+                <div class="control has-icons-left">
+                    <input class="input is-medium" type="text" id="direccion" name="direccion" placeholder="Ej: Av. Principal 123" required>
+                    <span class="icon is-small is-left"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="correo">Correo Electrónico</label>
+                <div class="control has-icons-left">
+                    <input class="input is-medium" type="email" id="correo" name="correo" placeholder="correo@tienda.com">
+                    <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="telefono">Teléfono</label>
+                <div class="control has-icons-left">
+                    <input class="input is-medium" type="tel" id="telefono" name="telefono" placeholder="Ej: 987654321">
+                    <span class="icon is-small is-left"><i class="fas fa-phone"></i></span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="categoria">Categoría / Rubro</label>
+                <div class="control has-icons-left">
+                    <div class="select is-medium is-fullwidth">
+                        <select id="categoria" name="categoria">
+                            <option value="">Seleccionar categoría</option>
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Ropa">Ropa</option>
+                            <option value="Electrónica">Electrónica</option>
+                            <option value="Hogar">Hogar</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                    <span class="icon is-small is-left"><i class="fas fa-tags"></i></span>
+                </div>
+            </div>
+
+            <!-- Campo de imagen -->
+            <div class="field">
+                <label class="label" for="imagen_tienda">Imagen de la Tienda</label>
+                <div class="file has-name is-fullwidth">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="imagen_tienda" id="imagen_tienda" accept="image/*">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">Seleccionar imagen...</span>
+                        </span>
+                        <span class="file-name" id="file-name">Ningún archivo seleccionado</span>
+                    </label>
+                </div>
+                <div class="image-preview" id="imagePreview">
+                    <p class="has-text-grey is-size-7 mt-2">Previsualización:</p>
+                    <img id="previewImg" src="#" alt="Previsualización de la imagen">
+                </div>
+            </div>
+
+            <div class="field mt-5">
+                <div class="control">
+                    <button class="button is-primary is-fullwidth is-large" type="submit">
+                        <span class="icon"><i class="fas fa-save"></i></span>
+                        <span>Registrar Tienda</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
 
 <script>
-    // Script para mostrar el nombre del archivo seleccionado
-    const fileInput = document.querySelector('.file-input');
-    fileInput.onchange = () => {
-        if (fileInput.files.length > 0) {
-            const fileName = document.querySelector('.file-name');
-            fileName.textContent = fileInput.files[0].name;
+    // Mostrar nombre del archivo e imagen seleccionada
+    const fileInput = document.getElementById('imagen_tienda');
+    const fileName = document.getElementById('file-name');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            fileName.textContent = file.name;
+            const reader = new FileReader();
+            reader.onload = e => {
+                previewImg.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
         } else {
-            document.querySelector('.file-name').textContent = 'No hay archivo subido';
+            fileName.textContent = "Ningún archivo seleccionado";
+            imagePreview.style.display = 'none';
         }
-    }
+    });
 </script>
 
 </body>
