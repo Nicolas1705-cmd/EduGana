@@ -6,7 +6,7 @@ import psycopg2
 DB_NAME = "edugana_db"
 DB_USER = "postgres"
 DB_PASS = "System.2025*"
-DB_HOST = "35.237.18.79"
+DB_HOST = "localhost"
 DB_PORT = "5432"
 
 def get_db_connection():
