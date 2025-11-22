@@ -6,7 +6,7 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 
 import psycopg2
 
-from configbd import get_db_connection
+from configbd import get_db_connection 
 from psycopg2.extras import RealDictCursor
 
 def registrar_colegio():
