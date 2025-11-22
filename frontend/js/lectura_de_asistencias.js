@@ -1,10 +1,5 @@
-// ==========================================================
-// LÓGICA DE INTEGRACIÓN CON EL API DE PYTHON (JavaScript)
-// Este script maneja el registro y la visualización de asistencias
-// ==========================================================
-
 // Asegúrate de que esta URL coincida con la dirección donde se ejecuta tu API de Flask.
-const API_BASE_URL = 'http://localhost:5000/api/asistencia'; 
+const API_BASE_URL = '/asistencia'; 
 
 // Referencias a elementos del DOM
 const formRegistro = document.getElementById('asistencia-form');
