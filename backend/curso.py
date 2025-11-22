@@ -13,8 +13,9 @@ def registrar_inscripcion():
 
     nombre_completo = data.get('nombre_completo')
     nombre_curso = data.get('nombre_curso')
-    # Validación sin id_alumno
-    if not all([nombre_completo,]):
+
+    # Validación correcta
+    if not all([nombre_completo, nombre_curso]):
         return jsonify({"error": "Missing required fields"}), 400
 
     conn = None
@@ -23,12 +24,12 @@ def registrar_inscripcion():
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
         insert_query = sql.SQL("""
-            INSERT INTO Curso (nombre_completo,)
+            INSERT INTO Curso (nombre_completo, nombre_curso)
             VALUES (%s, %s)
             RETURNING id_inscripcion;
         """)
 
-        cur.execute(insert_query, (nombre_completo,))
+        cur.execute(insert_query, (nombre_completo, nombre_curso))
         new_id = cur.fetchone()
         conn.commit()
         cur.close()
@@ -49,4 +50,4 @@ def registrar_inscripcion():
 
     finally:
         if conn:
-         conn.close()
+            conn.close()
