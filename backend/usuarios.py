@@ -4,39 +4,13 @@ from flask_jwt_extended import create_access_token, JWTManager, jwt_required, ge
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-app = Flask(__name__)
-bcrypt = Bcrypt(app)
 
-# ============================
-# CONFIG JWT
-# ============================
-app.config["JWT_SECRET_KEY"] = "super-secret-key-2025"
-jwt = JWTManager(app)
 
-# ============================
-# CREDENCIALES DE BASE DE DATOS
-# ============================
-DB_NAME = "edugana_db"
-DB_USER = "postgres"
-DB_PASS = "System.2025*"
-DB_HOST = "35.237.18.79"
-DB_PORT = "5432"
 
-# Conexión a PostgreSQL
-def get_db():
-    return psycopg2.connect(
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASS,
-        host=DB_HOST,
-        port=DB_PORT,
-        cursor_factory=RealDictCursor
-    )
 
 # =====================================
 # API: REGISTRAR USUARIO
 # =====================================
-@app.route("/api/registrarUsuario", methods=["POST"])
 def registrar_usuario():
     try:
         data = request.get_json()
@@ -86,7 +60,6 @@ def registrar_usuario():
 # =====================================
 # API: LOGIN
 # =====================================
-@app.route("/api/login", methods=["POST"])
 def login():
     try:
         data = request.json
@@ -125,7 +98,6 @@ def login():
 # =====================================
 # API: PERFIL (PROTEGIDO CON JWT)
 # =====================================
-@app.route("/api/perfil", methods=["GET"])
 @jwt_required()
 def perfil():
     user_id = get_jwt_identity()
@@ -146,4 +118,3 @@ def perfil():
 # RUN SERVER
 # =====================================
 if __name__ == "__main__":
-    app.run(debug=True)
