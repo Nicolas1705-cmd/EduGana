@@ -1,7 +1,9 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS # Importamos CORS para permitir consumo desde cualquier origen
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
+import os # Importamos el módulo os para manejar rutas
 
 # Importaciones de módulos
+# ... (dejar todas tus importaciones existentes)
 import seccion
 import curso
 import colegio
@@ -14,104 +16,86 @@ import usuarios
 import cupones
 import matricula
 import profesores
-# Importación repetida de cupones eliminada
 
 
 # Inicializa la aplicación Flask
 app = Flask(__name__)
 
 # =========================================================
-# CONFIGURACIÓN DE CORS GLOBAL
-# Permite que cualquier dominio (*) acceda a todas las rutas (/*)
-# Para máxima compatibilidad con clientes externos.
+# CONFIGURACIÓN DE RUTAS Y CORS
 # =========================================================
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+# Define la ruta base para el frontend (relativa a donde está api.py)
+# Como api.py está en 'backend', '../frontend' apunta a la carpeta 'frontend'
+FRONTEND_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'frontend')
+FRONTEND_STATIC_FOLDER = os.path.join(FRONTEND_FOLDER) # La carpeta frontend contiene los estáticos y HTML
+
+# --- RUTAS PARA EL FRONTEND (Servicio de archivos estáticos) ---
+
+# 1. Ruta principal (Servir la página inicial)
+# Cuando el usuario navega a la URL raíz (/)
+@app.route('/')
+def serve_index():
+    # Asume que 'inicio.html' es tu página principal
+    return send_from_directory(FRONTEND_STATIC_FOLDER, 'inicio.html')
+
+# 2. Ruta para todos los demás archivos estáticos (CSS, JS, imágenes, otros HTML)
+# Captura cualquier ruta que no haya sido mapeada por el backend (como /tienda.html, /css/style.css, etc.)
+@app.route('/<path:filename>')
+def serve_static(filename):
+    # Esto busca el archivo solicitado dentro de la carpeta 'frontend'
+    # Ejemplo: para 'tienda.html', buscará 'EduGana/frontend/tienda.html'
+    return send_from_directory(FRONTEND_STATIC_FOLDER, filename)
+
+
+# --- TUS REGLAS DE API EXISTENTES ---
+
 # RYDER
 app.add_url_rule(
-    '/addCurso',         # La URL a mapear
-    view_func=curso.registrar_inscripcion, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/addCurso', view_func=curso.registrar_inscripcion, methods=['GET']
 )
 
 # SEBASTIAN check
 app.add_url_rule(
-    '/addMatricula',         # La URL a mapear
-    view_func=matricula.registrar_matricula, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/addMatricula', view_func=matricula.registrar_matricula, methods=['GET']
 )
-
 
 # BRAYAN check
 app.add_url_rule(
-    '/addColegio',         # La URL a mapear
-    view_func=colegio.registrar_colegio, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/addColegio', view_func=colegio.registrar_colegio, methods=['GET']
 )
 
-
+# ... (Continuar con todas tus otras rutas de API)
 # MOSNERRAT
 app.add_url_rule(
-    '/addProfesor',         # La URL a mapear
-    view_func=profesores.agregar_profesor, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/addProfesor', view_func=profesores.agregar_profesor, methods=['GET']
 )
-
-
 # JOSE check
 app.add_url_rule(
-    '/listRecompensas',         # La URL a mapear
-    view_func=listar_recompensas.listar_recompensas, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/listRecompensas', view_func=listar_recompensas.listar_recompensas, methods=['GET']
 )
-
-
-
-# CUEVA  check
+# CUEVA check
 app.add_url_rule(
-    '/registrarAsistencia',         # La URL a mapear
-    view_func=registro_de_control_asistencia.registrar_asistencia, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/registrarAsistencia', view_func=registro_de_control_asistencia.registrar_asistencia, methods=['GET']
 )
-
-
-# ANDERSON  check
+# ANDERSON check
 app.add_url_rule(
-    '/listAsistencia',         # La URL a mapear
-    view_func=Historial.obtener_asistencias, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/listAsistencia', view_func=Historial.obtener_asistencias, methods=['GET']
 )
-
-
-
-
-# RODRIGO  check
+# RODRIGO check
 app.add_url_rule(
-    '/registrarUsuario',         # La URL a mapear
-    view_func=usuarios.registrar_usuario, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/registrarUsuario', view_func=usuarios.registrar_usuario, methods=['GET']
 )
-
-# YANELY 
+# YANELY
 app.add_url_rule(
-    '/addTienda',         # La URL a mapear
-    view_func=tienda.registrar_tienda, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/addTienda', view_func=tienda.registrar_tienda, methods=['GET']
 )
-
-# FABIAN 
+# FABIAN
 app.add_url_rule(
-    '/listCupones',         # La URL a mapear
-    view_func=cupones.listar_cupones, # La función del módulo 'seccion'
-    methods=['GET']   # Los métodos HTTP permitidos
+  '/listCupones', view_func=cupones.listar_cupones, methods=['GET']
 )
 
 
 if __name__ == '__main__':
-    # Asegúrate de configurar las variables de entorno para JWT antes de correr
-    # Se añade host='0.0.0.0' para permitir que el servidor sea accesible
-    # desde cualquier dispositivo en la red local.
-    app.run(debug=True, host='0.0.0.0')
-
-
-
+  app.run(debug=True, host='0.0.0.0')

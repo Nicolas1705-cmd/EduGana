@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Grado - Edugana</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      background: #f4f6fb;
+      font-family: "Poppins", sans-serif;
+      margin-top: 20px;
+    }
+
+    .form-box {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      padding: 35px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #36c3ff 0%, #004aad 100%);
+      border-radius: 0px 0px 12px 12px;
+      padding: 2rem;
+      color: white;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      border-left: 4px solid #007bff;
+      padding-left: 10px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <h1 class="title is-2">
+      <span class="icon-text">
+        <span class="icon"><i class="fas fa-school"></i></span>
+        <span>Registro de Grado</span>
+      </span>
+    </h1>
+    <p class="subtitle">Edugana</p>
+  </div>
+
+  <!-- FORMULARIO -->
+  <div class="form-box">
+    <form id="registroGrado">
+
+      <h2 class="section-title">Información del Grado</h2>
+
+      <div class="columns is-multiline">
+
+        <div class="column is-6">
+          <label class="label">Nombre del Grado *</label>
+          <input class="input" id="nombreGrado" type="text" required>
+        </div>
+
+        <div class="column is-6">
+          <label class="label">Nivel</label>
+          <div class="select is-fullwidth">
+            <select id="nivelGrado">
+              <option>Primaria</option>
+              <option>Secundaria</option>
+              <option>Superior</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="column is-6">
+          <label class="label">Capacidad</label>
+          <input class="input" type="number" id="capacidadGrado" value="0">
+        </div>
+
+      </div>
+
+      <div class="buttons is-centered mt-5">
+        <button class="button is-primary" type="submit">
+          <i class="fas fa-check"></i>&nbsp; Registrar
+        </button>
+
+        <button class="button is-light" type="reset">
+          <i class="fas fa-xmark"></i>&nbsp; Limpiar
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+<script>
+document.getElementById("registroGrado").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        nombre_grado: document.getElementById("nombreGrado").value,
+        nivel: document.getElementById("nivelGrado").value,
+        capacidad: document.getElementById("capacidadGrado").value,
+        estado: true
+    };
+
+    const response = await fetch("http://localhost:5000/api/grado1", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+        alert("✅ Grado registrado correctamente. ID: " + result.id);
+        document.getElementById("registroGrado").reset();
+    } else {
+        alert("❌ Error: " + result.error);
+    }
+});
+</script>
+
+</body>
+</html>
