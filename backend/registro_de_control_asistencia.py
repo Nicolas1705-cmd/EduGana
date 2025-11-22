@@ -3,53 +3,50 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from configbd import get_db_connection
 
+# Nombre de la tabla
+TABLE_NAME = "public.registro_asistencia"
+
 # ============================
 # POST: REGISTRAR ASISTENCIA
 # ============================
 def registrar_asistencia():
+    """Registra una nueva asistencia en la base de datos según el esquema de la imagen."""
     try:
         data = request.get_json()
 
-        # Los campos de la tabla son: dni, nombres, apellidos, fecha, hora_entrada, hora_salida, estado_asistencia, observacion
-
+        # Los campos de la tabla en la imagen son: dni, fecha, hora, estado_asistencia, id_registro
+        
+        # Campos de entrada necesarios
+        id_registro = data.get("id_registro") # Asumimos que la aplicación provee el ID
         dni = data.get("dni")
-        nombres = data.get("nombres")  # Usamos 'nombres' directamente
-        apellidos = data.get("apellidos")  # Usamos 'apellidos' directamente
         fecha = data.get("fecha")
+        hora = data.get("hora") # Unificamos hora_entrada/salida en solo 'hora'
         estado_asistencia = data.get("estado_asistencia")
-        hora_entrada = data.get("hora_entrada")
-        # hora_salida se deja como NULL por defecto si no se proporciona
-        hora_salida = data.get("hora_salida")
-        observacion = data.get("observacion") # Cambiamos 'observaciones' a 'observacion'
 
-        # Validamos los campos NOT NULL de la tabla
-        # La tabla exige: id_registro (autoincremental, no lo pedimos), dni, nombres, apellidos, fecha, estado_asistencia
-        if not dni or not nombres or not apellidos or not fecha or not estado_asistencia:
-            return jsonify({"mensaje": "Faltan campos obligatorios (dni, nombres, apellidos, fecha, estado_asistencia)"}), 400
+        # Eliminamos: nombres, apellidos, hora_entrada, hora_salida, observacion
+        
+        # Validar campos obligatorios (NOT NULL en la imagen: dni, fecha, estado_asistencia)
+        # NOTA: Incluyo id_registro en la validación si la aplicación debe proporcionarlo
+        if not id_registro or not dni or not fecha or not estado_asistencia:
+            return jsonify({"mensaje": "Faltan campos obligatorios (id_registro, dni, fecha, estado_asistencia)"}), 400
 
         conn = get_db_connection()
-        # Nota: Usar RealDictCursor aquí permite que fetchone() devuelva un diccionario, lo cual simplifica la obtención del id_registro.
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        # 1. Cambiamos el nombre de la tabla de 'asistencias' a 'registro_asistencia'
-        # 2. Cambiamos los nombres de las columnas a los de la tabla 'registro_asistencia'
-        # 3. Ajustamos el número de %s (8 columnas en total, ya que id_registro es clave primaria y probablemente autoincremental/serial, no lo incluimos aquí)
-        cur.execute("""
-            INSERT INTO public.registro_asistencia (
-                dni, nombres, apellidos, fecha,
-                hora_entrada, hora_salida, estado_asistencia, observacion
+        # La consulta solo incluye las 5 columnas presentes en la imagen
+        cur.execute(f"""
+            INSERT INTO {TABLE_NAME} (
+                id_registro, dni, fecha, hora, estado_asistencia
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s)
             RETURNING id_registro;
         """, (
-            dni, nombres, apellidos, fecha,
-            hora_entrada, hora_salida, estado_asistencia, observacion
+            id_registro, dni, fecha, hora, estado_asistencia
         ))
         
         conn.commit()
-        # 4. Cambiamos 'id' por 'id_registro' al obtener el ID devuelto
+        # Obtener el id_registro retornado
         new_id = cur.fetchone()["id_registro"] 
-
 
         cur.close()
         conn.close()
@@ -60,29 +57,30 @@ def registrar_asistencia():
         }), 201
 
     except Exception as e:
-        print("Error:", e)
+        print(f"Error al registrar asistencia: {e}")
         return jsonify({"mensaje": "Error interno del servidor"}), 500
 
+---
 
 # ============================
 # GET: LISTAR ASISTENCIAS
 # ============================
 
 def obtener_asistencias():
+    """Devuelve la lista completa de asistencias."""
     try:
-        # Usamos RealDictCursor para que los resultados se devuelvan como una lista de diccionarios (JSON más limpio)
         conn = get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor) 
 
-        # Cambiamos el nombre de la tabla de 'asistencias' a 'public.registro_asistencia'
-        cur.execute("SELECT * FROM public.registro_asistencia ORDER BY fecha DESC;")
-        asistencia = cur.fetchall()
+        # El nombre de la tabla sigue siendo el mismo, pero los datos devueltos serán diferentes
+        cur.execute(f"SELECT * FROM {TABLE_NAME} ORDER BY fecha DESC, hora DESC;")
+        asistencias = cur.fetchall()
 
         cur.close()
         conn.close()
 
-        return jsonify(asistencia), 200
+        return jsonify(asistencias), 200
 
     except Exception as e:
-        print("Error:", e)
-        return jsonify({"mensaje": "Error interno del servidor"}), 500
+        print(f"Error al obtener asistencias: {e}")
+        return jsonify({"mensaje": "Error interno del servidor al obtener asistencias"}), 500
