@@ -2,7 +2,6 @@
 
 // URL del endpoint de Flask. Debe ser el mismo que configures en Flask.
 const URL_BACKEND = '/addColegio';  
-const URL_BASE = 'http://127.0.0.1:5000'; // Define la base si usas una URL relativa
 
 document.addEventListener('DOMContentLoaded', () => {
     // ... (El código de inicialización es el mismo) ...
