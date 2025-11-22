@@ -27,7 +27,7 @@ def registrar_usuario():
         cur = conn.cursor()
 
         # Verificar si correo ya está registrado
-        cur.execute("SELECT * FROM registodeusuario WHERE correo = %s", (correo,))
+        cur.execute("SELECT * FROM registo_usuario WHERE correo = %s", (correo,))
         existe = cur.fetchone()
         if existe:
             return jsonify({"mensaje": "El correo ya está registrado"}), 400
@@ -37,7 +37,7 @@ def registrar_usuario():
 
         # Insertar usuario
         cur.execute("""
-            INSERT INTO registodeusuario (nombre_usuario, apellido_usuario, correo, contrasena)
+            INSERT INTO registo_usuario (nombre_usuario, apellido_usuario, correo, contrasena)
             VALUES (%s, %s, %s, %s) RETURNING id_usuario;
         """, (nombre, apellido, correo, hash_pw))
 

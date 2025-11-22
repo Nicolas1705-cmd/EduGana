@@ -1,11 +1,16 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "WorkspaceRootPath": "C:\\Users\\Ciberseguridad\\Documents\\EduGana\\",
+=======
+  "WorkspaceRootPath": "C:\\Users\\Lenovo\\Documents\\EduGana\\",
+>>>>>>> 3047e6d (no message)
   "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
+<<<<<<< HEAD
       "DocumentGroups": [
         {
           "DockedWidth": 200,
@@ -18,6 +23,9 @@
           ]
         }
       ]
+=======
+      "DocumentGroups": []
+>>>>>>> 3047e6d (no message)
     }
   ]
 }

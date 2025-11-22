@@ -1,8 +1,7 @@
 from flask import Flask, request, jsonify
 import psycopg2
 from psycopg2.extras import RealDictCursor
-
-
+from configbd import get_db_connection 
 def registrar_asistencia():
     try:
         data = request.get_json()
@@ -18,7 +17,7 @@ def registrar_asistencia():
         if not estudiante_id or not nombre_estudiante or not fecha or not asistencia:
             return jsonify({"mensaje": "Faltan campos obligatorios"}), 400
 
-        conn = get_db()
+        conn = get_db_connection()
         cur = conn.cursor()
 
         cur.execute("""
@@ -54,7 +53,7 @@ def registrar_asistencia():
 
 def obtener_asistencias():
     try:
-        conn = get_db()
+        conn = get_db_connection()
         cur = conn.cursor()
 
         cur.execute("SELECT * FROM asistencias ORDER BY fecha DESC;")
