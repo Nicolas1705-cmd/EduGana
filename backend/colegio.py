@@ -10,8 +10,8 @@ def registrar_colegio():
 
     data = request.get_json()
 
+    # ❗ No incluimos id_colegio porque se AUTOGENERA
     campos_requeridos = [
-        "id_colegio",
         "codigo_modular_r",
         "nombre_colegio",
         "tipo_gestion",
@@ -36,11 +36,10 @@ def registrar_colegio():
         if conn is None:
             return jsonify({"error": "No se pudo conectar a la base de datos"}), 500
 
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
 
         query = """
             INSERT INTO colegios (
-                id_colegio,
                 codigo_modular_r,
                 nombre_colegio,
                 tipo_gestion,
@@ -52,12 +51,11 @@ def registrar_colegio():
                 email_institucion,
                 nombre_director
             )
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
             RETURNING id_colegio;
         """
 
         valores = (
-            data["id_colegio"],
             data["codigo_modular_r"],
             data["nombre_colegio"],
             data["tipo_gestion"],
@@ -71,7 +69,7 @@ def registrar_colegio():
         )
 
         cur.execute(query, valores)
-        nuevo_id = cur.fetchone()["id_colegio"]
+        nuevo = cur.fetchone()
 
         conn.commit()
 
@@ -80,7 +78,7 @@ def registrar_colegio():
 
         return jsonify({
             "mensaje": "Colegio registrado exitosamente",
-            "id_colegio": nuevo_id
+            "id_colegio": nuevo["id_colegio"]
         }), 201
 
     except Exception as e:
