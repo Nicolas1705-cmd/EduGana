@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const inputs = document.querySelectorAll("input, select");
 
-        // Crear objeto con los datos
         const data = {
             "Nombre_Completo": inputs[0].value,
             "Fecha_de_Nacimiento": inputs[1].value,
@@ -19,16 +18,13 @@ document.addEventListener("DOMContentLoaded", function () {
             "Colegio": inputs[7].value
         };
 
-        // Convertir a parámetros de URL codificados
-        const queryString = new URLSearchParams(data).toString();
-
-        const url = `/addMatricula?${queryString}`;
-
-        console.log("URL generada:", url);
-
         try {
-            const response = await fetch(url, {
-                method: "GET"
+            const response = await fetch("/addMatricula", {
+                method: "GET",              // 🔥 OBLIGATORIO para Flask
+                headers: {
+                    "Content-Type": "application/json"  // 🔥 Flask espera JSON
+                },
+                body: JSON.stringify(data)  // 🔥 Enviamos JSON
             });
 
             const result = await response.json();
