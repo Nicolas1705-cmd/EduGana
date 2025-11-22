@@ -32,9 +32,9 @@ def registrar_asistencia():
             estudiante_id, nombre_estudiante, fecha,
             asistencia, hora_entrada, observaciones, colegio
         ))
-
         conn.commit()
         new_id = cur.fetchone()["id"]
+
 
         cur.close()
         conn.close()
