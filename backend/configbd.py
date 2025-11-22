@@ -13,7 +13,7 @@ except:
 # Datos de conexión (ajústalos según tu base)
 DB_NAME = "edugana_db"
 DB_USER = "postgres"
-DB_PASS = "postgres"
+DB_PASS = "System.2025*"
 DB_HOST = "localhost"
 DB_PORT = "5432"
 

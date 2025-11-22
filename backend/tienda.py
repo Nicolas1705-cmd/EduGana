@@ -1,107 +1,296 @@
-from flask import Flask, jsonify, request
+from flask import request, jsonify
+from flask_bcrypt import Bcrypt
 from configbd import get_db_connection
 
-app = Flask(__name__)
+bcrypt = Bcrypt()
 
-# --- 1️⃣ Agregar producto ---
-@app.route('/tienda', methods=['POST'])
-def agregar_producto():
-    data = request.get_json()
 
-    # Validar que todos los campos necesarios estén presentes
-    required_fields = ['NombreTienda', 'NombreProducto', 'CostoPuntos', 'CantidadDispo', 'MarcaProducto']
-    if not all(field in data for field in required_fields):
-        return jsonify({"error": "Faltan campos requeridos"}), 400
+##############################
+# AGREGAR TIENDA
+##############################
 
-    conn = get_db_connection()
-    if conn is None:
-        return jsonify({"error": "Error de conexión con la base de datos"}), 500
-
+def agregar_tienda():
+    """
+    REGISTRAR UNA TIENDA
+    JSON esperado:
+    {
+        "nombretienda": "",
+        "correoelectronico": "",
+        "contrasena": "",
+        "telefono": "",
+        "ruc": "",
+        "regimen": "",
+        "departamento": "",
+        "provincia": "",
+        "distrito": "",
+        "categoria": "",
+        "logo": "",
+        "pais": "",
+        "terminos": true
+    }
+    """
     try:
-        cur = conn.cursor()
-        cur.execute("""
-            INSERT INTO Tienda (NombreTienda, NombreProducto, CostoPuntos, CantidadDispo, MarcaProducto)
-            VALUES (%s, %s, %s, %s, %s)
-            RETURNING id_tienda;
-        """, (
-            data['NombreTienda'],
-            data['NombreProducto'],
-            data['CostoPuntos'],
-            data['CantidadDispo'],
-            data['MarcaProducto']
+        data = request.json
+
+        campos_obligatorios = [
+            "nombretienda", "correoelectronico", "contrasena", "telefono",
+            "ruc", "regimen", "departamento", "provincia", "distrito",
+            "categoria", "pais", "terminos"
+        ]
+
+        for campo in campos_obligatorios:
+            if campo not in data:
+                return jsonify({"error": f"El campo '{campo}' es obligatorio"}), 400
+
+        # encriptar contraseña
+        hashed_pass = bcrypt.generate_password_hash(data["contrasena"]).decode("utf-8")
+
+        conn = get_db_connection()
+        if conn is None:
+            return jsonify({"error": "Error conectando a la BD"}), 500
+
+        cursor = conn.cursor()
+
+        query = """
+            INSERT INTO tiendas (
+                nombretienda, correoelectronico, contrasena, telefono,
+                ruc, regimen, departamento, provincia, distrito,
+                categoria, logo, pais, terminos
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING id
+        """
+
+        cursor.execute(query, (
+            data["nombretienda"],
+            data["correoelectronico"],
+            hashed_pass,
+            data["telefono"],
+            data["ruc"],
+            data["regimen"],
+            data["departamento"],
+            data["provincia"],
+            data["distrito"],
+            data["categoria"],
+            data.get("logo"),
+            data["pais"],
+            data["terminos"]
         ))
 
-        new_id = cur.fetchone()[0]
+        nuevo_id = cursor.fetchone()[0]
         conn.commit()
-        cur.close()
+
+        cursor.close()
         conn.close()
 
-        return jsonify({"message": "✅ Producto agregado exitosamente", "id_tienda": new_id}), 201
+        return jsonify({
+            "success": True,
+            "mensaje": "Tienda registrada exitosamente",
+            "id_tienda": nuevo_id
+        }), 201
 
     except Exception as e:
-        conn.rollback()
-        return jsonify({"error": f"Error al insertar producto: {e}"}), 500
+        import traceback
+        print("Error:", traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
 
 
-# --- 2️⃣ Eliminar producto ---
-@app.route('/tienda/<int:id_tienda>', methods=['DELETE'])
-def eliminar_producto(id_tienda):
-    conn = get_db_connection()
-    if conn is None:
-        return jsonify({"error": "Error de conexión con la base de datos"}), 500
 
+##############################
+# LISTAR TIENDAS
+##############################
+
+def listar_tiendas():
     try:
-        cur = conn.cursor()
-        cur.execute("DELETE FROM Tienda WHERE id_tienda = %s RETURNING id_tienda;", (id_tienda,))
-        result = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
+        conn = get_db_connection()
+        if conn is None:
+            return jsonify({"error": "Error conectando a la BD"}), 500
 
-        if result:
-            return jsonify({"message": f"✅ Producto {id_tienda} eliminado correctamente"}), 200
-        else:
-            return jsonify({"error": "Producto no encontrado"}), 404
+        cursor = conn.cursor()
 
-    except Exception as e:
-        conn.rollback()
-        return jsonify({"error": f"Error al eliminar producto: {e}"}), 500
-
-
-# --- 3️⃣ Listar productos ---
-@app.route('/tienda', methods=['GET'])
-def listar_productos():
-    conn = get_db_connection()
-    if conn is None:
-        return jsonify({"error": "Error de conexión con la base de datos"}), 500
-
-    try:
-        cur = conn.cursor()
-        cur.execute("""
-            SELECT id_tienda, NombreTienda, NombreProducto, CostoPuntos, CantidadDispo, MarcaProducto
-            FROM Tienda
-            ORDER BY id_tienda;
+        cursor.execute("""
+            SELECT id, nombretienda, correoelectronico, telefono, ruc,
+                   regimen, departamento, provincia, distrito,
+                   categoria, logo, pais, terminos
+            FROM tiendas
+            ORDER BY id DESC
         """)
-        rows = cur.fetchall()
-        cur.close()
+
+        filas = cursor.fetchall()
+
+        cursor.close()
         conn.close()
 
-        productos = []
-        for row in rows:
-            productos.append({
-                "id_tienda": row[0],
-                "NombreTienda": row[1],
-                "NombreProducto": row[2],
-                "CostoPuntos": float(row[3]),
-                "CantidadDispo": row[4],
-                "MarcaProducto": row[5]
+        tiendas = []
+        for t in filas:
+            tiendas.append({
+                "id": t[0],
+                "nombretienda": t[1],
+                "correoelectronico": t[2],
+                "telefono": t[3],
+                "ruc": t[4],
+                "regimen": t[5],
+                "departamento": t[6],
+                "provincia": t[7],
+                "distrito": t[8],
+                "categoria": t[9],
+                "logo": t[10],
+                "pais": t[11],
+                "terminos": t[12]
             })
 
-        return jsonify(productos), 200
+        return jsonify({
+            "success": True,
+            "total": len(tiendas),
+            "tiendas": tiendas
+        }), 200
 
     except Exception as e:
-        return jsonify({"error": f"Error al listar productos: {e}"}), 500
+        import traceback
+        print("Error:", traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
 
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+
+##############################
+# OBTENER TIENDA POR ID
+##############################
+
+def obtener_tienda(id_tienda):
+    try:
+        conn = get_db_connection()
+        if conn is None:
+            return jsonify({"error": "Error conectando a la BD"}), 500
+
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT id, nombretienda, correoelectronico, telefono, ruc,
+                   regimen, departamento, provincia, distrito,
+                   categoria, logo, pais, terminos
+            FROM tiendas
+            WHERE id = %s
+        """, (id_tienda,))
+
+        t = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        if not t:
+            return jsonify({"error": f"No existe tienda con ID {id_tienda}"}), 404
+
+        return jsonify({
+            "success": True,
+            "tienda": {
+                "id": t[0],
+                "nombretienda": t[1],
+                "correoelectronico": t[2],
+                "telefono": t[3],
+                "ruc": t[4],
+                "regimen": t[5],
+                "departamento": t[6],
+                "provincia": t[7],
+                "distrito": t[8],
+                "categoria": t[9],
+                "logo": t[10],
+                "pais": t[11],
+                "terminos": t[12]
+            }
+        }), 200
+
+    except Exception as e:
+        import traceback
+        print("Error:", traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
+
+
+
+##############################
+# ACTUALIZAR TIENDA
+##############################
+
+def actualizar_tienda(id_tienda):
+    try:
+        data = request.json
+
+        campos = [
+            "nombretienda", "correoelectronico", "telefono", "ruc",
+            "regimen", "departamento", "provincia", "distrito",
+            "categoria", "logo", "pais"
+        ]
+
+        conn = get_db_connection()
+        if conn is None:
+            return jsonify({"error": "Error conectando a la BD"}), 500
+
+        cursor = conn.cursor()
+
+        set_sql = []
+        params = []
+
+        for campo in campos:
+            if campo in data:
+                set_sql.append(f"{campo} = %s")
+                params.append(data[campo])
+
+        if "contrasena" in data:
+            nueva_pass = bcrypt.generate_password_hash(data["contrasena"]).decode("utf-8")
+            set_sql.append("contrasena = %s")
+            params.append(nueva_pass)
+
+        if not set_sql:
+            return jsonify({"error": "No hay campos para actualizar"}), 400
+
+        params.append(id_tienda)
+
+        query = f"UPDATE tiendas SET {', '.join(set_sql)} WHERE id = %s"
+
+        cursor.execute(query, tuple(params))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({
+            "success": True,
+            "mensaje": "Tienda actualizada correctamente"
+        }), 200
+
+    except Exception as e:
+        import traceback
+        print("Error:", traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
+
+
+
+##############################
+# ELIMINAR TIENDA
+##############################
+
+def eliminar_tienda(id_tienda):
+    try:
+        conn = get_db_connection()
+        if conn is None:
+            return jsonify({"error": "Error conectando a la BD"}), 500
+
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT id FROM tiendas WHERE id = %s", (id_tienda,))
+        existe = cursor.fetchone()
+
+        if not existe:
+            return jsonify({"error": f"No existe tienda con ID {id_tienda}"}), 404
+
+        cursor.execute("DELETE FROM tiendas WHERE id = %s", (id_tienda,))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({"success": True, "mensaje": "Tienda eliminada"}), 200
+
+    except Exception as e:
+        import traceback
+        print("Error:", traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
