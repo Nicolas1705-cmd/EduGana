@@ -26,7 +26,6 @@ def listar_profesores():
                 telefono,
                 direccion_residencia,
                 titulo_especialidad,
-                id_colegio_asignado
             FROM profesores
             ORDER BY id_profesor ASC;
         """)
