@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Datos enviados:", data); // Para depuración
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/matricula/registrar", {
+            const response = await fetch("/addMatricula", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
