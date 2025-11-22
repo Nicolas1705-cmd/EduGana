@@ -1,32 +1,7 @@
 from flask import Flask, request, jsonify
 import psycopg2
 from psycopg2.extras import RealDictCursor
-
-app = Flask(__name__)
-
-# ============================
-# CONFIG BASE DE DATOS
-# ============================
-DB_NAME = "edugana_db"
-DB_USER = "postgres"
-DB_PASS = "System.2025*"
-DB_HOST = "172.60.15.207"
-DB_PORT = "5432"
-
-def get_db():
-    return psycopg2.connect(
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASS,
-        host=DB_HOST,
-        port=DB_PORT,
-        cursor_factory=RealDictCursor
-    )
-
-# ============================
-# POST: REGISTRAR ASISTENCIA
-# ============================
-@app.route("/api/asistencia/manual", methods=["POST"])
+from configbd import get_db_connection 
 def registrar_asistencia():
     try:
         data = request.get_json()
@@ -42,23 +17,23 @@ def registrar_asistencia():
         if not estudiante_id or not nombre_estudiante or not fecha or not asistencia:
             return jsonify({"mensaje": "Faltan campos obligatorios"}), 400
 
-        conn = get_db()
+        conn = get_db_connection()
         cur = conn.cursor()
 
         cur.execute("""
             INSERT INTO asistencias (
                 estudiante_id, nombre_estudiante, fecha,
-                asistencia, hora_entrada, observaciones, colegio
+                asistencia, hora_entrada, observaciones
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             RETURNING id;
         """, (
             estudiante_id, nombre_estudiante, fecha,
-            asistencia, hora_entrada, observaciones, colegio
+            asistencia, hora_entrada, observaciones 
         ))
-
         conn.commit()
         new_id = cur.fetchone()["id"]
+
 
         cur.close()
         conn.close()
@@ -75,10 +50,10 @@ def registrar_asistencia():
 # ============================
 # GET: LISTAR ASISTENCIAS
 # ============================
-@app.route("/api/asistencias", methods=["GET"])
+
 def obtener_asistencias():
     try:
-        conn = get_db()
+        conn = get_db_connection()
         cur = conn.cursor()
 
         cur.execute("SELECT * FROM asistencias ORDER BY fecha DESC;")
@@ -93,8 +68,3 @@ def obtener_asistencias():
         print("Error:", e)
         return jsonify({"mensaje": "Error interno del servidor"}), 500
 
-# ============================
-# RUN
-# ============================
-if __name__ == "__main__":
-    app.run(debug=True)

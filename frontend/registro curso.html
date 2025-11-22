@@ -9,13 +9,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
+
     body {
       background: #f4f6fb;
       font-family: "Poppins", sans-serif;
       margin-top: 20px;
     }
 
-    /* Caja del formulario */
     .form-box {
       max-width: 900px;
       margin: 0 auto 40px auto;
@@ -25,7 +25,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-    /* Títulos de secciones */
     .section-title {
       font-size: 1.2rem;
       font-weight: 600;
@@ -38,239 +37,23 @@
     .button.is-primary {
       background-color: #2563eb;
     }
+
     .button.is-primary:hover {
       background-color: #1e40af;
     }
 
-    /* ✅ Header estilizado */
     .page-header {
-
       margin-bottom: 2rem;
-
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-  border-radius: 0px 0px 12px 12px;
-
-  padding: 2rem;
-
-  color: white;
-
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-
-      
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 0px 0px 12px 12px;
+      padding: 2rem;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .page-header .title,
-
-.page-header .subtitle {
-
-  color: white !important;
-
-}
-
-
-
-.page-header .icon {
-
-  color: white;
-
-}
-
-
-
-.page-header .icon-text {
-
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 0.75rem;
-
-}
-
-
-
-.page-header .icon-text .icon {
-
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-}
-
-
-
-/* Puntos del usuario */
-
-.user-points {
-
-  background: rgba(255, 255, 255, 0.2);
-
-  border-radius: 50px;
-
-  padding: 0.75rem 1.5rem;
-
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 0.5rem;
-
-  font-size: 1.2rem;
-
-  font-weight: bold;
-
-}
-
-
-
-.user-points .icon {
-
-  font-size: 1.5rem;
-
-}
-
-
-
-/* Media Queries específicas para el encabezado */
-
-@media screen and (max-width: 768px) {
-
-  .page-header .level {
-
-    display: block !important;
-
-    text-align: center;
-
-  }
-
-  .page-header .level-left,
-
-  .page-header .level-right {
-
-    margin-bottom: 1rem;
-
-    text-align: center;
-  }
-
-  .page-header .level-item {
-
-    display: block;
-
-    margin-bottom: 0.5rem;
-  }
-  .page-header .title.is-2 {
-
-    font-size: 1.3rem;
-  }
-  .page-header .subtitle.is-5 {
-
-    font-size: 0.95rem;
-
-  }
-  .page-header {
-
-    padding: 1.25rem 1rem;
-
-  }
-
-
-
-  .page-header .icon-text {
-
-    display: flex;
-
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-  }
-
-
-
-  .user-points {
-
-    font-size: 1rem;
-
-    padding: 0.6rem 1.2rem;
-
-    margin: 0 auto;
-
-    display: flex;
-
-    justify-content: center;
-
-  }
-
-
-
-  .user-points .icon {
-
-    font-size: 1.2rem;
-
-  }
-
-}
-
-
-
-/* Pantallas muy pequeñas */
-
-@media screen and (max-width: 480px) {
-
-  .page-header .title.is-2 {
-
-    font-size: 1.1rem;
-
-  }
-
-
-
-  .page-header .subtitle.is-5 {
-
-    font-size: 0.85rem;
-
-  }
-
-
-
-  .user-points {
-
-    font-size: 0.9rem;
-
-    padding: 0.5rem 1rem;
-
-  }
-
-
-
-  .user-points .icon {
-
-    font-size: 1.2rem;
-
-  }
-
-}
-
-
-
-/* Tablet */
-
-@media screen and (min-width: 769px) and (max-width: 1023px) {
-
-  .page-header {
-
-    padding: 1.75rem 1.5rem;
-
-  }
-
-}
-
-    .page-header .title {
-      font-size: 1.9rem;
-      font-weight: 700;
+    .page-header .subtitle {
+      color: white !important;
     }
 
     .page-header .subtitle {
@@ -283,6 +66,8 @@
       gap: 0.8rem;
     }
 
+    .page-header .icon { color: white; }
+
     .user-points {
       background: rgba(255, 255, 255, 0.22);
       border-radius: 50px;
@@ -290,75 +75,38 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-
-    .user-points .icon {
-      font-size: 1.3rem;
-    }
-
-    /* ✅ Responsivo fino */
-    @media screen and (max-width: 1024px) {
-      .page-header {
-        padding: 1.8rem;
-      }
+      font-size: 1.2rem;
+      font-weight: bold;
     }
 
     @media screen and (max-width: 768px) {
-      .page-header .level {
-        flex-direction: column;
-        text-align: center;
-      }
-      .page-header .title {
-        font-size: 1.5rem;
-      }
-      .page-header .subtitle {
-        font-size: 0.95rem;
-      }
-      .user-points {
-        margin-top: 10px;
-        font-size: 1rem;
-      }
+      .page-header .level { display: block !important; text-align: center; }
+      .user-points { margin: 0 auto; }
     }
 
-    @media screen and (max-width: 480px) {
-      .page-header {
-        padding: 1.3rem;
-      }
-      .page-header .title {
-        font-size: 1.25rem;
-      }
-      .page-header .subtitle {
-        font-size: 0.85rem;
-      }
-      .user-points {
-        padding: 0.5rem 1.1rem;
-        font-size: 0.9rem;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ Header Final -->
+  <!-- HEADER -->
   <div class="page-header">
+
     <div class="level">
 
       <div class="level-left">
         <div class="level-item">
           <div>
-            <h1 class="title">
+            <h1 class="title is-2">
               <span class="icon-text">
-                <span class="icon has-text-white">
+                <span class="icon has-text-white mr-3">
                   <i class="fas fa-gift fa-lg"></i>
                 </span>
                 <span>Registro de curso</span>
               </span>
             </h1>
 
-            <p class="subtitle mt-1">EduGana</p>
+            <p class="subtitle is-5 mt-2">edugana</p>
           </div>
         </div>
       </div>
@@ -368,23 +116,24 @@
           <div class="user-points">
             <span class="icon"><i class="fas fa-coins"></i></span>
             <span id="userPoints"></span>
-            <span></span>
           </div>
         </div>
       </div>
 
     </div>
+
   </div>
 
-  <!-- ✅ Formulario -->
+  <!-- FORMULARIO -->
   <div class="form-box">
     <form id="registroCurso">
 
       <h2 class="section-title">1. Identificación del Curso</h2>
 
       <div class="columns is-multiline">
+
         <div class="column is-12-mobile is-6-tablet">
-          <label class="label">ID Curso (Sistema)</label>
+          <label class="label">ID de Curso (Sistema)</label>
           <input class="input" value="Automático" disabled>
         </div>
 
@@ -392,18 +141,22 @@
           <label class="label">Nombre del Curso *</label>
           <input class="input" id="nombreCurso" type="text" required>
         </div>
+
       </div>
 
       <div class="columns is-multiline">
+
         <div class="column is-12-mobile is-6-tablet">
           <label class="label">Código *</label>
           <input class="input" id="codigoCurso" type="text" required>
         </div>
+
       </div>
 
       <h2 class="section-title">2. Detalles de Asignación</h2>
 
       <div class="columns is-multiline">
+
         <div class="column is-12-mobile is-6-tablet">
           <label class="label">Nivel / Grado *</label>
           <div class="select is-fullwidth">
@@ -425,6 +178,7 @@
           <label class="label">Profesor Asignado *</label>
           <input class="input" id="profesor" type="text" required>
         </div>
+
       </div>
 
       <h2 class="section-title">3. Descripción</h2>
@@ -443,6 +197,49 @@
 
     </form>
   </div>
+
+
+<!-- 🔥 SCRIPT BAJADO AQUÍ (AHORA FUNCIONA) -->
+<script>
+document.getElementById("registroCurso").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        nombre_curso: document.getElementById("nombreCurso").value,
+        codigo: document.getElementById("codigoCurso").value,
+        nivel_grado: document.getElementById("nivel").value,
+        capacidad_max: document.getElementById("capacidad").value,
+        profesor_asignado: document.getElementById("profesor").value,
+        descripcion: document.getElementById("descripcion").value
+    };
+
+    if (!data.nombre_curso || !data.codigo || !data.nivel_grado || !data.capacidad_max || !data.profesor_asignado) {
+        alert("⚠ Debes completar todos los campos obligatorios");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/cursos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("✅ Curso registrado correctamente. ID: " + result.id_curso);
+            document.getElementById("registroCurso").reset();
+        } else {
+            alert("❌ Error: " + result.error);
+        }
+
+    } catch (error) {
+        alert("🚫 No se pudo conectar con el servidor");
+        console.error(error);
+    }
+});
+</script>
 
 </body>
 </html>
