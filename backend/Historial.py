@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)  # Permitir peticiones desde el frontend
 
 # ============================
-# CREDENCIALES (LAS TUYAS)
+# CREDENCIALES
 # ============================
 DB_NAME = "edugana_db"
 DB_USER = "postgres"
@@ -15,17 +15,8 @@ DB_PASS = "System.2025*"
 DB_HOST = "172.60.15.207"
 DB_PORT = "5432"
 
-# ============================
-# CREDENCIALES COMPAÑERO
-# ============================
-DB_NAME_COMP = "edugana_db"  # PIDE ESTE DATO
-DB_USER_COMP = "postgres"
-DB_PASS_COMP = "System.2025*"   # PIDE ESTE DATO
-DB_HOST_COMP = "127.0.0.1"        # PIDE LA IP DE SU COMPUTADORA
-DB_PORT_COMP = "5432"
-
 # ----------------------------
-# Conexión a PostgreSQL (TU BASE DE DATOS)
+# Conexión a PostgreSQL
 # ----------------------------
 def get_conn():
     return psycopg2.connect(
@@ -36,20 +27,8 @@ def get_conn():
         port=DB_PORT
     )
 
-# ----------------------------
-# Conexión a PostgreSQL del compañero
-# ----------------------------
-def get_conn_companero():
-    return psycopg2.connect(
-        dbname=DB_NAME_COMP,
-        user=DB_USER_COMP,
-        password=DB_PASS_COMP,
-        host=DB_HOST_COMP,
-        port=DB_PORT_COMP
-    )
-
 # ======================================================
-#   📌 1. Registrar asistencia (SIN TOKEN)
+#   📌 1. Registrar asistencia
 # ======================================================
 @app.route("/asistencias", methods=["POST"])
 def registrar_asistencia():
@@ -58,9 +37,13 @@ def registrar_asistencia():
     estudiante_id = data.get("estudiante_id")
     nombre_estudiante = data.get("nombre_estudiante")
     fecha = data.get("fecha")
-    asistencia = data.get("asistencia")
+    asistencia = data.get("asistencia")  # True/False o "Presente"/"Ausente"
     hora_entrada = data.get("hora_entrada")
     observaciones = data.get("observaciones")
+
+    # Convertir string a boolean si es necesario
+    if isinstance(asistencia, str):
+        asistencia = asistencia.lower() in ['presente', 'true', '1']
 
     try:
         conn = get_conn()
@@ -90,7 +73,7 @@ def registrar_asistencia():
 
 
 # ======================================================
-#   📌 2. Obtener historial completo (SIN TOKEN)
+#   📌 2. Obtener historial completo
 # ======================================================
 @app.route("/asistencias", methods=["GET"])
 def obtener_asistencias():
@@ -98,80 +81,19 @@ def obtener_asistencias():
         conn = get_conn()
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        cur.execute("SELECT * FROM asistencias ORDER BY fecha DESC;")
-        data = cur.fetchall()
-
-        cur.close()
-        conn.close()
-
-        return jsonify(data), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-# ======================================================
-#   📌 3. Obtener por estudiante (SIN TOKEN)
-# ======================================================
-@app.route("/asistencias/estudiante/<int:estudiante_id>", methods=["GET"])
-def asistencias_por_estudiante(estudiante_id):
-    try:
-        conn = get_conn()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
-
-        cur.execute("SELECT * FROM asistencias WHERE estudiante_id = %s;", (estudiante_id,))
-        data = cur.fetchall()
-
-        cur.close()
-        conn.close()
-
-        return jsonify(data), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-# ======================================================
-#   📌 4. Obtener por fecha (SIN TOKEN)
-# ======================================================
-@app.route("/asistencias/fecha/<fecha>", methods=["GET"])
-def asistencias_por_fecha(fecha):
-    try:
-        conn = get_conn()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
-
-        cur.execute("SELECT * FROM asistencias WHERE fecha = %s;", (fecha,))
-        data = cur.fetchall()
-
-        cur.close()
-        conn.close()
-
-        return jsonify(data), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-# ======================================================
-#   📌 5. Obtener asistencias del compañero
-# ======================================================
-@app.route("/asistencias/companero", methods=["GET"])
-def obtener_asistencias_companero():
-    try:
-        conn = get_conn_companero()
-        cur = conn.cursor(cursor_factory=RealDictCursor)
-
         cur.execute("""
             SELECT 
-                id_registro,
-                dni as estudiante_id,
-                CONCAT(nombres, ' ', apellidos) as nombre_estudiante,
+                id,
+                estudiante_id,
+                nombre_estudiante,
                 fecha,
-                estado_asistencia as asistencia,
+                CASE 
+                    WHEN asistencia = true THEN 'Presente'
+                    ELSE 'Ausente'
+                END as asistencia,
                 hora_entrada,
-                hora_salida,
-                observacion as observaciones
-            FROM registro_asistencia 
+                observaciones
+            FROM asistencias 
             ORDER BY fecha DESC, hora_entrada DESC
         """)
         data = cur.fetchall()
@@ -186,124 +108,155 @@ def obtener_asistencias_companero():
 
 
 # ======================================================
-#   📌 6. Obtener historial COMBINADO (ambas bases de datos)
+#   📌 3. Obtener por estudiante
 # ======================================================
-@app.route("/asistencias/todas", methods=["GET"])
-def obtener_todas_asistencias():
+@app.route("/asistencias/estudiante/<int:estudiante_id>", methods=["GET"])
+def asistencias_por_estudiante(estudiante_id):
     try:
-        # Obtener de tu base de datos LOCAL
-        conn1 = get_conn()
-        cur1 = conn1.cursor(cursor_factory=RealDictCursor)
-        cur1.execute("SELECT * FROM asistencias ORDER BY fecha DESC")
-        data_local = cur1.fetchall()
-        cur1.close()
-        conn1.close()
+        conn = get_conn()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        # Agregar origen a cada registro
-        for registro in data_local:
-            registro['origen'] = 'local'
+        cur.execute("""
+            SELECT 
+                id,
+                estudiante_id,
+                nombre_estudiante,
+                fecha,
+                CASE 
+                    WHEN asistencia = true THEN 'Presente'
+                    ELSE 'Ausente'
+                END as asistencia,
+                hora_entrada,
+                observaciones
+            FROM asistencias 
+            WHERE estudiante_id = %s
+            ORDER BY fecha DESC
+        """, (estudiante_id,))
+        data = cur.fetchall()
 
-        # Obtener de la base de datos del COMPAÑERO
-        try:
-            conn2 = get_conn_companero()
-            cur2 = conn2.cursor(cursor_factory=RealDictCursor)
-            cur2.execute("""
-                SELECT 
-                    id_registro,
-                    dni as estudiante_id,
-                    CONCAT(nombres, ' ', apellidos) as nombre_estudiante,
-                    fecha,
-                    estado_asistencia as asistencia,
-                    hora_entrada,
-                    hora_salida,
-                    observacion as observaciones
-                FROM registro_asistencia 
-                ORDER BY fecha DESC
-            """)
-            data_companero = cur2.fetchall()
-            cur2.close()
-            conn2.close()
+        cur.close()
+        conn.close()
 
-            # Agregar origen a cada registro
-            for registro in data_companero:
-                registro['origen'] = 'companero'
-
-        except Exception as e:
-            print(f"Error al conectar con compañero: {e}")
-            data_companero = []
-
-        # Combinar ambos resultados
-        todos_registros = data_local + data_companero
-        
-        # Ordenar por fecha (más reciente primero)
-        todos_registros.sort(key=lambda x: x['fecha'], reverse=True)
-
-        resultado = {
-            "registros": todos_registros,
-            "total": len(todos_registros),
-            "local": len(data_local),
-            "companero": len(data_companero)
-        }
-
-        return jsonify(resultado), 200
+        return jsonify(data), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
 # ======================================================
-#   📌 7. Obtener estadísticas combinadas
+#   📌 4. Obtener por fecha
+# ======================================================
+@app.route("/asistencias/fecha/<fecha>", methods=["GET"])
+def asistencias_por_fecha(fecha):
+    try:
+        conn = get_conn()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+
+        cur.execute("""
+            SELECT 
+                id,
+                estudiante_id,
+                nombre_estudiante,
+                fecha,
+                CASE 
+                    WHEN asistencia = true THEN 'Presente'
+                    ELSE 'Ausente'
+                END as asistencia,
+                hora_entrada,
+                observaciones
+            FROM asistencias 
+            WHERE fecha = %s
+            ORDER BY hora_entrada
+        """, (fecha,))
+        data = cur.fetchall()
+
+        cur.close()
+        conn.close()
+
+        return jsonify(data), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ======================================================
+#   📌 5. Obtener estadísticas
 # ======================================================
 @app.route("/asistencias/estadisticas", methods=["GET"])
 def obtener_estadisticas():
     try:
-        # Estadísticas locales
-        conn1 = get_conn()
-        cur1 = conn1.cursor(cursor_factory=RealDictCursor)
-        cur1.execute("""
+        conn = get_conn()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        
+        cur.execute("""
             SELECT 
                 COUNT(*) as total,
-                COUNT(CASE WHEN asistencia = 'Presente' THEN 1 END) as presentes,
-                COUNT(CASE WHEN asistencia = 'Ausente' THEN 1 END) as ausentes,
-                COUNT(CASE WHEN asistencia = 'Tardanza' THEN 1 END) as tardanzas
+                COUNT(CASE WHEN asistencia = true THEN 1 END) as presentes,
+                COUNT(CASE WHEN asistencia = false THEN 1 END) as ausentes
             FROM asistencias
         """)
-        stats_local = cur1.fetchone()
-        cur1.close()
-        conn1.close()
+        stats = cur.fetchone()
+        
+        cur.close()
+        conn.close()
 
-        # Estadísticas del compañero
-        try:
-            conn2 = get_conn_companero()
-            cur2 = conn2.cursor(cursor_factory=RealDictCursor)
-            cur2.execute("""
-                SELECT 
-                    COUNT(*) as total,
-                    COUNT(CASE WHEN estado_asistencia = 'Presente' THEN 1 END) as presentes,
-                    COUNT(CASE WHEN estado_asistencia = 'Ausente' THEN 1 END) as ausentes,
-                    COUNT(CASE WHEN estado_asistencia = 'Tardanza' THEN 1 END) as tardanzas
-                FROM registro_asistencia
-            """)
-            stats_companero = cur2.fetchone()
-            cur2.close()
-            conn2.close()
-        except:
-            stats_companero = {"total": 0, "presentes": 0, "ausentes": 0, "tardanzas": 0}
+        return jsonify(stats), 200
 
-        # Combinar estadísticas
-        resultado = {
-            "local": stats_local,
-            "companero": stats_companero,
-            "total_general": {
-                "total": stats_local['total'] + stats_companero['total'],
-                "presentes": stats_local['presentes'] + stats_companero['presentes'],
-                "ausentes": stats_local['ausentes'] + stats_companero['ausentes'],
-                "tardanzas": stats_local['tardanzas'] + stats_companero['tardanzas']
-            }
-        }
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-        return jsonify(resultado), 200
 
+# ======================================================
+#   📌 6. Actualizar asistencia
+# ======================================================
+@app.route("/asistencias/<int:id>", methods=["PUT"])
+def actualizar_asistencia(id):
+    data = request.get_json()
+    
+    asistencia = data.get("asistencia")
+    observaciones = data.get("observaciones")
+    
+    # Convertir string a boolean si es necesario
+    if isinstance(asistencia, str):
+        asistencia = asistencia.lower() in ['presente', 'true', '1']
+    
+    try:
+        conn = get_conn()
+        cur = conn.cursor()
+        
+        cur.execute("""
+            UPDATE asistencias 
+            SET asistencia = %s, observaciones = %s
+            WHERE id = %s
+        """, (asistencia, observaciones, id))
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        return jsonify({"msg": "Asistencia actualizada exitosamente"}), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ======================================================
+#   📌 7. Eliminar asistencia
+# ======================================================
+@app.route("/asistencias/<int:id>", methods=["DELETE"])
+def eliminar_asistencia(id):
+    try:
+        conn = get_conn()
+        cur = conn.cursor()
+        
+        cur.execute("DELETE FROM asistencias WHERE id = %s", (id,))
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        return jsonify({"msg": "Asistencia eliminada exitosamente"}), 200
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
