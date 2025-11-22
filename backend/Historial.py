@@ -33,34 +33,16 @@ def obtener_asistencias():
                 hora_entrada,
                 observaciones
             FROM asistencias 
-            -- Ordenar por fecha más reciente primero, y luego por hora de entrada más reciente
             ORDER BY fecha DESC, hora_entrada DESC
         """)
-        # 3. Obtener todos los resultados
         data = cur.fetchall()
 
-        # 4. Cerrar cursor y conexión
         cur.close()
         conn.close()
 
-        # 5. Devolver los datos como una respuesta JSON con código 200 (OK)
         return jsonify(data), 200
 
     except Exception as e:
-        # 6. Manejar errores de conexión o consulta
-        print(f"Error al obtener asistencias: {e}")
-        return jsonify({"error": "Error interno del servidor", "detalle": str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
-# --- Rutas de la API ---
 
-def historial_asistencias():
-    """
-    Ruta para acceder al historial de asistencias.
-    """
-    return obtener_asistencias()
-
-# --- Ejecución de la Aplicación ---
-
-if __name__ == '__main__':
-    # Ejecuta la aplicación en modo debug para desarrollo
-    app.run(debug=True, port=5000)
