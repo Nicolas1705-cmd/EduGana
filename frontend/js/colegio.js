@@ -1,7 +1,7 @@
 // registro.js
 
 // URL del endpoint de Flask. Debe ser el mismo que configures en Flask.
-const URL_BACKEND = '/addColegio'; 
+const URL_BACKEND = '/addColegio';  
 
 document.addEventListener('DOMContentLoaded', () => {
     // Obtenemos el formulario
