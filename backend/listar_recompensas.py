@@ -2,11 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from configbd import get_db_connection
 
-app = Flask(__name__)
-CORS(app)  # Permitir peticiones desde el frontend
-app.config['JSON_AS_ASCII'] = False
+##########################
+# LISTAR RECOMPENSAS
+##########################
 
-@app.route('/recompensas', methods=['GET'])
 def listar_recompensas():
     """
     API para listar todas las recompensas.
@@ -75,7 +74,11 @@ def listar_recompensas():
         return jsonify({'error': f'Error al listar recompensas: {str(e)}'}), 500
 
 
-@app.route('/recompensas/<int:id>', methods=['GET'])
+
+##########################
+# OBTENER RECOMPENSA X ID
+##########################
+
 def obtener_recompensa(id):
     """
     API para obtener una recompensa específica por ID.
@@ -125,13 +128,4 @@ def obtener_recompensa(id):
         print(f"Error al obtener recompensa: {traceback.format_exc()}")
         return jsonify({'error': f'Error al obtener recompensa: {str(e)}'}), 500
 
-
-if __name__ == '__main__':
-    print("=== API de Recompensas ===")
-    print("Endpoints disponibles:")
-    print("  GET  /recompensas           - Listar todas las recompensas")
-    print("  GET  /recompensas/<id>      - Obtener una recompensa por ID")
-    print("\nServidor ejecutándose en http://localhost:5000")
-    print("=" * 50)
-    app.run(debug=True, host='0.0.0.0', port=5000)
 
