@@ -2,33 +2,7 @@ from flask import Flask, request, jsonify
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from psycopg2 import sql
-
-DB_NAME = "edugana_db"
-DB_USER = "postgres"
-DB_PASS = "System.2025*"
-DB_HOST = "172.60.15.207"
-DB_PORT = "5432"
-
-
-def get_db_connection():
-    try:
-        from psycopg2.extras import RealDictCursor
-        conn = psycopg2.connect(
-            dbname=DB_NAME,
-            user=DB_USER,
-            password=DB_PASS,
-            host=DB_HOST,
-            port=DB_PORT,
-            cursor_factory=RealDictCursor
-        )
-        return conn
-    except psycopg2.OperationalError as e:
-        print(f"Database connection error: {e}")
-        raise
-
-
-def status():
-    return jsonify({"status": "API de Inscripciones is running!"}), 200
+from configbd import get_db_connection
 
 
 def registrar_inscripcion():
