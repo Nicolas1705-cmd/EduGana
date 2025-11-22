@@ -6,83 +6,8 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 
 import psycopg2
 
+from configbd import get_db_connection
 from psycopg2.extras import RealDictCursor
-
-
-from flask_cors import CORS 
-
-app = Flask(__name__)
-# ... otras configuraciones
-
-CORS(app) # Permite peticiones desde cualquier origen (necesario para el frontend)
-
-bcrypt = Bcrypt(app)
-
-
-
-# ============================================
-
-# CONFIGURACIÓN BASE DE DATOS
-
-# ============================================
-
-DB_NAME = "edugana_db"
-
-DB_USER = "postgres"
-
-DB_PASS = "System.2025*"
-
-DB_HOST = "127.0.0.1"
-
-DB_PORT = "5432"
-
-
-
-# ============================================
-
-# FUNCIÓN DE CONEXIÓN
-
-# ============================================
-
-def get_db_connection():
-
-  try:
-
-    conn = psycopg2.connect(
-
-      dbname=DB_NAME,
-
-      user=DB_USER,
-
-      password=DB_PASS,
-
-      host=DB_HOST,
-
-      port=DB_PORT,
-
-      cursor_factory=RealDictCursor
-
-    )
-
-    return conn
-
-  except psycopg2.Error as e:
-
-    print("❌ Error de conexión:", e)
-
-    return None
-
-
-
-
-
-# ============================================
-
-# ENDPOINT PARA REGISTRAR COLEGIOS
-
-# ============================================
-
-@app.route("/colegios", methods=["POST"])
 
 def registrar_colegio():
 
@@ -234,17 +159,4 @@ def registrar_colegio():
 
     return jsonify({"error": "Error al registrar el colegio"}), 500
 
-
-
-
-
-# ============================================
-
-# INICIO DE LA APP
-
-# ============================================
-
-if __name__ == "__main__":
-
-  app.run(debug=True)
   
