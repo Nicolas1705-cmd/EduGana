@@ -1,299 +1,433 @@
-/**
- * Nombre del archivo: historial.js
- * Descripción: Consume el endpoint GET /listAsistencia para mostrar el historial.
- */
-
-// ==========================================
-// 1. CONFIGURACIÓN
-// ==========================================
-const API_URL = 'http://172.60.15.207:5000/'; // Asegúrate que sea el puerto de tu Flask
-const ENDPOINT_HISTORIAL = '/listAsistencia'; // Tu ruta específica GET
-
-// Variables de estado
-let historialGlobal = [];
-let historialFiltrado = [];
+// ========================================
+// CONFIGURACIÓN DE LA API
+// ========================================
+const API_URL = 'http://localhost:5000';
+let asistenciasGlobales = [];
+let asistenciasFiltradas = [];
 let paginaActual = 1;
 const registrosPorPagina = 10;
 
-// ==========================================
-// 2. INICIALIZACIÓN (Al cargar la página)
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    // Cargar datos inmediatamente
-    cargarHistorial();
-
-    // Configurar listeners de los filtros (Desktop y Móvil)
-    const formDesktop = document.getElementById('filtrosDesktop');
-    const formMovil = document.getElementById('filtrosMovil');
-
-    if (formDesktop) formDesktop.addEventListener('submit', filtrarHistorial);
-    if (formMovil) formMovil.addEventListener('submit', filtrarHistorial);
-
-    // Refresco automático (Opcional: cada 30 seg)
-    setInterval(cargarHistorial, 30000);
-});
-
-// ==========================================
-// 3. CONSUMO DEL API (GET /listAsistencia)
-// ==========================================
-async function cargarHistorial() {
+// ========================================
+// FUNCIÓN PRINCIPAL: CARGAR ASISTENCIAS
+// ========================================
+async function cargarAsistencias() {
     try {
         mostrarCargando(true);
-
-        // Petición GET al backend Python
-        const response = await fetch(`${API_URL}${ENDPOINT_HISTORIAL}`);
-
+        
+        const response = await fetch(`${API_URL}/listAsistencia`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
         if (!response.ok) {
-            throw new Error(`Error de conexión: ${response.status}`);
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
-
-        // Tu Python devuelve una lista directa: [ {id, nombre_estudiante...}, ... ]
-        // O un JSON: { data: [...] }. Este código soporta ambos.
+        
         const data = await response.json();
         
-        historialGlobal = Array.isArray(data) ? data : (data.data || []);
+        // Manejar la estructura de respuesta
+        asistenciasGlobales = Array.isArray(data) ? data : [];
+        asistenciasFiltradas = [...asistenciasGlobales];
         
-        // Al inicio, lo filtrado es igual a todo lo recibido
-        historialFiltrado = [...historialGlobal];
-
-        // Renderizar en HTML
-        renderizarVista();
-        actualizarFechaHora();
-
+        console.log('✅ Asistencias cargadas:', asistenciasGlobales.length);
+        
+        mostrarAsistencias();
+        actualizarFechaActualizacion();
+        
     } catch (error) {
-        console.error('Error cargando historial:', error);
-        mostrarError('No se pudo cargar el historial de asistencias.');
+        console.error('❌ Error al cargar asistencias:', error);
+        mostrarError(`No se pudieron cargar las asistencias. Verifica que el servidor Flask esté ejecutándose en ${API_URL}. Error: ${error.message}`);
     } finally {
         mostrarCargando(false);
     }
 }
 
-// ==========================================
-// 4. RENDERIZADO (Pintar tabla y tarjetas)
-// ==========================================
-function renderizarVista() {
+// ========================================
+// MOSTRAR ASISTENCIAS EN TABLA Y TARJETAS
+// ========================================
+function mostrarAsistencias() {
     const inicio = (paginaActual - 1) * registrosPorPagina;
     const fin = inicio + registrosPorPagina;
-    const datosPagina = historialFiltrado.slice(inicio, fin);
+    const asistenciasPagina = asistenciasFiltradas.slice(inicio, fin);
 
-    // 4.1 Renderizar Tabla Desktop
-    const tbody = document.getElementById('tablaAsistenciasDesktop');
-    if (tbody) {
-        tbody.innerHTML = '';
+    // TABLA DESKTOP
+    const tbodyDesktop = document.getElementById('tablaAsistenciasDesktop');
+    if (tbodyDesktop) {
+        tbodyDesktop.innerHTML = '';
         
-        if (datosPagina.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="has-text-centered py-4">No se encontraron registros.</td></tr>';
+        if (asistenciasPagina.length === 0) {
+            tbodyDesktop.innerHTML = '<tr><td colspan="6" class="has-text-centered has-text-grey">No hay registros de asistencia disponibles</td></tr>';
         } else {
-            datosPagina.forEach(fila => {
-                // Mapeo exacto de tus columnas SQL a la Tabla HTML
+            asistenciasPagina.forEach(asistencia => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${fila.id || fila.estudiante_id}</td>
-                    <td class="has-text-weight-semibold is-uppercase-text">${fila.nombre_estudiante || 'Desconocido'}</td>
-                    <td>${formatearFecha(fila.fecha)}</td>
-                    <td>${fila.hora_entrada || '--:--'}</td>
-                    <td>${generarEtiquetaEstado(fila.asistencia)}</td>
-                    <td>${fila.colegio || '---'}</td> 
+                    <td><strong>${asistencia.id || '---'}</strong></td>
+                    <td>${asistencia.nombre_estudiante || 'Sin nombre'}</td>
+                    <td>${formatearFecha(asistencia.fecha)}</td>
+                    <td><span class="icon-text">
+                        <span class="icon"><i class="fas fa-clock"></i></span>
+                        <span>${asistencia.hora_entrada || '---'}</span>
+                    </span></td>
+                    <td>${getTagEstado(asistencia.asistencia)}</td>
+                    <td>${asistencia.observaciones || 'Sin observaciones'}</td>
                 `;
-                tbody.appendChild(tr);
+                tbodyDesktop.appendChild(tr);
             });
         }
     }
 
-    // 4.2 Renderizar Tarjetas Móvil
+    // TARJETAS MÓVIL
     const contenedorMovil = document.getElementById('tarjetasAsistenciasMovil');
     if (contenedorMovil) {
         contenedorMovil.innerHTML = '';
-
-        if (datosPagina.length === 0) {
-            contenedorMovil.innerHTML = '<div class="notification is-light has-text-centered">Sin datos</div>';
+        
+        if (asistenciasPagina.length === 0) {
+            contenedorMovil.innerHTML = `
+                <div class="notification is-info is-light">
+                    <span class="icon"><i class="fas fa-info-circle"></i></span>
+                    <span>No hay registros para mostrar</span>
+                </div>
+            `;
         } else {
-            datosPagina.forEach(fila => {
-                contenedorMovil.insertAdjacentHTML('beforeend', `
-                    <div class="mobile-card">
-                        <div class="mobile-card-date level is-mobile">
-                            <div class="level-left">
-                                <span class="icon mr-2"><i class="fas fa-calendar"></i></span>
-                                <b>${formatearFecha(fila.fecha)}</b>
-                            </div>
-                            <div class="level-right">
-                                ${generarEtiquetaEstado(fila.asistencia)}
-                            </div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <span class="mobile-card-label">Nombre:</span>
-                            <span class="mobile-card-value is-uppercase-text">${fila.nombre_estudiante}</span>
-                        </div>
-                         <div class="mobile-card-row">
-                            <span class="mobile-card-label">Hora:</span>
-                            <span class="mobile-card-value">${fila.hora_entrada}</span>
-                        </div>
-                        <div class="mobile-card-row">
-                            <span class="mobile-card-label">Colegio:</span>
-                            <span class="mobile-card-value">${fila.colegio || '---'}</span>
-                        </div>
-                    </div>
-                `);
+            asistenciasPagina.forEach(asistencia => {
+                const card = crearTarjetaMovil(asistencia);
+                contenedorMovil.insertAdjacentHTML('beforeend', card);
             });
         }
     }
 
-    // 4.3 Actualizar Paginación
-    renderizarPaginacion();
+    // PAGINACIÓN
+    mostrarPaginacion();
 }
 
-// ==========================================
-// 5. FILTROS
-// ==========================================
-function filtrarHistorial(e) {
-    if(e) e.preventDefault();
+// ========================================
+// CREAR TARJETA MÓVIL
+// ========================================
+function crearTarjetaMovil(asistencia) {
+    return `
+        <div class="mobile-card">
+            <div class="mobile-card-date">
+                <i class="fas fa-calendar-alt"></i> ${formatearFecha(asistencia.fecha)}
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label"><i class="fas fa-user"></i> Nombres:</span>
+                <span class="mobile-card-value"><strong>${asistencia.nombre_estudiante || 'Sin nombre'}</strong></span>
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label"><i class="fas fa-id-card"></i> ID:</span>
+                <span class="mobile-card-value">${asistencia.id || '---'}</span>
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label"><i class="fas fa-check-circle"></i> Estado:</span>
+                <span class="mobile-card-value">${getTagEstado(asistencia.asistencia)}</span>
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label"><i class="fas fa-clock"></i> Hora:</span>
+                <span class="mobile-card-value">${asistencia.hora_entrada || '---'}</span>
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label"><i class="fas fa-comment"></i> Observaciones:</span>
+                <span class="mobile-card-value">${asistencia.observaciones || 'Sin observaciones'}</span>
+            </div>
+        </div>
+    `;
+}
 
-    const esMovil = window.innerWidth < 1024;
+// ========================================
+// FORMATEAR FECHA
+// ========================================
+function formatearFecha(fecha) {
+    if (!fecha) return '---';
+    try {
+        const date = new Date(fecha + 'T00:00:00');
+        const opciones = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return date.toLocaleDateString('es-PE', opciones);
+    } catch (error) {
+        console.error('Error al formatear fecha:', error);
+        return fecha;
+    }
+}
+
+// ========================================
+// OBTENER TAG DE ESTADO
+// ========================================
+function getTagEstado(estado) {
+    const estados = {
+        'Presente': '<span class="tag is-success is-light"><i class="fas fa-check mr-1"></i>Presente</span>',
+        'Ausente': '<span class="tag is-danger is-light"><i class="fas fa-times mr-1"></i>Ausente</span>'
+    };
+    return estados[estado] || '<span class="tag is-light">---</span>';
+}
+
+// ========================================
+// FILTRAR ASISTENCIAS
+// ========================================
+function aplicarFiltros(event) {
+    event.preventDefault();
     
-    // Obtener valores según la vista
-    const fInicio = document.getElementById(esMovil ? 'fechaInicioMovil' : 'fechaInicioDesktop').value;
-    const fFin = document.getElementById(esMovil ? 'fechaFinMovil' : 'fechaFinDesktop').value;
-    const textoColegio = document.getElementById(esMovil ? 'colegioMovil' : 'colegioDesktop').value.toLowerCase();
+    const esMovil = window.innerWidth < 1024;
+    const fechaInicio = document.getElementById(esMovil ? 'fechaInicioMovil' : 'fechaInicioDesktop').value;
+    const fechaFin = document.getElementById(esMovil ? 'fechaFinMovil' : 'fechaFinDesktop').value;
+    const nombreBusqueda = document.getElementById(esMovil ? 'colegioMovil' : 'colegioDesktop').value.toLowerCase().trim();
 
-    historialFiltrado = historialGlobal.filter(item => {
-        let pasaFecha = true;
-        let pasaColegio = true;
+    asistenciasFiltradas = asistenciasGlobales.filter(asistencia => {
+        let cumpleFecha = true;
+        let cumpleNombre = true;
 
-        // Filtro Fecha
-        if (fInicio && item.fecha < fInicio) pasaFecha = false;
-        if (fFin && item.fecha > fFin) pasaFecha = false;
-
-        // Filtro Colegio (Búsqueda parcial)
-        if (textoColegio && item.colegio) {
-            pasaColegio = item.colegio.toLowerCase().includes(textoColegio);
-        } else if (textoColegio && !item.colegio) {
-            pasaColegio = false; // Buscamos algo pero el registro no tiene colegio
+        // Filtro por fecha de inicio
+        if (fechaInicio && asistencia.fecha) {
+            cumpleFecha = asistencia.fecha >= fechaInicio;
         }
 
-        return pasaFecha && pasaColegio;
+        // Filtro por fecha fin
+        if (fechaFin && asistencia.fecha && cumpleFecha) {
+            cumpleFecha = asistencia.fecha <= fechaFin;
+        }
+
+        // Filtro por nombre de estudiante
+        if (nombreBusqueda && asistencia.nombre_estudiante) {
+            cumpleNombre = asistencia.nombre_estudiante.toLowerCase().includes(nombreBusqueda);
+        }
+
+        return cumpleFecha && cumpleNombre;
     });
 
-    paginaActual = 1; // Volver a la primera página tras filtrar
-    renderizarVista();
-}
-
-function limpiarFiltros() {
-    // Limpiar inputs
-    const ids = ['fechaInicioDesktop', 'fechaFinDesktop', 'colegioDesktop', 
-                 'fechaInicioMovil', 'fechaFinMovil', 'colegioMovil'];
-    ids.forEach(id => {
-        const input = document.getElementById(id);
-        if(input) input.value = '';
-    });
-
-    // Resetear datos
-    historialFiltrado = [...historialGlobal];
     paginaActual = 1;
-    renderizarVista();
+    mostrarAsistencias();
+    
+    console.log(`🔍 Filtros aplicados: ${asistenciasFiltradas.length} de ${asistenciasGlobales.length} registros`);
 }
 
-// ==========================================
-// 6. UTILIDADES Y AYUDAS VISUALES
-// ==========================================
+// ========================================
+// LIMPIAR FILTROS
+// ========================================
+function limpiarFiltros() {
+    // Desktop
+    const fechaInicioDesktop = document.getElementById('fechaInicioDesktop');
+    const fechaFinDesktop = document.getElementById('fechaFinDesktop');
+    const colegioDesktop = document.getElementById('colegioDesktop');
+    
+    if (fechaInicioDesktop) fechaInicioDesktop.value = '';
+    if (fechaFinDesktop) fechaFinDesktop.value = '';
+    if (colegioDesktop) colegioDesktop.value = '';
+    
+    // Móvil
+    const fechaInicioMovil = document.getElementById('fechaInicioMovil');
+    const fechaFinMovil = document.getElementById('fechaFinMovil');
+    const colegioMovil = document.getElementById('colegioMovil');
+    
+    if (fechaInicioMovil) fechaInicioMovil.value = '';
+    if (fechaFinMovil) fechaFinMovil.value = '';
+    if (colegioMovil) colegioMovil.value = '';
 
-// Convierte el texto de la BD ('Presente', 'Ausente', booleanos) en HTML Bulma
-function generarEtiquetaEstado(estado) {
-    const st = String(estado).toLowerCase(); // Convertir a string y minúsculas para comparar seguro
-
-    if (st.includes('presente') || st === 'true') {
-        return `<span class="tag is-success is-light"><i class="fas fa-check mr-1"></i> Presente</span>`;
-    } 
-    if (st.includes('ausente') || st === 'false') {
-        return `<span class="tag is-danger is-light"><i class="fas fa-times mr-1"></i> Ausente</span>`;
-    }
-    // Si tienes estados de entrada/salida
-    if (st.includes('entrada')) return `<span class="tag is-info is-light">Entrada</span>`;
-    if (st.includes('salida')) return `<span class="tag is-warning is-light">Salida</span>`;
-
-    return `<span class="tag is-light">${estado}</span>`;
+    asistenciasFiltradas = [...asistenciasGlobales];
+    paginaActual = 1;
+    mostrarAsistencias();
+    
+    console.log('🔄 Filtros limpiados');
 }
 
-// Formatea YYYY-MM-DD a DD/MM/YYYY
-function formatearFecha(fechaStr) {
-    if (!fechaStr) return '--/--/----';
-    const partes = fechaStr.split('-'); 
-    // Si viene como 2025-10-25
-    if (partes.length === 3) return `${partes[2]}/${partes[1]}/${partes[0]}`;
-    return fechaStr;
-}
-
-// Manejo del spinner de carga
-function mostrarCargando(activo) {
-    const spinners = document.querySelectorAll('.loading-spinner');
-    spinners.forEach(s => s.style.display = activo ? 'flex' : 'none');
-}
-
-// Manejo de errores visuales
-function mostrarError(mensaje) {
-    const tbody = document.getElementById('tablaAsistenciasDesktop');
-    const movil = document.getElementById('tarjetasAsistenciasMovil');
-    const alerta = `<div class="notification is-danger is-light">${mensaje}</div>`;
-
-    if(tbody) tbody.innerHTML = `<tr><td colspan="6">${alerta}</td></tr>`;
-    if(movil) movil.innerHTML = alerta;
-}
-
-function actualizarFechaHora() {
-    const el = document.getElementById('fechaActualizacion');
-    if(el) {
-        const now = new Date();
-        el.innerText = `Actualizado: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
-    }
-}
-
-// ==========================================
-// 7. PAGINACIÓN
-// ==========================================
-function renderizarPaginacion() {
-    const paginacionDiv = document.getElementById('paginacionDesktop');
-    if(!paginacionDiv) return;
-
-    const totalPaginas = Math.ceil(historialFiltrado.length / registrosPorPagina);
-
+// ========================================
+// PAGINACIÓN
+// ========================================
+function mostrarPaginacion() {
+    const totalPaginas = Math.ceil(asistenciasFiltradas.length / registrosPorPagina);
+    const paginacionDesktop = document.getElementById('paginacionDesktop');
+    
+    if (!paginacionDesktop) return;
+    
     if (totalPaginas <= 1) {
-        paginacionDiv.style.display = 'none';
+        paginacionDesktop.style.display = 'none';
         return;
     }
-    paginacionDiv.style.display = 'flex';
 
-    const ul = document.getElementById('listaPaginas');
-    const btnPrev = document.getElementById('btnAnterior');
-    const btnNext = document.getElementById('btnSiguiente');
+    paginacionDesktop.style.display = 'flex';
 
-    // Configurar botones
-    btnPrev.onclick = () => cambiarPagina(paginaActual - 1);
-    btnPrev.toggleAttribute('disabled', paginaActual === 1);
+    const btnAnterior = document.getElementById('btnAnterior');
+    const btnSiguiente = document.getElementById('btnSiguiente');
+    const listaPaginas = document.getElementById('listaPaginas');
 
-    btnNext.onclick = () => cambiarPagina(paginaActual + 1);
-    btnNext.toggleAttribute('disabled', paginaActual === totalPaginas);
+    // Botón anterior
+    if (btnAnterior) {
+        if (paginaActual === 1) {
+            btnAnterior.setAttribute('disabled', 'disabled');
+            btnAnterior.classList.add('is-disabled');
+        } else {
+            btnAnterior.removeAttribute('disabled');
+            btnAnterior.classList.remove('is-disabled');
+            btnAnterior.onclick = () => cambiarPagina(paginaActual - 1);
+        }
+    }
 
-    // Dibujar números
-    ul.innerHTML = '';
-    // Lógica simplificada: mostrar todas o rango (aquí muestro un rango simple)
-    for (let i = 1; i <= totalPaginas; i++) {
-        // Mostrar primera, última y las cercanas a la actual
-        if (i === 1 || i === totalPaginas || (i >= paginaActual - 1 && i <= paginaActual + 1)) {
+    // Botón siguiente
+    if (btnSiguiente) {
+        if (paginaActual === totalPaginas) {
+            btnSiguiente.setAttribute('disabled', 'disabled');
+            btnSiguiente.classList.add('is-disabled');
+        } else {
+            btnSiguiente.removeAttribute('disabled');
+            btnSiguiente.classList.remove('is-disabled');
+            btnSiguiente.onclick = () => cambiarPagina(paginaActual + 1);
+        }
+    }
+
+    // Lista de páginas (mostrar máximo 5 páginas)
+    if (listaPaginas) {
+        listaPaginas.innerHTML = '';
+        
+        let inicio = Math.max(1, paginaActual - 2);
+        let fin = Math.min(totalPaginas, inicio + 4);
+        
+        if (fin - inicio < 4) {
+            inicio = Math.max(1, fin - 4);
+        }
+        
+        for (let i = inicio; i <= fin; i++) {
             const li = document.createElement('li');
-            li.innerHTML = `<a class="pagination-link ${i === paginaActual ? 'is-current' : ''}" onclick="cambiarPagina(${i})">${i}</a>`;
-            ul.appendChild(li);
+            const a = document.createElement('a');
+            a.classList.add('pagination-link');
+            
+            if (i === paginaActual) {
+                a.classList.add('is-current');
+                a.setAttribute('aria-current', 'page');
+            }
+            
+            a.textContent = i;
+            a.setAttribute('aria-label', `Página ${i}`);
+            a.onclick = () => cambiarPagina(i);
+            
+            li.appendChild(a);
+            listaPaginas.appendChild(li);
         }
     }
 }
 
 function cambiarPagina(nuevaPagina) {
-    const totalPaginas = Math.ceil(historialFiltrado.length / registrosPorPagina);
-    if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
-        paginaActual = nuevaPagina;
-        renderizarVista();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    paginaActual = nuevaPagina;
+    mostrarAsistencias();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    console.log(`📄 Página cambiada a: ${nuevaPagina}`);
+}
+
+// ========================================
+// MOSTRAR CARGANDO
+// ========================================
+function mostrarCargando(mostrar) {
+    const tbodyDesktop = document.getElementById('tablaAsistenciasDesktop');
+    const contenedorMovil = document.getElementById('tarjetasAsistenciasMovil');
+    
+    if (mostrar) {
+        const spinnerHTML = `
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p class="has-text-grey mt-3">Cargando datos...</p>
+            </div>
+        `;
+        
+        if (tbodyDesktop) {
+            tbodyDesktop.innerHTML = `<tr><td colspan="6">${spinnerHTML}</td></tr>`;
+        }
+        
+        if (contenedorMovil) {
+            contenedorMovil.innerHTML = spinnerHTML;
+        }
     }
 }
 
-// Exportar funciones globales para usar en onclick del HTML (ej. Limpiar)
-window.limpiarFiltros = limpiarFiltros;
-window.cargarMasRegistros = () => {}; // Dejar vacío si no usas "cargar más" en móvil
+// ========================================
+// MOSTRAR ERROR
+// ========================================
+function mostrarError(mensaje) {
+    const tbodyDesktop = document.getElementById('tablaAsistenciasDesktop');
+    const contenedorMovil = document.getElementById('tarjetasAsistenciasMovil');
+    
+    const errorHTML = `
+        <div class="notification is-danger is-light">
+            <button class="delete" onclick="this.parentElement.remove()"></button>
+            <span class="icon has-text-danger">
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            <span><strong>Error:</strong> ${mensaje}</span>
+            <br>
+            <small class="mt-2">
+                <strong>Solución:</strong> Asegúrate de que el servidor Flask esté ejecutándose con <code>python api.py</code>
+            </small>
+        </div>
+    `;
+    
+    if (tbodyDesktop) {
+        tbodyDesktop.innerHTML = `<tr><td colspan="6">${errorHTML}</td></tr>`;
+    }
+    
+    if (contenedorMovil) {
+        contenedorMovil.innerHTML = errorHTML;
+    }
+}
+
+// ========================================
+// ACTUALIZAR FECHA DE ACTUALIZACIÓN
+// ========================================
+function actualizarFechaActualizacion() {
+    const fechaElement = document.getElementById('fechaActualizacion');
+    if (fechaElement) {
+        const ahora = new Date();
+        const opciones = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        };
+        const fechaFormateada = ahora.toLocaleDateString('es-PE', opciones);
+        fechaElement.innerHTML = `
+            <span class="icon-text">
+                <span class="icon has-text-info"><i class="fas fa-sync-alt"></i></span>
+                <span>Datos actualizados al ${fechaFormateada}</span>
+            </span>
+        `;
+    }
+}
+
+// ========================================
+// EVENTOS AL CARGAR LA PÁGINA
+// ========================================
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 Iniciando aplicación de Historial de Asistencias...');
+    
+    // Cargar asistencias inicial
+    cargarAsistencias();
+
+    // Eventos de formularios
+    const filtrosDesktop = document.getElementById('filtrosDesktop');
+    const filtrosMovil = document.getElementById('filtrosMovil');
+    
+    if (filtrosDesktop) {
+        filtrosDesktop.addEventListener('submit', aplicarFiltros);
+    }
+    
+    if (filtrosMovil) {
+        filtrosMovil.addEventListener('submit', aplicarFiltros);
+    }
+
+    // Auto-actualización cada 30 segundos
+    setInterval(() => {
+        console.log('🔄 Auto-actualización de datos...');
+        cargarAsistencias();
+    }, 30000);
+    
+    console.log('✅ Aplicación iniciada correctamente');
+});
+
+// ========================================
+// MANEJO DE ERRORES GLOBALES
+// ========================================
+window.addEventListener('error', (event) => {
+    console.error('❌ Error global capturado:', event.error);
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('❌ Promesa rechazada no manejada:', event.reason);
+});
