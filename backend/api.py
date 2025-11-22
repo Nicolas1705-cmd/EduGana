@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify # Importamos Flask aquí
 app = Flask(__name__)
 import seccion
-import curso
+import cursos
 import colegio
 import historialdecanjes
 import Historial
