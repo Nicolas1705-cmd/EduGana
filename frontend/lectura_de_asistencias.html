@@ -130,9 +130,7 @@
                     <h2 class="title is-5 has-text-centered">👤 Registro de Control de Asistencias</h2>
                     <p class="subtitle is-7 has-text-centered mb-4">Ingresa el ID del **empleado/estudiante** para marcar asistencia.</p>
 
-                    <form action="#" method="POST">
-                        
-                        <div class="field">
+                    <form action="#" method="POST" id="asistencia-form"> <div class="field">
                             <label class="label" for="registro_id">ID *</label>
                             <div class="control has-icons-left">
                                 <input class="input is-large" type="text" id="registro_id" name="registro_id" placeholder="Ej. A00123" required autofocus>
@@ -169,15 +167,15 @@
                     
                     <div class="field has-addons mb-4">
                         <div class="control has-icons-left is-expanded">
-                            <input class="input" type="text" placeholder="Buscar por Nombre o ID...">
+                            <input class="input" type="text" id="filtro-busqueda" placeholder="Buscar por Nombre o ID...">
                             <span class="icon is-left"><i class="fas fa-search"></i></span>
                         </div>
                         <div class="control">
                             <div class="select">
-                                <select>
-                                    <option>Mostrar todos</option>
-                                    <option>Entrada</option>
-                                    <option>Salida</option>
+                                <select id="filtro-estado">
+                                    <option value="todos">Mostrar todos</option>
+                                    <option value="Presente">Entrada</option>
+                                    <option value="Salida">Salida</option>
                                 </select>
                             </div>
                         </div>
@@ -196,33 +194,33 @@
                                 </tr>
                             </thead>
                             
-                            <tbody>
-                                <tr>
+                            <tbody id="asistencia-body">
+                                <tr data-id="A00123" data-estado="Presente">
                                     <td>1</td>
                                     <td>Ana Lucía Flores</td>
                                     <td>A00123</td>
                                     <td><span class="tag is-success">Presente</span></td>
                                     <td>07:58 AM</td>
                                 </tr>
-                                <tr>
+                                <tr data-id="C00456" data-estado="Tarde">
                                     <td>2</td>
                                     <td>Carlos Miguel Pérez</td>
                                     <td>C00456</td>
                                     <td><span class="tag is-warning">Tarde</span></td>
                                     <td>08:10 AM</td>
                                 </tr>
-                                <tr>
+                                <tr data-id="D00789" data-estado="Ausente">
                                     <td>3</td>
                                     <td>Diana Sofía Herrera</td>
                                     <td>D00789</td>
                                     <td><span class="tag is-danger">Ausente</span></td>
                                     <td>-</td>
                                 </tr>
-                                <tr>
+                                <tr data-id="E01011" data-estado="Salida">
                                     <td>4</td>
                                     <td>Ernesto Gómez Paz</td>
                                     <td>E01011</td>
-                                    <td><span class="tag is-info">Presente</span></td>
+                                    <td><span class="tag is-info">Salida</span></td>
                                     <td>05:05 PM</td>
                                 </tr>
                             </tbody>
@@ -233,6 +231,133 @@
             
         </div>
     </div>
+
+<script>
+    // ==========================================================
+    // LÓGICA DE ASISTENCIAS (JavaScript)
+    // ==========================================================
+
+    // 1. Obtener elementos clave del DOM
+    const formRegistro = document.getElementById('asistencia-form');
+    const inputID = document.getElementById('registro_id');
+    const tablaCuerpo = document.getElementById('asistencia-body');
+    
+    // Función para obtener la hora actual en formato HH:MM XM
+    function obtenerHoraActual() {
+        const ahora = new Date();
+        return new Intl.DateTimeFormat('es-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        }).format(ahora);
+    }
+
+    // Función para simular la búsqueda de nombre
+    function buscarNombrePorID(id) {
+        // Simulación de una "base de datos" simple con algunos nombres de ejemplo
+        const datosUsuarios = {
+            'A00123': 'Ana Lucía Flores',
+            'C00456': 'Carlos Miguel Pérez',
+            'D00789': 'Diana Sofía Herrera',
+            'E01011': 'Ernesto Gómez Paz',
+            'F01234': 'Fabiola García' // Nuevo para pruebas
+        };
+        // Devuelve el nombre si existe, o un nombre genérico si no
+        return datosUsuarios[id] || `Usuario ${id} (Nuevo)`;
+    }
+
+    // Manejar el envío del formulario (Marcar Asistencia)
+    formRegistro.addEventListener('submit', function(event) {
+        event.preventDefault(); // Previene el envío por defecto de la página
+
+        const idIngresado = inputID.value.trim().toUpperCase();
+        
+        if (idIngresado.length === 0) {
+            alert('Por favor, ingresa un ID.');
+            return;
+        }
+
+        const nombre = buscarNombrePorID(idIngresado);
+        const hora = obtenerHoraActual();
+        
+        // Determinar el estado (Entrada/Salida) y el color
+        let estadoTag;
+        let estadoTexto;
+        
+        // 1. Obtener todas las filas de la tabla
+        const filasActuales = Array.from(tablaCuerpo.children);
+        
+        // 2. Filtrar las filas de hoy que coinciden con el ID y que son Presente/Tarde (Entrada)
+        // Nota: En un sistema real, no buscarías en la tabla visible, sino en la fuente de datos.
+        const entradasExistentes = filasActuales.filter(row => {
+            const rowID = row.querySelector('td:nth-child(3)').textContent;
+            const rowEstado = row.querySelector('.tag').textContent;
+            return rowID === idIngresado && (rowEstado === 'Presente' || rowEstado === 'Tarde');
+        });
+        
+        // 3. Filtrar las salidas existentes
+         const salidasExistentes = filasActuales.filter(row => {
+            const rowID = row.querySelector('td:nth-child(3)').textContent;
+            const rowEstado = row.querySelector('.tag').textContent;
+            return rowID === idIngresado && rowEstado === 'Salida';
+        });
+
+
+        if (entradasExistentes.length > salidasExistentes.length) {
+            // Existe una entrada pero no una salida reciente. Se marca como Salida.
+            estadoTexto = 'Salida';
+            estadoTag = 'is-info';
+        } else {
+            // No hay entradas, o la última marca fue una Salida. Se marca como Entrada.
+            estadoTexto = 'Presente'; 
+            estadoTag = 'is-success';
+        }
+
+        // 4. Calcular el nuevo número de registro (recontar después de filtrar filas de ejemplo estáticas si las hay)
+        // Para simplificar, simplemente usamos el número total de filas + 1, aunque en un sistema real esto lo manejaría el backend.
+        const numRegistros = tablaCuerpo.children.length + 1;
+
+
+        // 5. Crear la nueva fila (<tr>) para la tabla
+        const nuevaFila = document.createElement('tr');
+        nuevaFila.setAttribute('data-id', idIngresado); // Añadir data-id para futuras búsquedas
+        nuevaFila.setAttribute('data-estado', estadoTexto);
+        
+        nuevaFila.innerHTML = `
+            <td>${numRegistros}</td>
+            <td>${nombre}</td>
+            <td>${idIngresado}</td>
+            <td><span class="tag ${estadoTag}">${estadoTexto}</span></td>
+            <td>${hora}</td>
+        `;
+
+        // 6. Insertar la nueva fila al inicio de la tabla (el registro más reciente primero)
+        tablaCuerpo.prepend(nuevaFila);
+
+        // 7. Limpiar el campo de entrada
+        inputID.value = '';
+        inputID.focus();
+
+        // Muestra una notificación temporal de éxito
+        alert(`✅ Asistencia de ${nombre} marcada a las ${hora} como ${estadoTexto}.`);
+        
+        // Re-numerar las filas después de insertar una nueva (opcional, para mantener el # en orden)
+        renumerarFilas();
+    });
+    
+    // Función para re-numerar las filas de la tabla
+    function renumerarFilas() {
+        const filas = tablaCuerpo.querySelectorAll('tr');
+        filas.forEach((fila, index) => {
+            // El número es la cantidad total de filas menos el índice actual
+            fila.querySelector('td:first-child').textContent = filas.length - index;
+        });
+    }
+
+    // Inicializar la numeración al cargar
+    document.addEventListener('DOMContentLoaded', renumerarFilas);
+    
+</script>
 
 </body>
 </html>
