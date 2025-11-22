@@ -2,19 +2,22 @@ from flask import request, jsonify
 import psycopg2
 from configbd import get_db_connection
 
+
+# @app.route('/tienda/registrar', methods=['POST'])
 def registrar_tienda():
     """
     Ruta para registrar una nueva tienda en la tabla tiendas.
     Acepta datos JSON por método POST.
     """
+
     # 1. Obtener datos del cuerpo (JSON)
     data = request.get_json()
 
-    # 2. Validar que se recibieron datos
+    # 2. Validar datos
     if not data:
-        return jsonify({"error": "Datos no recibidos. Envía un JSON válido."}), 400
+        return jsonify({"error": "Datos no recibidos. Asegúrate de enviar un JSON válido."}), 400
 
-    # 3. Extraer campos obligatorios
+    # 3. Extraer campos obligatorios EXACTOS como tu tabla
     try:
         nombretienda = data["nombretienda"]
         correoelectronico = data["correoelectronico"]
@@ -27,20 +30,20 @@ def registrar_tienda():
         distrito = data["distrito"]
         categoria = data["categoria"]
         pais = data["pais"]
-        terminos = data["terminos"]
+        terminos = data["terminos"]   # boolean obligatorio
 
-        # Campos opcionales
-        logo = data.get("logo")
+        # Campo opcional
+        logo = data.get("logo")  # text opcional
 
     except KeyError as e:
         return jsonify({"error": f"Falta el campo obligatorio: {e}"}), 400
 
-    # 4. Conectarse a la base de datos
+    # 4. Conexión BD
     conn = get_db_connection()
     if conn is None:
-        return jsonify({"error": "No se pudo establecer conexión a la base de datos."}), 500
+        return jsonify({"error": "No se pudo establecer conexión con la base de datos."}), 500
 
-    # 5. Ejecutar inserción
+    # 5. Insertar en BD
     try:
         cursor = conn.cursor()
 
