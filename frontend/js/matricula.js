@@ -3,11 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
 
     form.addEventListener("submit", async function (event) {
-        event.preventDefault(); // Evita recargar la página
+        event.preventDefault();
 
-        // Capturamos los valores en el mismo orden que tu formulario HTML
         const inputs = document.querySelectorAll("input, select");
 
+        // Crear objeto con los datos
         const data = {
             "Nombre_Completo": inputs[0].value,
             "Fecha_de_Nacimiento": inputs[1].value,
@@ -19,15 +19,16 @@ document.addEventListener("DOMContentLoaded", function () {
             "Colegio": inputs[7].value
         };
 
-        console.log("Datos enviados:", data); // Para depuración
+        // Convertir a parámetros de URL codificados
+        const queryString = new URLSearchParams(data).toString();
+
+        const url = `/addMatricula?${queryString}`;
+
+        console.log("URL generada:", url);
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/matricula/registrar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
+            const response = await fetch(url, {
+                method: "GET"
             });
 
             const result = await response.json();
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Error al enviar:", error);
             alert("❌ Error al conectar con la API.");
         }
+
     });
 
 });
