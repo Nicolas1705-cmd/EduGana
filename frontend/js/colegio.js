@@ -1,7 +1,7 @@
 // registro.js
 
 // URL del endpoint de Flask. Debe ser el mismo que configures en Flask.
-const URL_BACKEND = '/addColegio';  
+const URL_BACKEND = '/addColegio';
 
 document.addEventListener('DOMContentLoaded', () => {
     // ... (El código de inicialización es el mismo) ...
@@ -28,7 +28,7 @@ async function manejarEnvioFormulario(event) {
     const tipoColegio = document.getElementById('tipo_colegio').value;
     if (tipoColegio === "") {
         alert("⚠️ Por favor, seleccione un 'Tipo de Gestión'.");
-        return; 
+        return;
     }
     
     if (submitButton) {
@@ -40,7 +40,7 @@ async function manejarEnvioFormulario(event) {
         const params = new URLSearchParams({
             codigo_modular_r: document.getElementById('codigo').value,
             nombre_colegio: document.getElementById('nombre').value,
-            tipo_gestion: tipoColegio, 
+            tipo_gestion: tipoColegio,
             direccion_comple: document.getElementById('direccion').value,
             departamento: document.getElementById('departamento').value,
             provincia: document.getElementById('provincia').value,
