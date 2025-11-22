@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, request, jsonify
 from configbd import get_db_connection
 
 app = Flask(__name__)
+
 
 
 @app.route('/idiomas', methods=['POST'])
@@ -22,16 +24,16 @@ def agregar_idioma():
         nombre_idioma = data['nombre_idioma']
         codigo = data['codigo']
         
-        # Validar longitud del código (máximo 5 caracteres)
+        # Validar longitud del codigo (maximo 5 caracteres)
         if len(codigo) > 5:
             return jsonify({
-                'error': 'El código no puede tener más de 5 caracteres'
+                'error': 'El codigo no puede tener mas de 5 caracteres'
             }), 400
         
-        # Validar longitud del nombre (máximo 50 caracteres)
+        # Validar longitud del nombre (maximo 50 caracteres)
         if len(nombre_idioma) > 50:
             return jsonify({
-                'error': 'El nombre del idioma no puede tener más de 50 caracteres'
+                'error': 'El nombre del idioma no puede tener mas de 50 caracteres'
             }), 400
         
         # Conectar a la base de datos
@@ -91,7 +93,7 @@ def eliminar_idioma(idioma_id):
             cursor.close()
             conn.close()
             return jsonify({
-                'error': f'No se encontró el idioma con ID {idioma_id}'
+                'error': f'No se encontro el idioma con ID {idioma_id}'
             }), 404
         
         # Eliminar el idioma
@@ -155,3 +157,4 @@ def listar_idiomas():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+   
