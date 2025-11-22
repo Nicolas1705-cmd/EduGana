@@ -1,25 +1,20 @@
-from flask import Flask, request, jsonify
+from flask import request, jsonify
 import psycopg2
 from configbd import get_db_connection
-
-
-# ------------------------------------------
-# REGISTRAR TIENDA
-# ------------------------------------------
 
 def registrar_tienda():
     """
     Ruta para registrar una nueva tienda en la tabla tiendas.
     Acepta datos JSON por método POST.
     """
-    # 1. Obtener los datos del cuerpo de la petición (JSON)
+    # 1. Obtener datos del cuerpo (JSON)
     data = request.get_json()
 
     # 2. Validar que se recibieron datos
     if not data:
-        return jsonify({"error": "Datos no recibidos. Asegúrate de enviar un JSON."}), 400
+        return jsonify({"error": "Datos no recibidos. Envía un JSON válido."}), 400
 
-    # 3. Extraer y validar campos obligatorios
+    # 3. Extraer campos obligatorios
     try:
         nombretienda = data["nombretienda"]
         correoelectronico = data["correoelectronico"]
@@ -40,18 +35,18 @@ def registrar_tienda():
     except KeyError as e:
         return jsonify({"error": f"Falta el campo obligatorio: {e}"}), 400
 
-    # 4. Establecer conexión a la base de datos
+    # 4. Conectarse a la base de datos
     conn = get_db_connection()
     if conn is None:
-        return jsonify({"error": "No se pudo establecer conexión con la base de datos."}), 500
+        return jsonify({"error": "No se pudo establecer conexión a la base de datos."}), 500
 
-    # 5. Ejecutar la inserción
+    # 5. Ejecutar inserción
     try:
         cursor = conn.cursor()
 
         insert_query = """
         INSERT INTO public.tiendas (
-            nombretienda, correoelectronico, contrasena, telefono, 
+            nombretienda, correoelectronico, contrasena, telefono,
             ruc, regimen, departamento, provincia, distrito,
             categoria, logo, pais, terminos
         ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -72,7 +67,7 @@ def registrar_tienda():
         return jsonify({
             "mensaje": "Tienda registrada exitosamente.",
             "id_tienda": nuevo_id
-        }), 201  # 201 Created
+        }), 201
 
     except psycopg2.Error as db_error:
         conn.rollback()
