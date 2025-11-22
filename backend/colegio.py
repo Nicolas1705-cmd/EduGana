@@ -10,19 +10,8 @@ def registrar_colegio():
 
     data = request.get_json()
 
-    # ❗ No incluimos id_colegio porque se AUTOGENERA
-    campos_requeridos = [
-        "codigo_modular_r",
-        "nombre_colegio",
-        "tipo_gestion",
-        "direccion_comple",
-        "departamento",
-        "provincia",
-        "distrito",
-        "telefono",
-        "email_institucion",
-        "nombre_director"
-    ]
+    # Ahora SOLO id_colegio es obligatorio
+    campos_requeridos = ["id_colegio"]
 
     campos_faltantes = [c for c in campos_requeridos if c not in data]
 
@@ -38,8 +27,10 @@ def registrar_colegio():
 
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
+        # Todos los demás campos ahora pueden ser NULL
         query = """
             INSERT INTO colegios (
+                id_colegio,
                 codigo_modular_r,
                 nombre_colegio,
                 tipo_gestion,
@@ -51,28 +42,31 @@ def registrar_colegio():
                 email_institucion,
                 nombre_director
             )
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            VALUES (
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, %s, %s
+            )
             RETURNING id_colegio;
         """
 
         valores = (
-            data["codigo_modular_r"],
-            data["nombre_colegio"],
-            data["tipo_gestion"],
-            data["direccion_comple"],
-            data["departamento"],
-            data["provincia"],
-            data["distrito"],
-            data["telefono"],
-            data["email_institucion"],
-            data["nombre_director"]
+            data.get("id_colegio"),
+            data.get("codigo_modular_r"),
+            data.get("nombre_colegio"),
+            data.get("tipo_gestion"),
+            data.get("direccion_comple"),
+            data.get("departamento"),
+            data.get("provincia"),
+            data.get("distrito"),
+            data.get("telefono"),
+            data.get("email_institucion"),
+            data.get("nombre_director")
         )
 
         cur.execute(query, valores)
         nuevo = cur.fetchone()
 
         conn.commit()
-
         cur.close()
         conn.close()
 
