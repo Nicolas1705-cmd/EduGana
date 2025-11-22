@@ -1,132 +1,73 @@
-# app.py
-import random
-from datetime import datetime
+// registro.js
 
-from flask import Flask, jsonify, request
-from flask_cors import CORS 
-# Aunque no se usen en este endpoint, se mantienen si los necesitas
-from flask_bcrypt import Bcrypt 
-from flask_jwt_extended import JWTManager, create_access_token 
+const URL_BACKEND = 'addColegio';
+const URL_BASE = '/'; // Usar URL absoluta para evitar problemas CORS/relativas
 
-import psycopg2
-from psycopg2.extras import RealDictCursor
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+    // ... (Inicialización) ...
+    if (form) {
+        form.addEventListener('submit', manejarEnvioFormulario);
+    }
+});
 
-# Asegúrate de que este archivo exista y contenga get_db_connection
-from configbd import get_db_connection 
+async function manejarEnvioFormulario(event) {
+    event.preventDefault();
 
-
-# --- CONFIGURACIÓN DE FLASK ---
-app = Flask(__name__)
-# Habilitar CORS para permitir la conexión desde el frontend
-CORS(app) 
-
-# Configuración de JWT y Bcrypt (solo si tienes otros endpoints de autenticación)
-app.config["JWT_SECRET_KEY"] = "super-secreto-cambiar-en-produccion" 
-bcrypt = Bcrypt(app)
-jwt = JWTManager(app)
-
-# --- FUNCIÓN DE UTILIDAD (Generación de ID) ---
-def generar_id_colegio():
-    Genera un ID único para el colegio (simulación).
-    year = datetime.now().year
-    random_num = random.randint(1000, 9999)
-    return f"CLG-{year}-{random_num}"
-
-# --- FUNCIÓN DE REGISTRO ADAPTADA A GET ---
-def registrar_colegio():
+    const submitButton = event.target.querySelector('button[type="submit"]');
+    const tipoColegio = document.getElementById('tipo_colegio').value;
+    if (tipoColegio === "") {
+        alert("⚠️ Por favor, seleccione un 'Tipo de Gestión'.");
+        return;
+    }
     
-    # 1. OBTENER LOS DATOS DE LA URL (request.args)
-    # ESTO ES CRUCIAL PARA EL MÉTODO GET
-    data = request.args
+    if (submitButton) {
+        submitButton.classList.add('is-loading');
+    }
 
-    # 2. Validar campos requeridos
-    campos_requeridos = [
-        "codigo_modular_r", "nombre_colegio", "tipo_gestion", 
-        "direccion_comple", "departamento", "provincia", 
-        "distrito", "email_institucion", "nombre_director"
-    ]
+    try {
+        // CONSTRUCCIÓN DE LA URL CON PARÁMETROS DE CONSULTA (QUERY STRING)
+        const params = new URLSearchParams({
+            codigo_modular_r: document.getElementById('codigo').value,
+            nombre_colegio: document.getElementById('nombre').value,
+            tipo_gestion: tipoColegio,
+            direccion_comple: document.getElementById('direccion').value,
+            departamento: document.getElementById('departamento').value,
+            provincia: document.getElementById('provincia').value,
+            distrito: document.getElementById('distrito').value,
+            telefono: document.getElementById('telefono').value.trim(),
+            email_institucion: document.getElementById('email').value,
+            nombre_director: document.getElementById('director').value
+        });
 
-    campos_faltantes = [c for c in campos_requeridos if not data.get(c)]
-
-    if campos_faltantes:
-        return jsonify({
-            "error": "Faltan campos obligatorios",
-            "detalles": f"Los campos requeridos son: {', '.join(campos_faltantes)}."
-        }), 400
-
-    # 3. Generar ID en el backend
-    new_id = generar_id_colegio() 
-
-    conn = None 
-    try:
-        conn = get_db_connection()
-        if conn is None:
-            return jsonify({"error": "No se pudo conectar a la base de datos"}), 500
-
-        cur = conn.cursor(cursor_factory=RealDictCursor)
-
-        query = 
-            INSERT INTO colegios (
-                id_colegio, codigo_modular_r, nombre_colegio, tipo_gestion,
-                direccion_comple, departamento, provincia, distrito,
-                telefono, email_institucion, nombre_director
-            )
-            VALUES (
-                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-            )
-            RETURNING id_colegio;
+        // URL FINAL: http://127.0.0.1:5000/addColegio?codigo_modular_r=...
+        const urlFinal = `${URL_BASE}${URL_BACKEND}?${params.toString()}`;
         
+        console.log("URL de la petición (GET):", urlFinal);
 
-        # Preparamos los valores.
-        valores = (
-            new_id,
-            data.get("codigo_modular_r"),
-            data.get("nombre_colegio"),
-            data.get("tipo_gestion"),
-            data.get("direccion_comple"),
-            data.get("departamento"),
-            data.get("provincia"),
-            data.get("distrito"),
-            # Convierte string vacío ('' o None) a None para inserción en DB
-            data.get("telefono") or None, 
-            data.get("email_institucion"),
-            data.get("nombre_director")
-        )
+        const respuesta = await fetch(urlFinal, {
+            method: 'GET', // MÉTODO GET
+        });
 
-        cur.execute(query, valores)
-        nuevo = cur.fetchone()
+        if (respuesta.ok) {
+            const resultado = await respuesta.json();
+            alert(`✅ Registro (GET) exitoso!\nID Generado: ${resultado.id_colegio}\n${resultado.mensaje}`);
+            event.target.reset();
+            const idColegioInput = document.getElementById('id_colegio');
+            if (idColegioInput) {
+                idColegioInput.value = resultado.id_colegio;
+            }
+        } else {
+            const errorData = await respuesta.json();
+            throw new Error(errorData.error || `Error HTTP: ${respuesta.status}`);
+        }
 
-        conn.commit()
-        cur.close()
-        conn.close()
-
-        # Respuesta exitosa
-        return jsonify({
-            "mensaje": "Colegio registrado exitosamente usando GET",
-            "id_colegio": nuevo["id_colegio"]
-        }), 201
-
-    except psycopg2.IntegrityError as e:
-        if conn:
-            conn.rollback()
-            conn.close()
-        print("❌ Error de integridad de DB:", e)
-        return jsonify({"error": "Error: El Código Modular/RUC o ID ya existe."}), 409
-    
-    except Exception as e:
-        if conn:
-            conn.close()
-        print("❌ Error general al registrar:", e)
-        return jsonify({"error": "Error interno del servidor", "detalles": str(e)}), 500
-
-# --- MAPEO DE LA RUTA (APIS) ---
-# ESTO ES CRUCIAL: La ruta DEBE aceptar el método GET
-app.add_url_rule(
-    '/addColegio',             
-    view_func=registrar_colegio, 
-    methods=['GET']         
-)
-
-# --- EJECUCIÓN DEL SERVIDOR ---
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    } catch (error) {
+        console.error('❌ Error en la conexión/registro:', error);
+        alert(`Error al registrar el colegio:\n${error.message}`);
+    } finally {
+        if (submitButton) {
+            submitButton.classList.remove('is-loading');
+        }
+    }
+}

@@ -1,44 +1,35 @@
-# app.py
-
+# app.py (SOLUCIONADO para GET)
+import random
+from datetime import datetime
 from flask import Flask, jsonify, request
 from flask_cors import CORS 
-# Aunque no los uses en este endpoint, los mantengo por tu código original
-from flask_bcrypt import Bcrypt 
-from flask_jwt_extended import JWTManager, create_access_token 
-
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-import random
-from datetime import datetime
-
-# Asume que configbd.py está en el mismo directorio
+# Asume que configbd.py y get_db_connection están correctamente definidos
 from configbd import get_db_connection 
 
 
 # --- CONFIGURACIÓN DE FLASK ---
 app = Flask(__name__)
-# Habilitar CORS para permitir la conexión desde el frontend
+# Habilitar CORS es crucial si el HTML y Flask están en diferentes puertos/hosts
 CORS(app) 
 
-# Inicializar componentes (necesarios si usas otros endpoints de auth)
-app.config["JWT_SECRET_KEY"] = "super-secreto-cambiar-en-produccion" 
-bcrypt = Bcrypt(app)
-jwt = JWTManager(app)
-
-# --- FUNCIÓN DE UTILIDAD (Simulación de ID) ---
+# --- FUNCIÓN DE UTILIDAD (Generación de ID) ---
 def generar_id_colegio():
-    """Genera un ID único para el colegio (simulación si no usas SERIAL en DB)."""
+    """Genera un ID único para el colegio (simulación)."""
     year = datetime.now().year
     random_num = random.randint(1000, 9999)
     return f"CLG-{year}-{random_num}"
 
-# --- FUNCIÓN DE REGISTRO CORREGIDA ---
+# --- FUNCIÓN DE REGISTRO ADAPTADA A GET ---
 def registrar_colegio():
     
-    data = request.get_json()
+    # 1. OBTENER LOS DATOS DE LA URL (query parameters)
+    # ESTO EVITA EL ERROR 415, YA QUE NO ESPERA JSON EN EL CUERPO
+    data = request.args
 
-    # 1. Validar campos requeridos
+    # 2. Validar campos requeridos
     campos_requeridos = [
         "codigo_modular_r", "nombre_colegio", "tipo_gestion", 
         "direccion_comple", "departamento", "provincia", 
@@ -53,14 +44,12 @@ def registrar_colegio():
             "detalles": f"Los campos requeridos son: {', '.join(campos_faltantes)}."
         }), 400
 
-    # 2. Generar ID en el backend
     new_id = generar_id_colegio() 
-
-    conn = None # Inicializar conexión a None
+    conn = None 
+    
     try:
         conn = get_db_connection()
-        if conn is None:
-            return jsonify({"error": "No se pudo conectar a la base de datos"}), 500
+        # ... (Tu lógica de conexión a DB) ...
 
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
@@ -70,13 +59,11 @@ def registrar_colegio():
                 direccion_comple, departamento, provincia, distrito,
                 telefono, email_institucion, nombre_director
             )
-            VALUES (
-                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING id_colegio;
         """
 
-        # Preparamos los valores.
+        # Preparamos los valores directamente desde request.args
         valores = (
             new_id,
             data.get("codigo_modular_r"),
@@ -86,43 +73,35 @@ def registrar_colegio():
             data.get("departamento"),
             data.get("provincia"),
             data.get("distrito"),
-            data.get("telefono") or None, # String vacío se convierte a NULL
+            data.get("telefono") or None, 
             data.get("email_institucion"),
             data.get("nombre_director")
         )
 
         cur.execute(query, valores)
         nuevo = cur.fetchone()
-
         conn.commit()
-        cur.close()
-        conn.close()
 
         return jsonify({
-            "mensaje": "Colegio registrado exitosamente",
+            "mensaje": "Colegio registrado exitosamente usando GET",
             "id_colegio": nuevo["id_colegio"]
         }), 201
 
     except psycopg2.IntegrityError as e:
-        # Manejar error de duplicidad (ej. código modular/RUC ya existe)
-        if conn:
-            conn.rollback()
-            conn.close()
-        print("❌ Error de integridad de DB:", e)
+        if conn: conn.rollback(); conn.close()
         return jsonify({"error": "Error: El Código Modular/RUC o ID ya existe."}), 409
     
     except Exception as e:
-        # Error general
-        if conn:
-            conn.close()
+        if conn: conn.close()
         print("❌ Error general al registrar:", e)
         return jsonify({"error": "Error interno del servidor", "detalles": str(e)}), 500
 
-# --- MAPEO DE LA RUTA CORREGIDO (APIS) ---
+# --- MAPEO DE LA RUTA (APIS) ---
+# ESTO ES CRUCIAL: El método mapeado DEBE ser GET
 app.add_url_rule(
-    '/colegios',             # La URL debe coincidir con URL_BACKEND en JS
-    view_func=registrar_colegio, # Usamos la función corregida
-    methods=['POST']         # Debe ser POST para recibir datos
+    '/addColegio',             
+    view_func=registrar_colegio, 
+    methods=['GET']         
 )
 
 # --- EJECUCIÓN DEL SERVIDOR ---
