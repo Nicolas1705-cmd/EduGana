@@ -4,10 +4,100 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EduGana - Listar Cupones</title>
+
+  <!-- Bulma CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+  <!-- FontAwesome para iconos -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
   <style>
+    /* ======= ENCABEZADO (Header) ======= */
+    .page-header {
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      padding: 2rem;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .page-header .title,
+    .page-header .subtitle {
+      color: white !important;
+    }
+
+    .page-header .icon {
+      color: white;
+    }
+
+    .page-header .icon-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .page-header .icon-text .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ======= RESPONSIVE ======= */
+    @media screen and (max-width: 768px) {
+      .page-header .level {
+        display: block !important;
+        text-align: center;
+      }
+
+      .page-header .level-left,
+      .page-header .level-right {
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .page-header .level-item {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-header .title.is-2 {
+        font-size: 1.3rem;
+      }
+
+      .page-header .subtitle.is-5 {
+        font-size: 0.95rem;
+      }
+
+      .page-header {
+        padding: 1.25rem 1rem;
+      }
+
+      .page-header .icon-text {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    /* ======= CUERPO ======= */
     body {
       background-color: #f8fafc;
+    }
+
+    .list-view {
+      background-color: #e3f2fd;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .list-view h2 {
+      color: #0d47a1;
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin: 0;
     }
 
     .coupon-card {
@@ -21,6 +111,7 @@
       background-color: #fff;
       transition: transform 0.2s;
     }
+
     .coupon-card:hover {
       transform: translateY(-4px);
     }
@@ -37,54 +128,38 @@
       margin: 0.3rem 0;
     }
 
-    /* Cabecera principal */
-    .header-box {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .header-box img {
-      width: 90px;
-      margin-bottom: 10px;
-    }
-    .header-box .title {
-      font-size: 3rem;
-      color: #3273dc;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    /* Vista para listar cupones */
-    .list-view {
-      background-color: #e3f2fd;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
-    }
-    .list-view h2 {
-      color: #0d47a1;
-      font-weight: 600;
-      font-size: 1.4rem;
-      margin: 0;
-    }
-
     .tag {
       margin-left: 5px;
     }
   </style>
 </head>
+
 <body>
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <div>
+            <h1 class="title is-2">
+              <span class="icon-text">
+                <span class="icon mr-3">
+                  <i class="fas fa-gift fa-lg"></i>
+                </span>
+                <span>EduGana</span>
+              </span>
+            </h1>
+            <p class="subtitle is-5 mt-2">Tu plataforma de premios y descuentos educativos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
   <section class="section">
     <div class="container">
-
-      <!-- Encabezado -->
-      <div class="header-box">
-        <img src="https://cdn-icons-png.flaticon.com/512/685/685655.png" alt="EduGana Logo">
-        <h1 class="title">EduGana</h1>
-      </div>
-
-      <!-- Vista de Listar Cupones -->
-      <div class="list-view has-text-centered">
+      <div class="list-view">
         <h2>📜 Listar Cupones</h2>
       </div>
 
@@ -144,12 +219,11 @@
         </div>
       </div>
 
-      <!-- Pie -->
       <div class="has-text-centered mt-5">
         <button class="button is-primary is-light is-medium">Ver más cupones</button>
       </div>
-
     </div>
   </section>
 </body>
 </html>
+

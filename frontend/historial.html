@@ -143,6 +143,28 @@
             text-align: right;
         }
 
+        /* Indicador de carga */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3273dc;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Media Queries específicas para el encabezado */
         @media screen and (max-width: 768px) {
             .page-header .level {
@@ -244,7 +266,7 @@
                     </div>
                     <div class="level-right">
                         <div class="level-item">
-                            <div class="coin-icon">
+                            <div class="coin-icon" aria-hidden="true">
                                 <i class="fas fa-coins"></i>
                             </div>
                         </div>
@@ -258,31 +280,38 @@
                 <div class="content-wrapper">
                     <!-- FILTROS DESKTOP -->
                     <div class="is-hidden-touch mb-5">
-                        <form>
+                        <form id="filtrosDesktop">
                             <div class="columns is-vcentered">
                                 <div class="column is-3">
+                                    <a href="inicio.html" class="button is-light is-small mb-2" title="Ir al inicio" aria-label="Ir al inicio">
+                                        <span class="icon"><i class="fas fa-home"></i></span>
+                                        <span>Inicio</span>
+                                    </a>
                                     <label class="label is-size-7">Inicio (Fecha)</label>
                                     <div class="control">
-                                        <input class="input is-small" type="date" placeholder="dd/mm/aaaa">
+                                        <input class="input is-small" type="date" id="fechaInicioDesktop" placeholder="dd/mm/aaaa">
                                     </div>
                                 </div>
                                 <div class="column is-3">
                                     <label class="label is-size-7">Fin (Fecha)</label>
                                     <div class="control">
-                                        <input class="input is-small" type="date" placeholder="dd/mm/aaaa">
+                                        <input class="input is-small" type="date" id="fechaFinDesktop" placeholder="dd/mm/aaaa">
                                     </div>
                                 </div>
                                 <div class="column is-3">
                                     <label class="label is-size-7">Colegio (Filtro)</label>
                                     <div class="control">
-                                        <input class="input is-small" type="text" placeholder="Buscar Colegio...">
+                                        <input class="input is-small" type="text" id="colegioDesktop" placeholder="Buscar Colegio...">
                                     </div>
                                 </div>
                                 <div class="column is-3">
                                     <label class="label is-size-7 has-text-white-ter">Buscar</label>
                                     <div class="control">
-                                        <button class="button is-primary is-small is-fullwidth">
+                                        <button type="submit" class="button is-primary is-small is-fullwidth">
                                             <i class="fas fa-search mr-1"></i> Buscar
+                                        </button>
+                                        <button type="button" onclick="limpiarFiltros()" class="button is-light is-small is-fullwidth mt-2">
+                                            <i class="fas fa-times mr-1"></i> Limpiar
                                         </button>
                                     </div>
                                 </div>
@@ -292,29 +321,36 @@
 
                     <!-- FILTROS MÓVIL -->
                     <div class="is-hidden-desktop mb-5">
-                        <form>
+                        <a href="inicio.html" class="button is-light is-small mb-3" title="Ir al inicio" aria-label="Ir al inicio">
+                            <span class="icon"><i class="fas fa-home"></i></span>
+                            <span>Inicio</span>
+                        </a>
+                        <form id="filtrosMovil">
                             <div class="field">
                                 <label class="label is-size-7">Inicio (Fecha)</label>
                                 <div class="control">
-                                    <input class="input is-small" type="date">
+                                    <input class="input is-small" type="date" id="fechaInicioMovil">
                                 </div>
                             </div>
                             <div class="field">
                                 <label class="label is-size-7">Fin (Fecha)</label>
                                 <div class="control">
-                                    <input class="input is-small" type="date">
+                                    <input class="input is-small" type="date" id="fechaFinMovil">
                                 </div>
                             </div>
                             <div class="field">
                                 <label class="label is-size-7">Colegio (Filtro)</label>
                                 <div class="control">
-                                    <input class="input is-small" type="text" placeholder="Buscar Colegio...">
+                                    <input class="input is-small" type="text" id="colegioMovil" placeholder="Buscar Colegio...">
                                 </div>
                             </div>
                             <div class="field">
                                 <div class="control">
-                                    <button class="button is-primary is-small is-fullwidth">
+                                    <button type="submit" class="button is-primary is-small is-fullwidth">
                                         <i class="fas fa-search mr-1"></i> Buscar
+                                    </button>
+                                    <button type="button" onclick="limpiarFiltros()" class="button is-light is-small is-fullwidth mt-2">
+                                        <i class="fas fa-times mr-1"></i> Limpiar
                                     </button>
                                 </div>
                             </div>
@@ -335,52 +371,19 @@
                                         <th>Colegio</th> 
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tablaAsistenciasDesktop">
                                     <tr>
-                                        <td>15432</td>
-                                        <td>Juan Pérez</td>
-                                        <td>2025-11-06</td>
-                                        <td>08:00:15</td>
-                                        <td><span class="tag is-success is-light">Entrada</span></td>
-                                        <td><strong>San José Obrero</strong></td> 
-                                    </tr>
-                                    <tr>
-                                        <td>15433</td>
-                                        <td>Juan Pérez</td>
-                                        <td>2025-11-06</td>
-                                        <td>17:01:30</td>
-                                        <td><span class="tag is-info is-light">Salida</span></td>
-                                        <td><strong>San José Obrero</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>15434</td>
-                                        <td>Ana Gómez</td>
-                                        <td>2025-11-07</td>
-                                        <td>08:35:45</td>
-                                        <td><span class="tag is-success is-light">Entrada</span></td>
-                                        <td><strong>Santa Úrsula</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>---</td>
-                                        <td>Ana Gómez</td>
-                                        <td>2025-11-08</td>
-                                        <td>- - -</td>
-                                        <td><span class="tag is-danger is-light">Ausente</span></td>
-                                        <td><strong>Santa Úrsula</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>15435</td>
-                                        <td>Luis Torres</td>
-                                        <td>2025-11-09</td>
-                                        <td>15:45:00</td>
-                                        <td><span class="tag is-info is-light">Salida</span></td>
-                                        <td><strong>Teresa de la Cuna</strong></td>
+                                        <td colspan="6" class="has-text-centered">
+                                            <div class="loading-spinner">
+                                                <div class="spinner"></div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="6"> 
-                                            <p class="has-text-right is-size-7">Datos actualizados al 07 de Noviembre de 2025.</p>
+                                            <p class="has-text-right is-size-7" id="fechaActualizacion">Cargando datos...</p>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -388,168 +391,345 @@
                         </div>
 
                         <!-- PAGINACIÓN -->
-                        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-                            <a class="pagination-previous" disabled>Anterior</a>
-                            <a class="pagination-next">Siguiente</a>
-                            <ul class="pagination-list">
-                                <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
-                                <li><span class="pagination-ellipsis">&hellip;</span></li>
-                                <li><a class="pagination-link is-current is-primary" aria-label="Page 46" aria-current="page">46</a></li>
-                                <li><span class="pagination-ellipsis">&hellip;</span></li>
-                                <li><a class="pagination-link" aria-label="Goto page 86">86</a></li>
+                        <nav class="pagination is-centered" role="navigation" aria-label="pagination" id="paginacionDesktop" style="display: none;">
+                            <a class="pagination-previous" id="btnAnterior">Anterior</a>
+                            <a class="pagination-next" id="btnSiguiente">Siguiente</a>
+                            <ul class="pagination-list" id="listaPaginas">
                             </ul>
                         </nav>
                     </div>
 
                     <hr>
 
-                    <!-- TARJETAS MÓVIL SIMPLIFICADAS -->
+                    <!-- TARJETAS MÓVIL -->
                     <div class="is-hidden-desktop">
                         <h2 class="title is-5">Resumen de Registros</h2>
-                        
-                        <!-- Tarjeta 1: Entrada -->
-                        <div class="mobile-card">
-                            <div class="mobile-card-date">
-                                <i class="fas fa-calendar-alt"></i> 2025-11-06
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Nombres:</span>
-                                <span class="mobile-card-value">Juan Pérez</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">ID.Reg:</span>
-                                <span class="mobile-card-value">15432</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Movimiento:</span>
-                                <span class="mobile-card-value"><span class="tag is-success">Entrada</span></span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Hora:</span>
-                                <span class="mobile-card-value">08:00:15</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Colegio:</span>
-                                <span class="mobile-card-value">San José Obrero</span>
-                            </div>
-                        </div>
-
-                        <!-- Tarjeta 2: Salida -->
-                        <div class="mobile-card">
-                            <div class="mobile-card-date">
-                                <i class="fas fa-calendar-alt"></i> 2025-11-06
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Nombres:</span>
-                                <span class="mobile-card-value">Juan Pérez</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">ID.Reg:</span>
-                                <span class="mobile-card-value">15433</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Movimiento:</span>
-                                <span class="mobile-card-value"><span class="tag is-info">Salida</span></span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Hora:</span>
-                                <span class="mobile-card-value">17:01:30</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Colegio:</span>
-                                <span class="mobile-card-value">San José Obrero</span>
-                            </div>
-                        </div>
-
-                        <!-- Tarjeta 3: Entrada -->
-                        <div class="mobile-card">
-                            <div class="mobile-card-date">
-                                <i class="fas fa-calendar-alt"></i> 2025-11-07
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Nombres:</span>
-                                <span class="mobile-card-value">Ana Gómez</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">ID.Reg:</span>
-                                <span class="mobile-card-value">15434</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Movimiento:</span>
-                                <span class="mobile-card-value"><span class="tag is-success">Entrada</span></span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Hora:</span>
-                                <span class="mobile-card-value">08:35:45</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Colegio:</span>
-                                <span class="mobile-card-value">Santa Úrsula</span>
-                            </div>
-                        </div>
-
-                        <!-- Tarjeta 4: Ausente -->
-                        <div class="mobile-card">
-                            <div class="mobile-card-date">
-                                <i class="fas fa-calendar-alt"></i> 2025-11-08
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Nombres:</span>
-                                <span class="mobile-card-value">Ana Gómez</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">ID.Reg:</span>
-                                <span class="mobile-card-value">---</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Movimiento:</span>
-                                <span class="mobile-card-value"><span class="tag is-danger">Ausente</span></span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Hora:</span>
-                                <span class="mobile-card-value">- - -</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Colegio:</span>
-                                <span class="mobile-card-value">Santa Úrsula</span>
-                            </div>
-                        </div>
-
-                        <!-- Tarjeta 5: Salida -->
-                        <div class="mobile-card">
-                            <div class="mobile-card-date">
-                                <i class="fas fa-calendar-alt"></i> 2025-11-09
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Nombres:</span>
-                                <span class="mobile-card-value">Luis Torres</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">ID.Reg:</span>
-                                <span class="mobile-card-value">15435</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Movimiento:</span>
-                                <span class="mobile-card-value"><span class="tag is-info">Salida</span></span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Hora:</span>
-                                <span class="mobile-card-value">15:45:00</span>
-                            </div>
-                            <div class="mobile-card-row">
-                                <span class="mobile-card-label">Colegio:</span>
-                                <span class="mobile-card-value">Teresa de la Cuna</span>
+                        <div id="tarjetasAsistenciasMovil">
+                            <div class="loading-spinner">
+                                <div class="spinner"></div>
                             </div>
                         </div>
                         
-                        <div class="has-text-centered mt-4">
-                            <button class="button is-info is-outlined is-fullwidth is-small">Cargar Registros Anteriores</button>
+                        <div class="has-text-centered mt-4" id="btnCargarMas" style="display: none;">
+                            <button class="button is-info is-outlined is-fullwidth is-small" onclick="cargarMasRegistros()">
+                                Cargar Más Registros
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        // ========================================
+        // CONFIGURACIÓN DE LA API
+        // ========================================
+        const API_URL = 'http://localhost:5000';
+        let asistenciasGlobales = [];
+        let asistenciasFiltradas = [];
+        let paginaActual = 1;
+        const registrosPorPagina = 10;
+
+        // ========================================
+        // FUNCIÓN PRINCIPAL: CARGAR ASISTENCIAS
+        // ========================================
+        async function cargarAsistencias() {
+            try {
+                mostrarCargando(true);
+                
+                const response = await fetch(`${API_URL}/asistencias`);
+                
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                asistenciasGlobales = data.data || data;
+                asistenciasFiltradas = [...asistenciasGlobales];
+                
+                mostrarAsistencias();
+                actualizarFechaActualizacion();
+                
+            } catch (error) {
+                console.error('Error al cargar asistencias:', error);
+                mostrarError(`No se pudieron cargar las asistencias. ${error.message}`);
+            } finally {
+                mostrarCargando(false);
+            }
+        }
+
+        // ========================================
+        // MOSTRAR ASISTENCIAS EN TABLA Y TARJETAS
+        // ========================================
+        function mostrarAsistencias() {
+            const inicio = (paginaActual - 1) * registrosPorPagina;
+            const fin = inicio + registrosPorPagina;
+            const asistenciasPagina = asistenciasFiltradas.slice(inicio, fin);
+
+            // TABLA DESKTOP
+            const tbodyDesktop = document.getElementById('tablaAsistenciasDesktop');
+            tbodyDesktop.innerHTML = '';
+            
+            if (asistenciasPagina.length === 0) {
+                tbodyDesktop.innerHTML = '<tr><td colspan="6" class="has-text-centered">No hay registros de asistencia</td></tr>';
+            } else {
+                asistenciasPagina.forEach(asistencia => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${asistencia.id || '---'}</td>
+                        <td>${asistencia.nombre_estudiante || 'Sin nombre'}</td>
+                        <td>${formatearFecha(asistencia.fecha)}</td>
+                        <td>${asistencia.hora_entrada || '---'}</td>
+                        <td>${getTagEstado(asistencia.asistencia)}</td>
+                        <td><strong>${asistencia.colegio || 'Sin especificar'}</strong></td>
+                    `;
+                    tbodyDesktop.appendChild(tr);
+                });
+            }
+
+            // TARJETAS MÓVIL
+            const contenedorMovil = document.getElementById('tarjetasAsistenciasMovil');
+            contenedorMovil.innerHTML = '';
+            
+            if (asistenciasPagina.length === 0) {
+                contenedorMovil.innerHTML = '<p class="has-text-centered has-text-grey">No hay registros para mostrar</p>';
+            } else {
+                asistenciasPagina.forEach(asistencia => {
+                    const card = crearTarjetaMovil(asistencia);
+                    contenedorMovil.insertAdjacentHTML('beforeend', card);
+                });
+            }
+
+            // PAGINACIÓN
+            mostrarPaginacion();
+        }
+
+        // ========================================
+        // CREAR TARJETA MÓVIL
+        // ========================================
+        function crearTarjetaMovil(asistencia) {
+            return `
+                <div class="mobile-card">
+                    <div class="mobile-card-date">
+                        <i class="fas fa-calendar-alt"></i> ${formatearFecha(asistencia.fecha)}
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Nombres:</span>
+                        <span class="mobile-card-value">${asistencia.nombre_estudiante || 'Sin nombre'}</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">ID.Reg:</span>
+                        <span class="mobile-card-value">${asistencia.estudiante_id || '---'}</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Movimiento:</span>
+                        <span class="mobile-card-value">${getTagEstado(asistencia.asistencia)}</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Hora:</span>
+                        <span class="mobile-card-value">${asistencia.hora_entrada || '---'}</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Colegio:</span>
+                        <span class="mobile-card-value">${asistencia.colegio || 'Sin especificar'}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ========================================
+        // FORMATEAR FECHA
+        // ========================================
+        function formatearFecha(fecha) {
+            if (!fecha) return '---';
+            const date = new Date(fecha + 'T00:00:00');
+            const opciones = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            return date.toLocaleDateString('es-PE', opciones);
+        }
+
+        // ========================================
+        // OBTENER TAG DE ESTADO
+        // ========================================
+        function getTagEstado(estado) {
+            const estados = {
+                'Entrada': '<span class="tag is-success is-light">Entrada</span>',
+                'Salida': '<span class="tag is-info is-light">Salida</span>',
+                'Ausente': '<span class="tag is-danger is-light">Ausente</span>',
+                'Presente': '<span class="tag is-success is-light">Presente</span>'
+            };
+            return estados[estado] || '<span class="tag is-light">---</span>';
+        }
+
+        // ========================================
+        // FILTRAR ASISTENCIAS
+        // ========================================
+        function aplicarFiltros(event) {
+            event.preventDefault();
+            
+            const esMovil = window.innerWidth < 1024;
+            const fechaInicio = document.getElementById(esMovil ? 'fechaInicioMovil' : 'fechaInicioDesktop').value;
+            const fechaFin = document.getElementById(esMovil ? 'fechaFinMovil' : 'fechaFinDesktop').value;
+            const colegio = document.getElementById(esMovil ? 'colegioMovil' : 'colegioDesktop').value.toLowerCase();
+
+            asistenciasFiltradas = asistenciasGlobales.filter(asistencia => {
+                let cumpleFecha = true;
+                let cumpleColegio = true;
+
+                // Filtro por fecha de inicio
+                if (fechaInicio && asistencia.fecha) {
+                    cumpleFecha = asistencia.fecha >= fechaInicio;
+                }
+
+                // Filtro por fecha fin
+                if (fechaFin && asistencia.fecha && cumpleFecha) {
+                    cumpleFecha = asistencia.fecha <= fechaFin;
+                }
+
+                // Filtro por colegio
+                if (colegio && asistencia.colegio) {
+                    cumpleColegio = asistencia.colegio.toLowerCase().includes(colegio);
+                }
+
+                return cumpleFecha && cumpleColegio;
+            });
+
+            paginaActual = 1;
+            mostrarAsistencias();
+        }
+
+        // ========================================
+        // LIMPIAR FILTROS
+        // ========================================
+        function limpiarFiltros() {
+            // Desktop
+            document.getElementById('fechaInicioDesktop').value = '';
+            document.getElementById('fechaFinDesktop').value = '';
+            document.getElementById('colegioDesktop').value = '';
+            
+            // Móvil
+            document.getElementById('fechaInicioMovil').value = '';
+            document.getElementById('fechaFinMovil').value = '';
+            document.getElementById('colegioMovil').value = '';
+
+            asistenciasFiltradas = [...asistenciasGlobales];
+            paginaActual = 1;
+            mostrarAsistencias();
+        }
+
+        // ========================================
+        // PAGINACIÓN
+        // ========================================
+        function mostrarPaginacion() {
+            const totalPaginas = Math.ceil(asistenciasFiltradas.length / registrosPorPagina);
+            const paginacionDesktop = document.getElementById('paginacionDesktop');
+            
+            if (totalPaginas <= 1) {
+                paginacionDesktop.style.display = 'none';
+                return;
+            }
+
+            paginacionDesktop.style.display = 'flex';
+
+            const btnAnterior = document.getElementById('btnAnterior');
+            const btnSiguiente = document.getElementById('btnSiguiente');
+            const listaPaginas = document.getElementById('listaPaginas');
+
+            // Botón anterior
+            if (paginaActual === 1) {
+                btnAnterior.setAttribute('disabled', 'disabled');
+            } else {
+                btnAnterior.removeAttribute('disabled');
+                btnAnterior.onclick = () => cambiarPagina(paginaActual - 1);
+            }
+
+            // Botón siguiente
+            if (paginaActual === totalPaginas) {
+                btnSiguiente.setAttribute('disabled', 'disabled');
+            } else {
+                btnSiguiente.removeAttribute('disabled');
+                btnSiguiente.onclick = () => cambiarPagina(paginaActual + 1);
+            }
+
+            // Lista de páginas
+            listaPaginas.innerHTML = '';
+            for (let i = 1; i <= totalPaginas; i++) {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.classList.add('pagination-link');
+                if (i === paginaActual) {
+                    a.classList.add('is-current');
+                }
+                a.textContent = i;
+                a.onclick = () => cambiarPagina(i);
+                li.appendChild(a);
+                listaPaginas.appendChild(li);
+            }
+        }
+
+        function cambiarPagina(nuevaPagina) {
+            paginaActual = nuevaPagina;
+            mostrarAsistencias();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ========================================
+        // MOSTRAR CARGANDO
+        // ========================================
+        function mostrarCargando(mostrar) {
+            // Implementado en el HTML inicial
+        }
+
+        // ========================================
+        // MOSTRAR ERROR
+        // ========================================
+        function mostrarError(mensaje) {
+            const tbodyDesktop = document.getElementById('tablaAsistenciasDesktop');
+            const contenedorMovil = document.getElementById('tarjetasAsistenciasMovil');
+            
+            const errorHTML = `
+                <div class="notification is-danger is-light">
+                    <span class="icon"><i class="fas fa-exclamation-triangle"></i></span>
+                    <span>${mensaje}</span>
+                </div>
+            `;
+            
+            tbodyDesktop.innerHTML = `<tr><td colspan="6">${errorHTML}</td></tr>`;
+            contenedorMovil.innerHTML = errorHTML;
+        }
+
+        // ========================================
+        // ACTUALIZAR FECHA DE ACTUALIZACIÓN
+        // ========================================
+        function actualizarFechaActualizacion() {
+            const ahora = new Date();
+            const opciones = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const fechaFormateada = ahora.toLocaleDateString('es-PE', opciones);
+            document.getElementById('fechaActualizacion').textContent = 
+                `Datos actualizados al ${fechaFormateada}`;
+        }
+
+        // ========================================
+        // EVENTOS AL CARGAR LA PÁGINA
+        // ========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar asistencias inicial
+            cargarAsistencias();
+
+            // Eventos de formularios
+            document.getElementById('filtrosDesktop').addEventListener('submit', aplicarFiltros);
+            document.getElementById('filtrosMovil').addEventListener('submit', aplicarFiltros);
+
+            // Auto-actualización cada 30 segundos
+            setInterval(cargarAsistencias, 30000);
+        });
+    </script>
 
 </body>
 </html>
