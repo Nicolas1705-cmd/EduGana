@@ -23,13 +23,13 @@ def registrar_asistencia():
         cur.execute("""
             INSERT INTO asistencias (
                 estudiante_id, nombre_estudiante, fecha,
-                asistencia, hora_entrada, observaciones, colegio
+                asistencia, hora_entrada, observaciones
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             RETURNING id;
         """, (
             estudiante_id, nombre_estudiante, fecha,
-            asistencia, hora_entrada, observaciones, colegio
+            asistencia, hora_entrada, observaciones 
         ))
         conn.commit()
         new_id = cur.fetchone()["id"]
