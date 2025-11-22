@@ -7,7 +7,7 @@ let idCanjear = null;
 let userPoints = 2500; // Puntos del usuario (se obtendría de la API de usuario)
 
 // URL de la API
-const API_URL = 'http://localhost:5000/listRecompensas';
+const API_URL = '/listRecompensas';
 
 // Cargar recompensas al iniciar
 document.addEventListener('DOMContentLoaded', function() {
