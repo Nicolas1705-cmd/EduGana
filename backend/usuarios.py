@@ -1,13 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import (
-<<<<<<< HEAD
     create_access_token, JWTManager, jwt_required,
     get_jwt_identity
-=======
+
     create_access_token, JWTManager,
     jwt_required, get_jwt_identity
->>>>>>> ee669591196fdf9adec45d01d6bbf16f54fb1d91
+
 )
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -16,9 +15,7 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 # ============================
-<<<<<<< HEAD
 # CREDENCIALES (LAS TUYAS)
-=======
 # CONFIG JWT
 # ============================
 app.config["JWT_SECRET_KEY"] = "super-secret-key-2025"
@@ -26,7 +23,6 @@ jwt = JWTManager(app)
 
 # ============================
 # CREDENCIALES DE BASE DE DATOS
->>>>>>> df0d89b149c9061aa3af6f53bd50c4254491a377
 # ============================
 DB_NAME = "edugana_db"
 DB_USER = "postgres"
@@ -34,7 +30,6 @@ DB_PASS = "System.2025*"
 DB_HOST = "35.237.18.79"
 DB_PORT = "5432"
 
-<<<<<<< HEAD
 # JWT
 app.config["JWT_SECRET_KEY"] = "cambia-este-secret"
 jwt = JWTManager(app)
@@ -364,6 +359,5 @@ def perfil():
 # =====================================
 # RUN SERVER
 # =====================================
->>>>>>> df0d89b149c9061aa3af6f53bd50c4254491a377
 if __name__ == "__main__":
     app.run(debug=True)
