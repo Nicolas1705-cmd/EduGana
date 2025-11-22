@@ -11,6 +11,7 @@ def registrar_colegio():
     data = request.get_json()
 
     campos_requeridos = [
+        "id_colegio",
         "codigo_modular_r",
         "nombre_colegio",
         "tipo_gestion",
@@ -39,6 +40,7 @@ def registrar_colegio():
 
         query = """
             INSERT INTO colegios (
+                id_colegio,
                 codigo_modular_r,
                 nombre_colegio,
                 tipo_gestion,
@@ -50,11 +52,12 @@ def registrar_colegio():
                 email_institucion,
                 nombre_director
             )
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
             RETURNING id_colegio;
         """
 
         valores = (
+            data["id_colegio"],
             data["codigo_modular_r"],
             data["nombre_colegio"],
             data["tipo_gestion"],
