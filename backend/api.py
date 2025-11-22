@@ -51,6 +51,12 @@ def serve_static(filename):
 
 # --- TUS REGLAS DE API EXISTENTES ---
 
+# LUIGGY
+app.add_url_rule(
+  '/addSeccion', view_func=seccion.addSeccion, methods=['GET']
+)
+
+
 # RYDER
 app.add_url_rule(
   '/addCurso', view_func=curso.registrar_inscripcion, methods=['GET']
