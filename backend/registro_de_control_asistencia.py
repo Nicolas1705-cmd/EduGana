@@ -60,8 +60,6 @@ def registrar_asistencia():
         print(f"Error al registrar asistencia: {e}")
         return jsonify({"mensaje": "Error interno del servidor"}), 500
 
----
-
 # ============================
 # GET: LISTAR ASISTENCIAS
 # ============================
