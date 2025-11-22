@@ -4,13 +4,9 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from configbd import get_db_connection 
 
-
-# ======================================================
-#   📌 Obtener historial completo
-# ======================================================
 def obtener_asistencias():
     try:
-        conn = get_conn()
+        conn = get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
         cur.execute("""
@@ -37,4 +33,5 @@ def obtener_asistencias():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
