@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity, unset_jwt_cookies
+from flask_jwt_extended import (
+    create_access_token, JWTManager, jwt_required,
+    get_jwt_identity
+)
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
@@ -19,7 +22,7 @@ jwt = JWTManager(app)
 DB_NAME = "edugana_db"
 DB_USER = "postgres"
 DB_PASS = "System.2025*"
-DB_HOST = "127.0.0.1"
+DB_HOST = "35.237.18.79"
 DB_PORT = "5432"
 
 # Conexión a PostgreSQL
@@ -44,22 +47,26 @@ def registrar_usuario():
         nombre = data.get("nombre_usuario")
         apellido = data.get("apellido_usuario")
         correo = data.get("correo")
-        contraseña = data.get("contrasena")
+        contrasena = data.get("contrasena")
 
+        # Validación correcta
         if not nombre or not apellido or not correo or not contrasena:
             return jsonify({"mensaje": "Todos los campos son obligatorios"}), 400
 
         conn = get_db()
         cur = conn.cursor()
 
-        # Verificar si correo ya está registrado
+        # Verificar si correo ya existe
         cur.execute("SELECT * FROM registodeusuario WHERE correo = %s", (correo,))
         existe = cur.fetchone()
+
         if existe:
+            cur.close()
+            conn.close()
             return jsonify({"mensaje": "El correo ya está registrado"}), 400
 
-        # Encriptar contraseña
-        hash_pw = bcrypt.generate_password_hash(contrasena).decode('utf-8')
+        # Encriptar contraseña correctamente
+        hash_pw = bcrypt.generate_password_hash(contrasena).decode("utf-8")
 
         # Insertar usuario
         cur.execute("""
@@ -67,8 +74,8 @@ def registrar_usuario():
             VALUES (%s, %s, %s, %s) RETURNING id_usuario;
         """, (nombre, apellido, correo, hash_pw))
 
-        conn.commit()
         user_id = cur.fetchone()["id_usuario"]
+        conn.commit()
 
         cur.close()
         conn.close()
@@ -89,10 +96,10 @@ def registrar_usuario():
 @app.route("/api/login", methods=["POST"])
 def login():
     try:
-        data = request.json
+        data = request.get_json()
 
         correo = data.get("correo")
-        contraseña = data.get("contrasena")
+        contrasena = data.get("contrasena")
 
         conn = get_db()
         cur = conn.cursor()
@@ -101,10 +108,14 @@ def login():
         user = cur.fetchone()
 
         if not user:
+            cur.close()
+            conn.close()
             return jsonify({"mensaje": "Correo no registrado"}), 400
 
-        # Validar contraseña
-        if not bcrypt.check_password_hash(user["contrasena"], contraseña):
+        # Comparación de contraseña
+        if not bcrypt.check_password_hash(user["contrasena"], contrasena):
+            cur.close()
+            conn.close()
             return jsonify({"mensaje": "Contraseña incorrecta"}), 400
 
         token = create_access_token(identity=user["id_usuario"])
@@ -115,7 +126,7 @@ def login():
         return jsonify({
             "mensaje": "Login exitoso",
             "token": token
-        })
+        }), 200
 
     except Exception as e:
         print("Error:", e)
@@ -123,7 +134,7 @@ def login():
 
 
 # =====================================
-# API: PERFIL (PROTEGIDO CON JWT)
+# API: PERFIL (PROTEGIDO)
 # =====================================
 @app.route("/api/perfil", methods=["GET"])
 @jwt_required()
@@ -133,7 +144,11 @@ def perfil():
     conn = get_db()
     cur = conn.cursor()
 
-    cur.execute("SELECT id_usuario, nombre_usuario, apellido_usuario, correo FROM registodeusuario WHERE id_usuario = %s", (user_id,))
+    cur.execute("""
+        SELECT id_usuario, nombre_usuario, apellido_usuario, correo
+        FROM registodeusuario WHERE id_usuario = %s
+    """, (user_id,))
+
     user = cur.fetchone()
 
     cur.close()
