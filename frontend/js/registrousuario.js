@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Crear objeto
+        // Crear objeto que enviamos al backend
         const usuarioData = {
             nombre_usuario: nombre,
             apellido_usuario: apellido,
