@@ -1,52 +1,59 @@
+// ================================
+//  REGISTRO DE USUARIO - EduGana
+// ================================
+
 document.addEventListener("DOMContentLoaded", function () {
+
     const form = document.querySelector("form");
 
     form.addEventListener("submit", async function (e) {
         e.preventDefault(); // Evita recargar la página
 
-        // Obtener valores del formulario
-        const nombre = document.querySelectorAll("input")[0].value.trim();
-        const apellido = document.querySelectorAll("input")[1].value.trim();
-        const correo = document.querySelectorAll("input")[2].value.trim();
-        const contrasena = document.querySelectorAll("input")[3].value.trim();
+        // Obtener los valores del formulario
+        const nombre = document.querySelector('input[placeholder="Ejemplo: Juan"]').value;
+        const apellido = document.querySelector('input[placeholder="Ejemplo: Pérez"]').value;
+        const correo = document.querySelector('input[type="email"]').value;
+        const contrasena = document.querySelector('input[type="password"]').value;
         const rol = document.querySelector("select").value;
 
-        // Validar campos
-        if (!nombre || !apellido || !correo || !contrasena || rol === "Seleccionar rol...") {
+        // Validación
+        if (!nombre || !apellido || !correo || !contrasena || !rol) {
             alert("Todos los campos son obligatorios");
             return;
         }
 
-        // Crear objeto que enviamos al backend
-        const usuarioData = {
+        // Crear objeto para enviar
+        const data = {
             nombre_usuario: nombre,
             apellido_usuario: apellido,
             correo: correo,
             contrasena: contrasena,
-            rol_usuario: rol
+            rol: rol
         };
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/registrarUsuario", {
+            const response = await fetch("http://127.0.0.1:5000/addregistrarUsuario", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(usuarioData)
+                body: JSON.stringify(data)
             });
 
-            const data = await response.json();
+            const result = await response.json();
 
-            if (response.status === 201) {
-                alert("✔ Usuario registrado correctamente");
-                form.reset();
+            if (response.ok) {
+                alert("Usuario registrado correctamente ✔");
+                form.reset(); // Limpia el formulario
             } else {
-                alert("⚠ " + data.mensaje);
+                alert("⚠ Error: " + result.mensaje);
             }
 
         } catch (error) {
-            console.error("ERROR:", error);
-            alert("Error al conectar con el servidor.");
+            console.error("Error:", error);
+            alert("No se pudo conectar con el servidor 😢");
         }
+
     });
+
 });
