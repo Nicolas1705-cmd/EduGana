@@ -10,7 +10,7 @@ app = Flask(__name__)
 DB_NAME = "edugana_db"
 DB_USER = "postgres"
 DB_PASS = "System.2025*"
-DB_HOST = "127.0.0.1"
+DB_HOST = "172.60.15.207"
 DB_PORT = "5432"
 
 def get_db():
