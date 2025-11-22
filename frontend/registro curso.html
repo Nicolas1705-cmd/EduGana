@@ -16,7 +16,6 @@
       margin-top: 20px;
     }
 
-    /* Caja del formulario */
     .form-box {
       max-width: 900px;
       margin: 0 auto 40px auto;
@@ -26,7 +25,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-    /* Títulos de secciones */
     .section-title {
       font-size: 1.2rem;
       font-weight: 600;
@@ -36,7 +34,6 @@
       padding-left: 10px;
     }
 
-    /* Botón */
     .button.is-primary {
       background-color: #2563eb;
     }
@@ -45,7 +42,6 @@
       background-color: #1e40af;
     }
 
-    /* ✅ HEADER FUSIONADO */
     .page-header {
       margin-bottom: 2rem;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -72,8 +68,6 @@
 
     .page-header .icon { color: white; }
 
-    /* ✅ Puntos */
-    .user-ppoints,
     .user-points {
       background: rgba(255, 255, 255, 0.22);
       border-radius: 50px;
@@ -85,57 +79,9 @@
       font-weight: bold;
     }
 
-    .user-points .icon {
-      font-size: 1.5rem;
-    }
-
-    /* ✅ RESPONSIVE COMPLETO */
-    @media screen and (max-width: 1024px) {
-      .page-header { padding: 1.8rem; }
-    }
-
     @media screen and (max-width: 768px) {
-
-      .page-header .level { 
-        display: block !important;
-        text-align: center;
-      }
-
-      .page-header .level-left,
-      .page-header .level-right {
-        margin-bottom: 1rem;
-        text-align: center;
-      }
-
-      .page-header .title { font-size: 1.5rem; }
-      .page-header .subtitle { font-size: 0.95rem; }
-
-      .icon-text {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .user-points {
-        margin: 0 auto;
-        font-size: 1rem;
-        padding: 0.6rem 1.2rem;
-      }
-
-      .user-points .icon {
-        font-size: 1.2rem;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      .page-header { padding: 1.3rem; }
-
-      .page-header .title { font-size: 1.25rem; }
-      .page-header .subtitle { font-size: 0.85rem; }
-
-      .user-points {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-      }
+      .page-header .level { display: block !important; text-align: center; }
+      .user-points { margin: 0 auto; }
     }
 
   </style>
@@ -143,7 +89,7 @@
 
 <body>
 
-  <!-- ✅ HEADER FINAL FUSIONADO -->
+  <!-- HEADER -->
   <div class="page-header">
 
     <div class="level">
@@ -160,9 +106,7 @@
               </span>
             </h1>
 
-            <p class="subtitle is-5 mt-2">
-              edugana
-            </p>
+            <p class="subtitle is-5 mt-2">edugana</p>
           </div>
         </div>
       </div>
@@ -172,7 +116,6 @@
           <div class="user-points">
             <span class="icon"><i class="fas fa-coins"></i></span>
             <span id="userPoints"></span>
-            <span></span>
           </div>
         </div>
       </div>
@@ -181,7 +124,7 @@
 
   </div>
 
-  <!-- ✅ FORMULARIO -->
+  <!-- FORMULARIO -->
   <div class="form-box">
     <form id="registroCurso">
 
@@ -254,6 +197,49 @@
 
     </form>
   </div>
+
+
+<!-- 🔥 SCRIPT BAJADO AQUÍ (AHORA FUNCIONA) -->
+<script>
+document.getElementById("registroCurso").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        nombre_curso: document.getElementById("nombreCurso").value,
+        codigo: document.getElementById("codigoCurso").value,
+        nivel_grado: document.getElementById("nivel").value,
+        capacidad_max: document.getElementById("capacidad").value,
+        profesor_asignado: document.getElementById("profesor").value,
+        descripcion: document.getElementById("descripcion").value
+    };
+
+    if (!data.nombre_curso || !data.codigo || !data.nivel_grado || !data.capacidad_max || !data.profesor_asignado) {
+        alert("⚠ Debes completar todos los campos obligatorios");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/cursos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("✅ Curso registrado correctamente. ID: " + result.id_curso);
+            document.getElementById("registroCurso").reset();
+        } else {
+            alert("❌ Error: " + result.error);
+        }
+
+    } catch (error) {
+        alert("🚫 No se pudo conectar con el servidor");
+        console.error(error);
+    }
+});
+</script>
 
 </body>
 </html>

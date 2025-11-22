@@ -3,7 +3,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, JWTManager, jwt_required, get_jwt_identity, unset_jwt_cookies
 import psycopg2
 from psycopg2.extras import RealDictCursor
-
+from configbd import get_db_connection
 
 
 
@@ -18,12 +18,12 @@ def registrar_usuario():
         nombre = data.get("nombre_usuario")
         apellido = data.get("apellido_usuario")
         correo = data.get("correo")
-        contraseña = data.get("contrasena")
+        contrasena = data.get("contrasena")
 
         if not nombre or not apellido or not correo or not contrasena:
             return jsonify({"mensaje": "Todos los campos son obligatorios"}), 400
 
-        conn = get_db()
+        conn = get_db_connection()
         cur = conn.cursor()
 
         # Verificar si correo ya está registrado
@@ -33,7 +33,7 @@ def registrar_usuario():
             return jsonify({"mensaje": "El correo ya está registrado"}), 400
 
         # Encriptar contraseña
-        hash_pw = bcrypt.generate_password_hash(contrasena).decode('utf-8')
+        hash_pw = contrasena
 
         # Insertar usuario
         cur.execute("""
@@ -65,9 +65,9 @@ def login():
         data = request.json
 
         correo = data.get("correo")
-        contraseña = data.get("contrasena")
+        contrasena = data.get("contrasena")
 
-        conn = get_db()
+        conn = get_db_connection()
         cur = conn.cursor()
 
         cur.execute("SELECT * FROM registodeusuario WHERE correo = %s", (correo,))
@@ -77,7 +77,7 @@ def login():
             return jsonify({"mensaje": "Correo no registrado"}), 400
 
         # Validar contraseña
-        if not bcrypt.check_password_hash(user["contrasena"], contraseña):
+        if not user["contrasena"]== contrasena:
             return jsonify({"mensaje": "Contraseña incorrecta"}), 400
 
         token = create_access_token(identity=user["id_usuario"])
@@ -102,7 +102,7 @@ def login():
 def perfil():
     user_id = get_jwt_identity()
 
-    conn = get_db()
+    conn = get_db_connection()
     cur = conn.cursor()
 
     cur.execute("SELECT id_usuario, nombre_usuario, apellido_usuario, correo FROM registodeusuario WHERE id_usuario = %s", (user_id,))
@@ -117,4 +117,3 @@ def perfil():
 # =====================================
 # RUN SERVER
 # =====================================
-if __name__ == "__main__":

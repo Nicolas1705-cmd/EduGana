@@ -3,25 +3,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from configbd import get_db_connection  
 
-
-
-
-# ======================================
-# API: REGISTRAR CURSO (POST)
-# ======================================
-def registrar_curso():
-    data = request.json
-
-    campos_obligatorios = [
-        "nombre_curso", "codigo", "nivel_grado",
-        "capacidad_max", "profesor_asignado"
-    ]
-
-    # Validar obligatorios
-    for campo in campos_obligatorios:
-        if campo not in data or str(data[campo]).strip() == "":
-            return jsonify({"error": f"El campo '{campo}' es obligatorio."}), 400
-
+def registrar_curso(data):
     try:
         conn = get_db_connection()
         cur = conn.cursor()
@@ -44,10 +26,11 @@ def registrar_curso():
 
         new_id = cur.fetchone()[0]
         conn.commit()
+
         cur.close()
         conn.close()
 
-        return jsonify({"mensaje": "Curso registrado correctamente", "id_curso": new_id}), 201
+        return {"mensaje": "Curso registrado", "id_curso": new_id}
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return {"error": str(e)}

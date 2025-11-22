@@ -16,8 +16,10 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 
 import psycopg2
 
+from configbd import get_db_connection 
 from psycopg2.extras import RealDictCursor
 
+<<<<<<< HEAD
 
 from flask_cors import CORS 
 
@@ -228,6 +230,8 @@ def get_db_connection():
 
 @app.route("/colegios", methods=["POST"])
 
+=======
+>>>>>>> 11a9cab05a7c146d09dd5ac72efe376c4e60815e
 def registrar_colegio():
 
   data = request.get_json()
@@ -378,6 +382,7 @@ def registrar_colegio():
 
     return jsonify({"error": "Error al registrar el colegio"}), 500
 
+<<<<<<< HEAD
 
 
 
@@ -393,3 +398,6 @@ if __name__ == "__main__":
   app.run(debug=True)
   
 >>>>>>> 23c887774217ac5201af5b1bfdb84778578374d4
+=======
+  
+>>>>>>> 11a9cab05a7c146d09dd5ac72efe376c4e60815e
